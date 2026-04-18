@@ -1,0 +1,122 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["src/**", "tests/**"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["src/**/domain/**", "tests/biome-contract/domain/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "drizzle-orm": "Domain layer cannot import 'drizzle-orm'. Reason: Domain must stay framework-free (see docs/decisions/0003-ddd-layering.md, docs/decisions/0009-rigidity-map.md Tier 1). Fix: Move Drizzle usage to src/{feature}/infrastructure/, use a Mapper (src/{feature}/infrastructure/mappers/) to convert rows to domain entities.",
+                  "postgres": "Domain layer cannot import 'postgres'. Reason: Domain must stay framework-free (ADR 0003, ADR 0009 Tier 1). Fix: Use the 'postgres' client only in src/shared/infrastructure/db/client.ts or {feature}/infrastructure/.",
+                  "elysia": "Domain layer cannot import 'elysia'. Reason: Domain entities and factories are framework-free (ADR 0003, ADR 0006). Fix: HTTP concerns belong in src/{feature}/presentation/; derive AuthContext via the requireAuth macro (ADR 0007) and pass it into domain factories as a value object.",
+                  "better-auth": "Domain layer cannot import 'better-auth'. Reason: BetterAuth is an infrastructure concern behind an IIdentityService port (ADR 0004, ADR 0006). Fix: Use ports in src/auth/application/ports/ and implement in src/auth/infrastructure/.",
+                  "@bogeychan/elysia-logger": "Domain layer cannot import logger adapters directly. Reason: Logger is a port (ILogger) injected via the shared kernel (ADR 0003). Fix: Depend on ILogger from src/shared/application/ports/, adapter lives in src/shared/infrastructure/logger/.",
+                  "pino": "Domain layer cannot import 'pino' directly (same reason as @bogeychan/elysia-logger, ADR 0003). Fix: Use the ILogger port from src/shared/application/ports/."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/**/application/**", "tests/biome-contract/application/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "drizzle-orm": "Application layer cannot import 'drizzle-orm'. Reason: Use cases talk to ports, not ORMs (ADR 0003). Fix: Define a Repository port in this feature's application/ports/ and let infrastructure/ implement it with Drizzle.",
+                  "postgres": "Application layer cannot import 'postgres'. Reason: Use cases talk to ports, not DB clients (ADR 0003). Fix: Inject the port defined in application/ports/; the adapter in infrastructure/ may use 'postgres'."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/**/application/**",
+        "src/**/presentation/**",
+        "tests/biome-contract/application/**",
+        "tests/biome-contract/presentation/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "drizzle-orm": "Application layer cannot import 'drizzle-orm'. Reason: Use cases talk to ports, not ORMs (ADR 0003). Fix: Define a Repository port in this feature's application/ports/ and let infrastructure/ implement it with Drizzle.",
+                  "postgres": "Application layer cannot import 'postgres'. Reason: Use cases talk to ports, not DB clients (ADR 0003). Fix: Inject the port defined in application/ports/; the adapter in infrastructure/ may use 'postgres'."
+                },
+                "patterns": [
+                  {
+                    "group": ["**/domain/internal/**", "**/domain/internal"],
+                    "message": "Cannot import from domain/internal/. Reason: Only the domain/index.ts barrel is a legal entry point (ADR 0003, CONTEXT D-11). Fix: Import from '{feature}/domain' (the barrel) and use getXxxService(ctx) factory, never instantiate classes directly."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/shared/kernel/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "drizzle-orm": "shared/kernel cannot import 'drizzle-orm'. Reason: The kernel (Result/Brand/UUID/DomainError) must be framework-free so any layer can use it (ADR 0003 §kernel). Fix: Keep kernel files pure TypeScript; put ORM bindings in src/shared/infrastructure/db/.",
+                  "postgres": "shared/kernel cannot import 'postgres'. Reason: framework-free kernel (ADR 0003). Fix: Keep DB client code in src/shared/infrastructure/db/client.ts.",
+                  "elysia": "shared/kernel cannot import 'elysia'. Reason: kernel is re-usable across any framework surface (ADR 0003). Fix: HTTP primitives live in src/shared/presentation/.",
+                  "better-auth": "shared/kernel cannot import 'better-auth'. Reason: kernel is framework-free (ADR 0003, ADR 0004). Fix: BetterAuth adapter belongs in src/auth/infrastructure/.",
+                  "@bogeychan/elysia-logger": "shared/kernel cannot import logger adapters. Reason: kernel is framework-free (ADR 0003). Fix: ILogger port lives in src/shared/application/ports/.",
+                  "pino": "shared/kernel cannot import 'pino'. Reason: kernel is framework-free (ADR 0003). Fix: ILogger port in src/shared/application/ports/."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
