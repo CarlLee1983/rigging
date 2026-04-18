@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+      - name: Install dependencies (frozen)
+        run: bun install --frozen-lockfile
+      - name: Lint (biome check .)
+        run: bun run lint
+      - name: Typecheck (tsc --noEmit)
+        run: bun run typecheck
+      - name: Test (bun test)
+        run: bun run test
