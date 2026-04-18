@@ -24,3 +24,8 @@ pnpm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Biome rule-contract fixtures (deliberate violations) — skipped from normal
+# `biome check .` via useIgnoreFile; the contract test opts in per-file via
+# --vcs-use-ignore-file=false.
+tests/biome-contract/**/*-violation.ts
