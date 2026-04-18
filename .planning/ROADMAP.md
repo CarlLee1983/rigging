@@ -35,7 +35,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `docs/decisions/` 下至少 12 條 ADR（9 條起始 + Rigidity Map + postgres-js driver + Resolver precedence）以 MADR 4.0 格式 commit，且 `docs/decisions/README.md` 索引表列出每條 status
   4. `AGENTS.md` 在 repo 根層就位並明列 Rigidity Map 三級（必嚴格 / 可 ADR 逃生 / 純約定）與 anti-features 清單
   5. `src/shared/kernel/` 可被任意層 import 且 zero framework import（`Result` / `Brand` / `UUID` / `DomainError` 皆 framework-free）
-**Plans**: TBD (estimate: 4-5 plans — project bootstrap、DDD scaffold + lint rules、shared kernel、ADR seed + AGENTS.md、docker + env validation)
+**Plans:** 5 plans
+**Plan list**:
+- [ ] 01-01-PLAN.md — Project bootstrap (package.json, tsconfig, biome base, DDD 目錄 scaffold, main.ts stub)
+- [ ] 01-02-PLAN.md — Shared kernel (Result / Brand / UUID / DomainError + unit tests + framework-free contract test)
+- [ ] 01-03-PLAN.md — DDD scaffold + Biome overrides (4 條 overrides + 9 個違規檔 + contract test + AUX-06 stub)
+- [ ] 01-04-PLAN.md — ADR seed + AGENTS.md + PR gate (12 ADR + README index + PR template + adr-check workflow + Rigidity Map + anti-features)
+- [ ] 01-05-PLAN.md — Env + Docker + Drizzle config + CI (config.ts TypeBox + docker-compose + .env.example + drizzle.config + ci.yml)
 **UI hint**: no
 
 ### Phase 2: App Skeleton
