@@ -53,7 +53,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. `curl http://localhost:3000/swagger` 能看到自動生成的 OpenAPI 3.x spec 頁面
   3. 每次請求 log 為結構化 JSON（stdout 可見 request id / method / path / status / duration 欄位）
   4. 故意 throw 一個 `DomainError` 子類可正確被全域 error handler 映射為對應 HTTP status（400/401/403/404/409）而非裸 500
-**Plans**: TBD (estimate: 3 plans — bootstrap/app + error handler plugin、request logger + CORS、health + Swagger + trivial feature walkthrough)
+**Plans:** 3 plans
+**Plan list**:
+- [ ] 02-01-PLAN.md — Shared Drizzle+postgres-js DB client + 4 global plugins (requestLogger / cors / errorHandler / swagger) + unit tests
+- [ ] 02-02-PLAN.md — /health DDD four-layer walkthrough (domain value + application port/usecase + Drizzle adapter + controller + feature module factory)
+- [ ] 02-03-PLAN.md — createApp assembly + main.ts wire + ADR 0012 canonical plugin ordering + integration smoke test
 **UI hint**: no
 
 ### Phase 3: Auth Foundation
