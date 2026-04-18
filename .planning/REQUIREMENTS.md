@@ -170,27 +170,81 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
+Which phases cover which requirements. Per-requirement mapping confirmed at roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FND-01 ~ FND-06 | Phase 1 | Pending |
-| ARCH-01 ~ ARCH-05 | Phase 1 | Pending |
-| ADR-01 ~ ADR-05 | Phase 1 | Pending |
-| AGM-01 ~ AGM-02 | Phase 1 | Pending |
-| WEB-01 ~ WEB-04 | Phase 2 | Pending |
-| AUTH-01 ~ AUTH-16 | Phase 3 | Pending |
-| AUX-01 ~ AUX-07 | Phase 3 | Pending |
-| DEMO-01 ~ DEMO-06 | Phase 4 | Pending |
-| QA-01 ~ QA-05 | Phase 5 | Pending |
-| CI-01 ~ CI-03 | Phase 5 | Pending |
-| DOC-01 ~ DOC-05 | Phase 5 | Pending |
+| FND-01 | Phase 1 | Pending |
+| FND-02 | Phase 1 | Pending |
+| FND-03 | Phase 1 | Pending |
+| FND-04 | Phase 1 | Pending |
+| FND-05 | Phase 1 | Pending |
+| FND-06 | Phase 1 | Pending |
+| ARCH-01 | Phase 1 | Pending |
+| ARCH-02 | Phase 1 | Pending |
+| ARCH-03 | Phase 1 | Pending |
+| ARCH-04 | Phase 1 | Pending |
+| ARCH-05 | Phase 1 | Pending |
+| ADR-01 | Phase 1 | Pending |
+| ADR-02 | Phase 1 | Pending |
+| ADR-03 | Phase 1 | Pending |
+| ADR-04 | Phase 1 | Pending |
+| ADR-05 | Phase 1 | Pending |
+| AGM-01 | Phase 1 | Pending |
+| AGM-02 | Phase 1 | Pending |
+| WEB-01 | Phase 2 | Pending |
+| WEB-02 | Phase 2 | Pending |
+| WEB-03 | Phase 2 | Pending |
+| WEB-04 | Phase 2 | Pending |
+| AUTH-01 | Phase 3 | Pending |
+| AUTH-02 | Phase 3 | Pending |
+| AUTH-03 | Phase 3 | Pending |
+| AUTH-04 | Phase 3 | Pending |
+| AUTH-05 | Phase 3 | Pending |
+| AUTH-06 | Phase 3 | Pending |
+| AUTH-07 | Phase 3 | Pending |
+| AUTH-08 | Phase 3 | Pending |
+| AUTH-09 | Phase 3 | Pending |
+| AUTH-10 | Phase 3 | Pending |
+| AUTH-11 | Phase 3 | Pending |
+| AUTH-12 | Phase 3 | Pending |
+| AUTH-13 | Phase 3 | Pending |
+| AUTH-14 | Phase 3 | Pending |
+| AUTH-15 | Phase 3 | Pending |
+| AUTH-16 | Phase 3 | Pending |
+| AUX-01 | Phase 3 | Pending |
+| AUX-02 | Phase 3 | Pending |
+| AUX-03 | Phase 3 | Pending |
+| AUX-04 | Phase 3 | Pending |
+| AUX-05 | Phase 3 | Pending |
+| AUX-06 | Phase 3 | Pending |
+| AUX-07 | Phase 3 | Pending |
+| DEMO-01 | Phase 4 | Pending |
+| DEMO-02 | Phase 4 | Pending |
+| DEMO-03 | Phase 4 | Pending |
+| DEMO-04 | Phase 4 | Pending |
+| DEMO-05 | Phase 4 | Pending |
+| DEMO-06 | Phase 4 | Pending |
+| QA-01 | Phase 5 | Pending |
+| QA-02 | Phase 5 | Pending |
+| QA-03 | Phase 5 | Pending |
+| QA-04 | Phase 5 | Pending |
+| QA-05 | Phase 5 | Pending |
+| CI-01 | Phase 5 | Pending |
+| CI-02 | Phase 5 | Pending |
+| CI-03 | Phase 5 | Pending |
+| DOC-01 | Phase 5 | Pending |
+| DOC-02 | Phase 5 | Pending |
+| DOC-03 | Phase 5 | Pending |
+| DOC-04 | Phase 5 | Pending |
+| DOC-05 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 55 total
-- Mapped to phases: 55 (preliminary — roadmap confirms)
-- Unmapped: 0 ✓ (pending roadmap creation)
+- Mapped to phases: 55 ✓
+- Unmapped: 0 ✓
+- Per-phase counts: Phase 1 = 18 / Phase 2 = 4 / Phase 3 = 23 / Phase 4 = 6 / Phase 5 = 13
 
 ---
 *Requirements defined: 2026-04-19*
-*Last updated: 2026-04-19 after initial definition*
+*Last updated: 2026-04-19 after roadmap creation (traceability expanded to per-REQ-ID rows)*
