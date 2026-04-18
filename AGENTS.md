@@ -193,7 +193,73 @@ Use these entry points:
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
 <!-- GSD:workflow-end -->
 
+<!-- RIGGING:rigidity-map-start source:docs/decisions/0009-rigidity-map.md -->
+## Rigging Rigidity Map (AI Agent: read this first)
 
+Rigging uses a three-tier strictness model. Check the tier before proposing a change.
+
+### Tier 1 — Must Be Rigid
+
+1. AuthContext is the only path to any domain service.
+   - Do not instantiate domain services outside the factory barrel.
+   - `getXxxService(ctx: AuthContext)` is the only legal entry point.
+   - Runtime guards throw `AuthContextMissingError` on missing context. See ADR 0006 and ADR 0007.
+
+2. The domain layer is framework-free.
+   - `src/**/domain/**` must not import `drizzle-orm`, `elysia`, `better-auth`, `postgres`, `@bogeychan/elysia-logger`, or `pino`.
+   - Biome `noRestrictedImports` enforces this boundary.
+   - A violation is a CI failure, not a review-time preference.
+
+3. Core stack versions are pinned.
+   - `bun@^1.3.12`, `elysia@^1.4.28`, `better-auth@1.6.5`, `drizzle-orm@^0.45.2`, and `postgres@^3.4.9` are the foundation pins.
+   - Changing one of these requires a new superseding ADR.
+
+### Tier 2 — Default Rigid, Escapable via ADR
+
+- Validator choice.
+- Postgres driver choice.
+- Logger choice.
+- Migration strategy.
+- Resolver precedence.
+
+Each Tier 2 change requires a new ADR that supersedes the existing decision record.
+
+### Tier 3 — Convention Only
+
+- Variable naming.
+- Error code naming.
+- Log field naming.
+- Git commit format.
+- Branch naming.
+
+### Detection
+
+- CI catches Tier 1 and Tier 2 boundary violations through Biome, TypeScript, and tests.
+- Runtime catches Tier 1 auth misses through the domain factory guard.
+- There is intentionally no pre-commit hook gate.
+<!-- RIGGING:rigidity-map-end -->
+
+<!-- RIGGING:anti-features-start source:.planning/PROJECT.md -->
+## Anti-features (DO NOT propose extending)
+
+AI Agent: if a user or you wants to add any of these, stop. Rigging v1 explicitly excludes them. See `.planning/PROJECT.md` for the full rationale.
+
+- Frontend UI.
+- `npx rigging` or `create-rigging` CLI generator.
+- Real email providers such as Resend or SMTP.
+- OAuth, SSO, 2FA, magic link, or passkeys.
+- MCP server, A2A, or multi-agent orchestration.
+- OpenTelemetry, distributed tracing, or Prometheus metrics.
+- Multi-tenancy, organization support, or RBAC.
+- NPM package publishing such as `@rigging/core`.
+- WebSocket, SSE, or real-time events.
+- GraphQL API.
+- Docker image publishing to a registry.
+- Production-grade zero-downtime migration tooling.
+
+If a user asks to add any of the above, respond with:
+"That's a v2 feature (see `.planning/PROJECT.md` Out of Scope). v1 scope is locked; adding it requires a PROJECT.md amendment with reasoning for why now."
+<!-- RIGGING:anti-features-end -->
 
 <!-- GSD:profile-start -->
 ## Developer Profile

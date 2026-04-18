@@ -1,0 +1,30 @@
+name: ADR Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  adr-check:
+    # D-16: if a PR says it needs an ADR but adds no docs/decisions/*.md file, fail CI.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: adr-required
+        run: |
+          body="${{ github.event.pull_request.body }}"
+          if echo "$body" | grep -qE '\- \[x\] This PR introduces a decision that requires a new ADR'; then
+            echo "required=true" >> $GITHUB_OUTPUT
+          else
+            echo "required=false" >> $GITHUB_OUTPUT
+          fi
+      - if: steps.adr-required.outputs.required == 'true'
+        run: |
+          added=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD -- 'docs/decisions/*.md' | wc -l)
+          if [ "$added" -eq 0 ]; then
+            echo "::error::PR marked as requiring an ADR but no new docs/decisions/*.md added."
+            exit 1
+          fi
+          echo "ADR check passed: $added new ADR(s) added."
