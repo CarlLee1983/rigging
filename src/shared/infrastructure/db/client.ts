@@ -1,5 +1,10 @@
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
+import { account } from '../../../auth/infrastructure/schema/account.schema'
+import { apikey } from '../../../auth/infrastructure/schema/api-key.schema'
+import { session } from '../../../auth/infrastructure/schema/session.schema'
+import { user } from '../../../auth/infrastructure/schema/user.schema'
+import { verification } from '../../../auth/infrastructure/schema/verification.schema'
 import type { Config } from '../../../bootstrap/config'
 
 /**
@@ -15,7 +20,9 @@ export function createDbClient(config: Pick<Config, 'DATABASE_URL'>) {
     // max defaults to 10 concurrent connections.
     onnotice: () => {}, // suppress NOTICE log spam
   })
-  const db = drizzle(sql)
+  const db = drizzle(sql, {
+    schema: { account, apikey, session, user, verification },
+  })
   return { db, sql }
 }
 

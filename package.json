@@ -26,6 +26,7 @@
     "typescript": "^5.9"
   },
   "dependencies": {
+    "@better-auth/api-key": "1.6.5",
     "@better-auth/drizzle-adapter": "1.6.5",
     "@bogeychan/elysia-logger": "^0.1.10",
     "@elysiajs/cors": "^1.4.1",

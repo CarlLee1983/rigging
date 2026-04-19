@@ -1,0 +1,10 @@
+{
+  "scenario": "B",
+  "sessionsAfterReset": 2,
+  "wrap_required": true,
+  "evidence": {
+    "resetPasswordEndpoint": "better-auth 1.6.5",
+    "signUpCreatesInitialSession": true,
+    "passwordResetDoesNotRevokeSessionsByDefault": true
+  }
+}
