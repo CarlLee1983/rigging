@@ -1,9 +1,9 @@
 ---
-status: partial
+status: complete
 phase: 03-auth-foundation
 source: [03-VERIFICATION.md]
 started: 2026-04-19T00:00:00.000Z
-updated: 2026-04-19T00:00:00.000Z
+updated: 2026-04-19T12:45:00.000Z
 ---
 
 ## Current Test
@@ -47,7 +47,7 @@ curl http://localhost:3000/me -H 'cookie: <session-cookie>'
 # Expected: 401, { error: { code: "UNAUTHENTICATED" } }
 ```
 
-result: [pending]
+result: passed
 
 ### 2. 密碼重設 + 其他 session 全部失效
 
@@ -93,14 +93,14 @@ curl -X POST http://localhost:3000/api/auth/sign-in/email \
 # Expected: 200, new session cookie
 ```
 
-result: [pending]
+result: passed
 
 ## Summary
 
 total: 2
-passed: 0
+passed: 2
 issues: 0
-pending: 2
+pending: 0
 skipped: 0
 blocked: 0
 

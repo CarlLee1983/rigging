@@ -22,7 +22,8 @@ export interface PromptVersionControllerDeps {
 const AgentIdParamsSchema = Type.Object({ agentId: Type.String({ minLength: 1 }) })
 const AgentIdAndVersionParamsSchema = Type.Object({
   agentId: Type.String({ minLength: 1 }),
-  version: Type.Integer({ minimum: 1 }),
+  // Path segments are strings; validate digits and coerce in the handler.
+  version: Type.String({ pattern: '^[1-9][0-9]*$' }),
 })
 
 function toPromptVersionResponse(pv: {
@@ -95,7 +96,7 @@ export function promptVersionController(deps: PromptVersionControllerDeps) {
         const { params } = context
         const result = await deps.getPromptVersion.execute(authContext, {
           agentId: params.agentId as AgentId,
-          version: params.version,
+          version: Number.parseInt(params.version, 10),
         })
         return toPromptVersionResponse(result)
       },

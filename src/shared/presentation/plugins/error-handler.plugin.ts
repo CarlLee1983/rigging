@@ -22,6 +22,23 @@ export function errorHandlerPlugin(logger: Logger) {
     const requestId = typeof rid === 'string' ? rid : 'unknown'
     const url = new URL(request.url)
 
+    const maybeValidation = error as { code?: unknown; status?: unknown; message?: unknown }
+    if (maybeValidation.code === 'VALIDATION' && typeof maybeValidation.status === 'number') {
+      set.status = maybeValidation.status
+      logger.warn(
+        { code: 'VALIDATION', requestId, path: url.pathname },
+        String(maybeValidation.message ?? 'validation failed'),
+      )
+      return toHttpErrorBody({
+        code: 'VALIDATION_ERROR',
+        message:
+          typeof maybeValidation.message === 'string'
+            ? maybeValidation.message
+            : 'Validation failed',
+        requestId,
+      })
+    }
+
     if (error instanceof DomainError) {
       set.status = error.httpStatus
       if (error.httpStatus >= 500) {

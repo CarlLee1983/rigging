@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Phase 3 Auth Foundation — CONTEXT gathered (25 decisions locked across 4 areas). Interactive discussion: Scope design (8 decisions) / Resolver precedence (4) / BetterAuth 整合 surface (6) / API Key lifecycle (7). All decisions selected Recommended options and cross-consistent."
-last_updated: "2026-04-19T05:01:39.903Z"
-last_activity: 2026-04-19 -- Phase 03 planning complete
+stopped_at: ~
+last_updated: "2026-04-19T15:09:24.000Z"
+last_activity: 2026-04-19 -- Phase 04 executed (04-01..04-04); tests + ADR 0017 + friction verifier
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 13
-  completed_plans: 8
-  percent: 62
+  completed_phases: 4
+  total_plans: 22
+  completed_plans: 22
+  percent: 80
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-18)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
-**Current focus:** Phase 03 — Auth Foundation (context gathered, ready for planning)
+**Current focus:** Phase 05 — next milestone (see ROADMAP)
 
 ## Current Position
 
-Phase: 03 (Auth Foundation) — CONTEXT gathered (25 decisions locked)
-Plan: 0 of TBD (estimated 5 plans per ROADMAP)
-Status: Ready to execute
-Last activity: 2026-04-19 -- Phase 03 planning complete
+Phase: 04 (Demo Domain) — Complete (04-01..04-04)
+Plan: 4 of 4
+Status: Integration suite green; ADR 0017 + friction tally verifier; destructive spike probe opt-in via RIGGING_RUN_DESTRUCTIVE_SPIKE
+Last activity: 2026-04-19 -- Phase 04 execute-phase finished (demo domain + agents API + regression fixes)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -82,8 +82,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T10:50:00Z
-Stopped at: Phase 3 Auth Foundation — CONTEXT gathered (25 decisions locked across 4 areas). Interactive discussion: Scope design (8 decisions) / Resolver precedence (4) / BetterAuth 整合 surface (6) / API Key lifecycle (7). All decisions selected Recommended options and cross-consistent.
-Resume file: .planning/phases/03-auth-foundation/03-CONTEXT.md
+Last session: 2026-04-19T06:11:33.511Z
+Stopped at: context exhaustion at 90% (2026-04-19)
+Resume file: None
 Next: $gsd-plan-phase 3 — plan first emphasis on Plan 03-01 BetterAuth schema-gen spike (D-17: standalone spike to derisk Pitfall #5446 before committing auth domain / ports code). Other plans per ROADMAP estimate: auth domain + ports / auth infrastructure (repos + adapters + ConsoleEmailAdapter) / use cases (register / verify / reset / API Key CRUD) / authContext plugin + macro + resolver + Runtime Guards + regression tests.
 Decisions commit: cfb226a (docs(03): capture phase 3 auth-foundation context).

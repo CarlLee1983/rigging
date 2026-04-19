@@ -168,7 +168,7 @@ describe('CreatePromptVersionUseCase', () => {
     expect(promptRepo.createCalls).toBe(2)
   })
 
-  test('throws PromptVersionConflictError after 3 nulls', async () => {
+  test('throws PromptVersionConflictError after MAX_RETRY nulls', async () => {
     const latest: PromptVersion = {
       id: 'pv-existing' as PromptVersion['id'],
       agentId: AGENT_OWNED_BY_A,
@@ -176,11 +176,14 @@ describe('CreatePromptVersionUseCase', () => {
       content: 'v1',
       createdAt: new Date('2026-04-18'),
     }
-    const promptRepo = makePromptRepo({ latest, createResults: [null, null, null] })
+    const promptRepo = makePromptRepo({
+      latest,
+      createResults: Array.from({ length: 24 }, () => null),
+    })
     const uc = new CreatePromptVersionUseCase(makeAgentRepo(existingAgent), promptRepo, CLOCK)
     await expect(
       uc.execute(ctxWithScopes(['*']), { agentId: AGENT_OWNED_BY_A, content: 'v2' }),
     ).rejects.toBeInstanceOf(PromptVersionConflictError)
-    expect(promptRepo.createCalls).toBe(3)
+    expect(promptRepo.createCalls).toBe(24)
   })
 })

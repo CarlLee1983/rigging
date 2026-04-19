@@ -16,7 +16,7 @@ export interface CreatePromptVersionInput {
   content: string
 }
 
-const MAX_RETRY = 3
+const MAX_RETRY = 24
 
 export class CreatePromptVersionUseCase {
   constructor(

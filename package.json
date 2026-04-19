@@ -14,7 +14,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
-    "test": "bun test",
+    "test": "bun scripts/ensure-agent-schema.ts && bun test",
     "test:contract": "bun test tests/biome-contract tests/contract"
   },
   "devDependencies": {

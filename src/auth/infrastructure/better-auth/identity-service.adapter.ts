@@ -5,7 +5,6 @@ import type { AuthContext, UserId } from '../../domain'
 import type { AuthInstance } from './auth-instance'
 
 const API_KEY_PREFIX = 'rig_live_'
-const PREFIX_INDEX_LEN = 8
 const RAW_KEY_LENGTH = 52
 const DUMMY_HASH = createHash('sha256').update('dummy').digest()
 
@@ -14,10 +13,6 @@ function isAscii(value: string): boolean {
     if (value.charCodeAt(index) > 0x7f) return false
   }
   return true
-}
-
-function asBuffer(hash: string): Buffer {
-  return Buffer.from(hash, 'hex')
 }
 
 export class BetterAuthIdentityService implements IIdentityService {
@@ -44,14 +39,18 @@ export class BetterAuthIdentityService implements IIdentityService {
       !isAscii(rawKey)
     ) {
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
+      // Align DB round-trips with the valid-format miss path (findByKeyHash + findByPrefix).
+      await this.apiKeys.findByKeyHash('0'.repeat(64))
+      timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
       await this.apiKeys.findByPrefix('xxxxxxxx')
       return null
     }
 
-    const prefix = rawKey.slice(0, PREFIX_INDEX_LEN)
-    const row = await this.apiKeys.findByPrefix(prefix)
+    const digestHex = createHash('sha256').update(rawKey).digest('hex')
+    const row = await this.apiKeys.findByKeyHash(digestHex)
     if (!row) {
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
+      await this.apiKeys.findByPrefix('xxxxxxxx')
       return null
     }
 
@@ -59,18 +58,6 @@ export class BetterAuthIdentityService implements IIdentityService {
       row.revokedAt !== null ||
       (row.expiresAt !== null && row.expiresAt.getTime() <= Date.now())
     ) {
-      timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
-      return null
-    }
-
-    const computedHash = createHash('sha256').update(rawKey).digest()
-    const storedHash = asBuffer(row.hash)
-    if (computedHash.length !== storedHash.length) {
-      timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
-      return null
-    }
-
-    if (!timingSafeEqual(computedHash, storedHash)) {
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
       return null
     }
@@ -112,7 +99,7 @@ export class BetterAuthIdentityService implements IIdentityService {
     return {
       id: createdRecord.id,
       rawKey,
-      prefix: createdRecord.prefix ?? createdRecord.start ?? rawKey.slice(0, PREFIX_INDEX_LEN),
+      prefix: createdRecord.prefix ?? createdRecord.start ?? rawKey.slice(0, 8),
       createdAt: createdRecord.createdAt,
     }
   }

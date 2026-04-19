@@ -14,6 +14,8 @@ export interface ApiKeyRow {
 
 export interface IApiKeyRepository {
   findByPrefix(prefix: string): Promise<ApiKeyRow | null>
+  /** SHA-256 hex digest of the raw API key (matches `apikey.key` column). */
+  findByKeyHash(keyHashHex: string): Promise<ApiKeyRow | null>
   listByUserId(userId: UserId): Promise<ApiKeyRow[]>
   markRevoked(id: string, userId: UserId): Promise<boolean>
 }

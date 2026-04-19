@@ -26,6 +26,25 @@ export class DrizzleApiKeyRepository implements IApiKeyRepository {
     return mapped
   }
 
+  async findByKeyHash(keyHashHex: string): Promise<ApiKeyRow | null> {
+    const rows = await this.db
+      .select()
+      .from(apikey)
+      .where(
+        and(
+          eq(apikey.key, keyHashHex),
+          eq(apikey.enabled, true),
+          or(isNull(apikey.expiresAt), gt(apikey.expiresAt, new Date())),
+        ),
+      )
+      .limit(1)
+    const row = rows[0] ?? null
+    if (!row) return null
+    const mapped = ApiKeyMapper.toDomain(row)
+    if (mapped.revokedAt !== null) return null
+    return mapped
+  }
+
   async listByUserId(userId: ApiKeyRow['userId']): Promise<ApiKeyRow[]> {
     const rows = await this.db
       .select()

@@ -6,15 +6,19 @@ import type {
 } from '../../../../src/auth/application/ports/api-key-repository.port'
 import { BetterAuthIdentityService } from '../../../../src/auth/infrastructure/better-auth/identity-service.adapter'
 
-function makeApiKeyRepo(rows: Map<string, ApiKeyRow> = new Map()) {
+function makeApiKeyRepo(rowsByHash: Map<string, ApiKeyRow> = new Map()) {
   let lookupCount = 0
   const repo: IApiKeyRepository & { lookupCount: number } = {
     get lookupCount() {
       return lookupCount
     },
-    async findByPrefix(prefix) {
+    async findByPrefix() {
       lookupCount++
-      return rows.get(prefix) ?? null
+      return null
+    },
+    async findByKeyHash(hex: string) {
+      lookupCount++
+      return rowsByHash.get(hex) ?? null
     },
     async listByUserId() {
       return []
@@ -63,7 +67,7 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
     const ctx = await svc.verifyApiKey('not-a-rig-key')
     expect(ctx).toBeNull()
-    expect(repo.lookupCount).toBe(1)
+    expect(repo.lookupCount).toBe(2)
   })
 
   test('verifyApiKey valid prefix without row returns null', async () => {
@@ -71,7 +75,7 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
     const ctx = await svc.verifyApiKey(`rig_live_${'a'.repeat(43)}`)
     expect(ctx).toBeNull()
-    expect(repo.lookupCount).toBe(1)
+    expect(repo.lookupCount).toBe(2)
   })
 
   test('verifyApiKey returns agent AuthContext when hash matches', async () => {
@@ -89,7 +93,7 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
       revokedAt: null,
       createdAt: new Date(),
     }
-    const repo = makeApiKeyRepo(new Map([[prefix, row]]))
+    const repo = makeApiKeyRepo(new Map([[hash, row]]))
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
     const ctx = await svc.verifyApiKey(rawKey)
     expect(ctx).toEqual({
@@ -116,7 +120,7 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
       revokedAt: new Date(),
       createdAt: new Date(),
     }
-    const repo = makeApiKeyRepo(new Map([[prefix, row]]))
+    const repo = makeApiKeyRepo(new Map([[hash, row]]))
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
     expect(await svc.verifyApiKey(rawKey)).toBeNull()
   })
@@ -136,20 +140,20 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
       revokedAt: null,
       createdAt: new Date(),
     }
-    const repo = makeApiKeyRepo(new Map([[prefix, row]]))
+    const repo = makeApiKeyRepo(new Map([[hash, row]]))
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
     expect(await svc.verifyApiKey(rawKey)).toBeNull()
   })
 
-  test('malformed and wrong-hash paths both do one prefix lookup', async () => {
+  test('malformed and wrong-hash paths have aligned lookup counts', async () => {
     const repo1 = makeApiKeyRepo()
     const svc1 = new BetterAuthIdentityService(makeFakeAuth(), repo1)
     await svc1.verifyApiKey('bad-format')
-    expect(repo1.lookupCount).toBe(1)
+    expect(repo1.lookupCount).toBe(2)
 
     const repo2 = makeApiKeyRepo()
     const svc2 = new BetterAuthIdentityService(makeFakeAuth(), repo2)
     await svc2.verifyApiKey(`rig_live_${'z'.repeat(43)}`)
-    expect(repo2.lookupCount).toBe(1)
+    expect(repo2.lookupCount).toBe(2)
   })
 })

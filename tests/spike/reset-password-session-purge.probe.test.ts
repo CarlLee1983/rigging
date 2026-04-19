@@ -35,7 +35,11 @@ async function resetSchema(sql: ReturnType<typeof createDbClient>['sql']) {
   }
 }
 
-describe('AUTH-11 reset-password session purge probe', () => {
+// Drops and recreates `public` — must never run against a shared dev DB during `bun test`.
+// Opt in: RIGGING_RUN_DESTRUCTIVE_SPIKE=1 bun test tests/spike/reset-password-session-purge.probe.test.ts
+const runDestructiveProbe = process.env.RIGGING_RUN_DESTRUCTIVE_SPIKE === '1'
+
+describe.skipIf(!runDestructiveProbe)('AUTH-11 reset-password session purge probe', () => {
   test('records BetterAuth 1.6.5 reset-password session retention behavior', async () => {
     const { db, sql } = createDbClient({ DATABASE_URL })
 

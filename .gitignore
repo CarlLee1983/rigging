@@ -29,3 +29,6 @@ Thumbs.db
 # `biome check .` via useIgnoreFile; the contract test opts in per-file via
 # --vcs-use-ignore-file=false.
 tests/biome-contract/**/*-violation.ts
+
+#dbcli
+.dbcli

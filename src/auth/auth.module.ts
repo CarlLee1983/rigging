@@ -63,7 +63,7 @@ export function createAuthModule(deps: AuthModuleDeps) {
   const revokeApiKey = new RevokeApiKeyUseCase(identity)
 
   return new Elysia({ name: 'rigging/auth' })
-    .mount('/api/auth', auth.handler)
+    .mount('/', auth.handler)
     .use(authContextPlugin({ identity }))
     .use(
       authController({

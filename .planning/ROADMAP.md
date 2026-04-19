@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Stack lock、DDD 骨架、shared kernel、ADR 機制、AGENTS.md 就位 (completed 2026-04-19)
 - [x] **Phase 2: App Skeleton** - Elysia root app、全域 plugin、`/health`、Swagger,驗證 DDD 四層模板 (completed 2026-04-19)
-- [ ] **Phase 3: Auth Foundation** - BetterAuth + 雙軌 AuthContext macro + Runtime Guards + CVE regression suite(atomic,不可拆)
+- [x] **Phase 3: Auth Foundation** - BetterAuth + 雙軌 AuthContext macro + Runtime Guards + CVE regression suite(atomic,不可拆) (completed 2026-04-19)
 - [ ] **Phase 4: Demo Domain** - Agent 元專案 dogfood(Agent / PromptVersion / EvalDataset),驗證 feature module factory 複用性
 - [ ] **Phase 5: Quality Gate** - Unit / integration / e2e tests、GitHub Actions CI、README、quickstart、architecture docs
 
@@ -72,11 +72,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Regression test suite 通過:CVE-2025-61928 attack pattern(非擁有者嘗試建 API Key → 403)、AuthContext bypass(不掛 auth plugin 啟 app 則全 protected route 回 401 而非 500)、timing-safe API Key compare、password reset invalidates other sessions、API Key hashed not plaintext
 **Plans:** 5 plans
 **Plan list**:
-- [ ] 03-01-PLAN.md — BetterAuth schema-gen spike + Drizzle migration + AUTH-11 session-fixation probe + drift contract (D-17, [BLOCKING] schema push)
-- [ ] 03-02-PLAN.md — Auth domain (AuthContext + ALLOWED_SCOPES + errors + Runtime Guard factory) + 4 application ports (AUX-01/02/05)
-- [ ] 03-03-PLAN.md — BetterAuth identity-service adapter (D-10 timing align) + Drizzle repos + 7 use cases (AUTH-15/D-04/D-22) + ConsoleEmailAdapter
-- [ ] 03-04-PLAN.md — Presentation macro + 3 controllers + createAuthModule wire + 14 integration/regression tests (CVE + AUX-06/07 + timing + key-hash + session-fix)
-- [ ] 03-05-PLAN.md — 4 ADRs (0013/0014/0015/0016) + README index + Phase 3 exit gate (lint / typecheck / test / drizzle-check all green)
+- [x] 03-01-PLAN.md — BetterAuth schema-gen spike + Drizzle migration + AUTH-11 session-fixation probe + drift contract (completed 2026-04-19)
+- [x] 03-02-PLAN.md — Auth domain (AuthContext + ALLOWED_SCOPES + errors + Runtime Guard factory) + 4 application ports (completed 2026-04-19)
+- [x] 03-03-PLAN.md — BetterAuth identity-service adapter (D-10 timing align) + Drizzle repos + 7 use cases + ConsoleEmailAdapter (completed 2026-04-19)
+- [x] 03-04-PLAN.md — Presentation macro + 3 controllers + createAuthModule wire + 14 integration/regression tests (completed 2026-04-19)
+- [x] 03-05-PLAN.md — 4 ADRs (0013/0014/0015/0016) + README index + Phase 3 exit gate (completed 2026-04-19)
 **UI hint**: no
 
 ### Phase 4: Demo Domain
@@ -89,7 +89,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Rigging dogfoods 自己:開發者產生 API Key → Agent 拿 key 呼叫「查自己的 prompt 最新版本」endpoint 成功;系統驗證 `apiKey.userId === agent.ownerId`(跨 user 存取回 403)
   4. 只讀 scope 的 API Key 呼叫 write endpoint 必回 403(scope check 實測通過)
   5. Demo domain 完整走過 feature module factory pattern;若複用成本高(>3 次「要解釋 harness」事件)則已開 ADR 記錄 P1 template 設計債與調整方向
-**Plans**: TBD (estimate: 3-4 plans — agents domain + ports、infrastructure + schema + migrations、use cases + REST controllers + API Key agent endpoints、scope check + dogfood verification)
+**Plans:** 4 plans
+**Plan list**:
+- [ ] 04-01-PLAN.md — Domain + ports + schemas + migration + friction-log template (DEMO-01/02/03/06)
+- [ ] 04-02-PLAN.md — Mappers + Drizzle repositories + 13 use cases + unit tests (scope+ownership+retry)
+- [ ] 04-03-PLAN.md — TypeBox DTOs + 3 controllers + createAgentsModule + createApp wire + smoke test
+- [ ] 04-04-PLAN.md — 8 integration tests + ADR 0017 + friction-tally verifier + checkpoint (DEMO-04/05 + D-09/12)
 **UI hint**: no
 
 ### Phase 5: Quality Gate
@@ -114,7 +119,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-19 |
 | 2. App Skeleton | 3/3 | Complete | 2026-04-19 |
-| 3. Auth Foundation | 0/5 | Not started | - |
+| 3. Auth Foundation | 5/5 | Complete | 2026-04-19 |
 | 4. Demo Domain | 0/TBD | Not started | - |
 | 5. Quality Gate | 0/TBD | Not started | - |
 
@@ -134,4 +139,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 ---
 *Roadmap created: 2026-04-19*
-*Last updated: 2026-04-19 after Phase 3 planning (5 plans across 4 waves — 03-01 Wave 1 spike, 03-02 Wave 2 domain+ports, 03-03 Wave 3 infra+usecases, 03-04 Wave 4 presentation+regression, 03-05 Wave 4 ADRs+exit-gate)*
+*Last updated: 2026-04-19 after Phase 3 completion (UAT passed — full register→verify→login→logout flow + password reset + session invalidation all green; 122 tests pass, 0 fail)*

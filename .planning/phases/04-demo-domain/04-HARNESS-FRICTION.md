@@ -24,13 +24,7 @@ Tally is verified automatically by `.planning/phases/04-demo-domain/verify-frict
 
 ## Events
 
-<!--
-Each event is a single bullet, one line, ordered by time. Format:
-- [YYYY-MM-DD HH:MM] [P4-XX-PLAN] symptom: <一句話 zh-TW> | workaround: <一句話 zh-TW> | structural: yes/no
 
-Example:
-- [2026-04-19 14:23] [04-02-PLAN] symptom: CreatePromptVersionUseCase 的 retry loop 需要讀 postgres-js PostgresError.code 但 port 層不能 import postgres | workaround: repository 捕獲並轉 null，use case 只看 null/non-null | structural: no
--->
 
 (No events yet)
 
