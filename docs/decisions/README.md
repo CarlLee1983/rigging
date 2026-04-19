@@ -18,6 +18,7 @@ See `0000-use-madr-for-adrs.md` for the MADR 4.0 template and workflow.
 | [0009](0009-rigidity-map.md) | Rigidity Map: three-tier strictness | accepted | 2026-04-19 | — |
 | [0010](0010-postgres-driver-postgres-js.md) | Postgres driver: postgres-js (NOT bun:sql) | accepted | 2026-04-19 | — |
 | [0011](0011-resolver-precedence-apikey-over-cookie.md) | Resolver precedence: API Key over cookie | accepted | 2026-04-19 | — |
+| [0012](0012-global-plugin-ordering.md) | Global plugin ordering for the Elysia root app | accepted | 2026-04-19 | — |
 
 ## Workflow
 
