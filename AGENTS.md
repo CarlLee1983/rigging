@@ -1,3 +1,17 @@
+<a id="ai-agent-onboarding"></a>
+
+# AGENTS.md
+
+> AI Agent 接手本專案前必讀 / AI Agent Onboarding
+
+1. **[Core Value + Why Rigging](#project)** — 1 分鐘：harness engineering 是什麼（見下方 Project 區塊）
+2. **[Rigidity Map (必嚴格 / 可 ADR 逃生 / 純約定)](#rigging-rigidity-map--ai-agent-接手本專案前必讀)** — 2 分鐘：三級嚴格度決定你能動什麼
+3. **[Anti-features (禁止提議擴張)](#anti-features-do-not-propose-extending)** — 1 分鐘：哪些事 Rigging v1 不做
+4. **[GSD workflow role](#gsd-workflow-enforcement)** — 本檔的 GSD 區塊如何運作
+5. **[Further reading](#further-reading)** — [README.md](README.md) · [docs/architecture.md](docs/architecture.md) · [docs/decisions/](docs/decisions/README.md)
+
+---
+
 <!-- GSD:project-start source:PROJECT.md -->
 ## Project
 
@@ -194,7 +208,7 @@ Do not make direct repo edits outside a GSD workflow unless the user explicitly 
 <!-- GSD:workflow-end -->
 
 <!-- RIGGING:rigidity-map-start source:docs/decisions/0009-rigidity-map.md -->
-## Rigging Rigidity Map (AI Agent: read this first)
+## Rigging Rigidity Map — AI Agent 接手本專案前必讀
 
 Rigging uses a three-tier strictness model. Check the tier before proposing a change.
 
@@ -267,3 +281,13 @@ If a user asks to add any of the above, respond with:
 > Profile not yet configured. Run `/gsd-profile-user` to generate your developer profile.
 > This section is managed by `generate-claude-profile` -- do not edit manually.
 <!-- GSD:profile-end -->
+
+---
+
+## Further reading
+
+- [README.md](README.md) — Core Value + Why Rigging + Stack + What NOT Included
+- [docs/quickstart.md](docs/quickstart.md) — 10-min two-path dogfood (session + API Key)
+- [docs/architecture.md](docs/architecture.md) — DDD layering, AuthContext macro, dual identity (with mermaid diagrams)
+- [docs/decisions/](docs/decisions/README.md) — 19 ADRs in MADR 4.0 format
+- [.planning/PROJECT.md](.planning/PROJECT.md) — Core Value + Constraints + v1 Out of Scope
