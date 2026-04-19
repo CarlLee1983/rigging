@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 complete (3/3 plans) — createApp assembly + ADR 0012 + 7 integration tests shipped; all 4 WEB-* requirements exercised end-to-end
-last_updated: "2026-04-19T01:23:38Z"
-last_activity: 2026-04-19 -- Plan 02-03 committed (3 atomic commits 60d4b01, 53023a2, 51fd66f)
+stopped_at: Phase 3 context gathered — 25 decisions across 4 areas (Scope design / Resolver precedence / BetterAuth 整合 / API Key lifecycle). Ready for $gsd-plan-phase 3.
+last_updated: "2026-04-19T10:50:00Z"
+last_activity: 2026-04-19 -- Phase 3 CONTEXT.md + DISCUSSION-LOG.md committed (cfb226a)
 progress:
   total_phases: 5
   completed_phases: 2
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-18)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
-**Current focus:** Phase 02 — App Skeleton
+**Current focus:** Phase 03 — Auth Foundation (context gathered, ready for planning)
 
 ## Current Position
 
-Phase: 02 (App Skeleton) — COMPLETE (3/3 plans shipped)
-Plan: 3 of 3 (02-01, 02-02, 02-03 complete)
-Status: Phase 02 complete; ready for Phase 03 (Auth Foundation)
+Phase: 03 (Auth Foundation) — CONTEXT gathered (25 decisions locked)
+Plan: 0 of TBD (estimated 5 plans per ROADMAP)
+Status: Discussion complete; ready for $gsd-plan-phase 3
 Last activity: 2026-04-19 -- Plan 02-03 committed (3 atomic commits)
 
 Progress: [██████████] 100%
@@ -82,8 +82,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T01:23:38Z
-Stopped at: Plan 02-03 complete — Phase 2 App Skeleton shipped end-to-end: createApp(config, deps): Elysia synchronous factory + ADR 0012 (canonical plugin ordering) + main.ts real wire + 7 integration tests via real createApp (no hand-rewired chain). 66 tests pass + 10 contract tests pass; all 4 WEB-* requirements (WEB-01/02/03/04) now satisfied via at least one integration test.
-Resume file: —
-Next: /gsd-transition (Phase 2 → Phase 3) then /gsd-research-phase 3 to run the three recommended spikes (BetterAuth schema gen × Elysia 1.4.28 compatibility, API Key vs cookie resolver precedence, password reset session invalidation) before planning Phase 3 (Auth Foundation atomic).
-All Phase 2 ROADMAP success criteria satisfied: (1) /health 200/503 end-to-end; (2) /swagger served; (3) structured JSON logs with requestId; (4) DomainError → mapped HTTP status via global error handler.
+Last session: 2026-04-19T10:50:00Z
+Stopped at: Phase 3 Auth Foundation — CONTEXT gathered (25 decisions locked across 4 areas). Interactive discussion: Scope design (8 decisions) / Resolver precedence (4) / BetterAuth 整合 surface (6) / API Key lifecycle (7). All decisions selected Recommended options and cross-consistent.
+Resume file: .planning/phases/03-auth-foundation/03-CONTEXT.md
+Next: $gsd-plan-phase 3 — plan first emphasis on Plan 03-01 BetterAuth schema-gen spike (D-17: standalone spike to derisk Pitfall #5446 before committing auth domain / ports code). Other plans per ROADMAP estimate: auth domain + ports / auth infrastructure (repos + adapters + ConsoleEmailAdapter) / use cases (register / verify / reset / API Key CRUD) / authContext plugin + macro + resolver + Runtime Guards + regression tests.
+Decisions commit: cfb226a (docs(03): capture phase 3 auth-foundation context).
