@@ -56,7 +56,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 3 plans
 **Plan list**:
 - [x] 02-01-PLAN.md — Shared Drizzle+postgres-js DB client + 4 global plugins (requestLogger / cors / errorHandler / swagger) + unit tests (completed 2026-04-19, commits a5981c6/59d3bb4/8447384)
-- [ ] 02-02-PLAN.md — /health DDD four-layer walkthrough (domain value + application port/usecase + Drizzle adapter + controller + feature module factory)
+- [x] 02-02-PLAN.md — /health DDD four-layer walkthrough (domain value + application port/usecase + Drizzle adapter + controller + feature module factory) (completed 2026-04-19, commits 2a7d828/c03fb5c/1919d61)
 - [ ] 02-03-PLAN.md — createApp assembly + main.ts wire + ADR 0012 canonical plugin ordering + integration smoke test
 **UI hint**: no
 
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-19 |
-| 2. App Skeleton | 1/3 | Executing | - |
+| 2. App Skeleton | 2/3 | Executing | - |
 | 3. Auth Foundation | 0/TBD | Not started | - |
 | 4. Demo Domain | 0/TBD | Not started | - |
 | 5. Quality Gate | 0/TBD | Not started | - |
