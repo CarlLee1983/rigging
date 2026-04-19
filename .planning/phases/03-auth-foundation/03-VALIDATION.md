@@ -1,9 +1,10 @@
 ---
 phase: 3
 slug: auth-foundation
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
+approval: approved 2026-04-19
 created: 2026-04-19
 ---
 
