@@ -3,6 +3,7 @@ import type { AgentId, PromptVersion, PromptVersionId } from '../../domain'
 export interface CreatePromptVersionCommand {
   readonly id: PromptVersionId
   readonly agentId: AgentId
+  readonly version: number
   readonly content: string
   readonly createdAt: Date
 }
