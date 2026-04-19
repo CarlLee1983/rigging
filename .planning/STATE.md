@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 Plan 02-02 完成 — /health DDD four-layer walkthrough shipped, 9 unit tests (usecase + drizzle adapter + controller) + Rigidity Tier 1 intact
-last_updated: "2026-04-19T01:14:32Z"
-last_activity: 2026-04-19 -- Plan 02-02 committed (3 atomic commits 2a7d828, c03fb5c, 1919d61)
+stopped_at: Phase 2 complete (3/3 plans) — createApp assembly + ADR 0012 + 7 integration tests shipped; all 4 WEB-* requirements exercised end-to-end
+last_updated: "2026-04-19T01:23:38Z"
+last_activity: 2026-04-19 -- Plan 02-03 committed (3 atomic commits 60d4b01, 53023a2, 51fd66f)
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 7
-  percent: 88
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -25,18 +25,18 @@ See: .planning/PROJECT.md (updated 2026-04-18)
 
 ## Current Position
 
-Phase: 02 (App Skeleton) — EXECUTING
-Plan: 3 of 3 (02-01, 02-02 complete)
-Status: Executing Phase 02
-Last activity: 2026-04-19 -- Plan 02-02 committed (3 atomic commits)
+Phase: 02 (App Skeleton) — COMPLETE (3/3 plans shipped)
+Plan: 3 of 3 (02-01, 02-02, 02-03 complete)
+Status: Phase 02 complete; ready for Phase 03 (Auth Foundation)
+Last activity: 2026-04-19 -- Plan 02-03 committed (3 atomic commits)
 
-Progress: [████████░░] 88%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: adopted (plans executed out-of-band, committed atomically 2026-04-19)
 - Total execution time: —
 
@@ -45,13 +45,14 @@ Progress: [████████░░] 88%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1 — Foundation | 5 | — | — |
-| 2 — App Skeleton | 2 | ~23 min | ~12 min |
+| 2 — App Skeleton | 3 | ~27 min | ~9 min |
 
 **Recent Trend:**
 
+- Plan 02-03: createApp(config, deps) synchronous factory + ADR 0012 (canonical plugin ordering) + main.ts wire + 7 integration tests via REAL createApp (no hand-rewired chain) — all 4 WEB-* requirements exercised end-to-end; 3 atomic commits (60d4b01, 53023a2, 51fd66f); 66 tests pass + 10 contract tests pass
 - Plan 02-02: /health DDD four-layer walkthrough (domain value + IDbHealthProbe port + CheckHealthUseCase + DrizzleDbHealthProbe w/ AbortController + healthController + createHealthModule factory) + 9 unit tests — all green, 3 atomic commits (2a7d828, c03fb5c, 1919d61)
 - Plan 02-01: shared Drizzle+postgres-js client + 4 global plugins (requestLogger/cors/errorHandler/swagger) + http-error shape + 8 unit tests — all green, 3 atomic commits (a5981c6, 59d3bb4, 8447384)
-- Last 7 plans: 01-01..01-05 + 02-01 + 02-02 all green
+- Last 8 plans: 01-01..01-05 + 02-01..02-03 all green
 
 *Updated after each plan completion*
 
@@ -68,6 +69,7 @@ Recent decisions affecting current work:
 - Phase 3 atomic：BetterAuth + 雙軌 AuthContext + Runtime Guards + CVE regression 不可拆
 - Plan 02-01 deviations: (a) CORS `origin: true` 取代 callback — `@elysiajs/cors@1.4.1` `Origin` 型別為 `(context) => boolean | void`，`true` 同樣 echo Origin + credentials 行為（dist/index.mjs L58-65）；(b) pino options 條件式組裝以避開 `exactOptionalPropertyTypes`；(c) onError `ctx` 以 defensive read 取 `requestId`（跨 plugin derive 不反映至型別）
 - Plan 02-02 decisions: (a) /health domain 四層 template 正式落地，framework-free 由 Biome noRestrictedImports + `test:contract` 雙重 enforce；(b) 層層防線 503：Drizzle adapter 吞所有錯誤 → `'down'`，controller try/catch 為 belt-and-suspenders（port contract 仍允許未來 adapter reject）；(c) Adapter 用 `Pick<DrizzleDb, 'execute'>` 構造，測試可傳 fake 無需起 Drizzle 真連線；(d) Controller catch-path inline 組 body（不呼叫 `makeHealthStatus`）因 clock 未在 catch scope，兩處 shape mirror 但各僅一行；(e) Feature module factory `createHealthModule({ db, probe?, clock? })` 為 Phase 3+ 模板
+- Plan 02-03 decisions: (a) `createApp(config, deps?): Elysia` 同步回傳（非 Promise）——D-05 reconciled，main.ts 直線執行不需 await，啟動時不 pre-warm DB；(b) AppDeps `{ db?, probe? }` 在 exactOptionalPropertyTypes: true 下以 conditional spread 傳給 HealthModuleDeps（省略 key 而非傳 undefined）；(c) 7 個 integration tests 呼叫真的 createApp（不 hand-rewire plugin chain）——ADR 0012 ordering 一旦被改，test 5 (body.error.requestId === x-request-id header) 立即失敗；(d) ADR 0012 accepted 並 index 進 README 作為 Rigidity Tier 2 「plugin ordering 可 ADR 逃生」的具體參照；(e) test 7 用 runtime `'then' in maybeApp` 檢查 createApp 同步性，不用 @ts-expect-error（Elysia 型別無 .then，directive 反而會被視為 unused suppression）
 
 ### Pending Todos
 
@@ -80,8 +82,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T01:14:32Z
-Stopped at: Plan 02-02 complete — /health DDD four-layer feature + 9 unit tests (3 usecase + 3 adapter + 3 controller) all green; Rigidity Tier 1 intact
-Resume file: .planning/phases/02-app-skeleton/02-03-PLAN.md
-Next: /gsd-execute-phase 2 --auto to continue with Plan 02-03 (createApp assembly + ADR 0012 + main.ts wire + integration smoke test)
-WEB-02 requirement satisfied by Plan 02-02 (/health end-to-end including DB-down → 503 and timeout handling); WEB-01/03/04 checkboxes still deferred to Plan 02-03 where createApp actually assembles the plugins + health module into a listenable app.
+Last session: 2026-04-19T01:23:38Z
+Stopped at: Plan 02-03 complete — Phase 2 App Skeleton shipped end-to-end: createApp(config, deps): Elysia synchronous factory + ADR 0012 (canonical plugin ordering) + main.ts real wire + 7 integration tests via real createApp (no hand-rewired chain). 66 tests pass + 10 contract tests pass; all 4 WEB-* requirements (WEB-01/02/03/04) now satisfied via at least one integration test.
+Resume file: —
+Next: /gsd-transition (Phase 2 → Phase 3) then /gsd-research-phase 3 to run the three recommended spikes (BetterAuth schema gen × Elysia 1.4.28 compatibility, API Key vs cookie resolver precedence, password reset session invalidation) before planning Phase 3 (Auth Foundation atomic).
+All Phase 2 ROADMAP success criteria satisfied: (1) /health 200/503 end-to-end; (2) /swagger served; (3) structured JSON logs with requestId; (4) DomainError → mapped HTTP status via global error handler.

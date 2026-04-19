@@ -39,10 +39,10 @@ Requirements for initial Reference App release. Each maps to roadmap phases.
 
 ### Web Framework Skeleton
 
-- [ ] **WEB-01**: Elysia `^1.4.28` app 啟動並掛載全域 plugin（error handler / logger / CORS / Swagger）
-- [ ] **WEB-02**: `/health` endpoint 回 200 OK 且含 DB 連線健康檢查
-- [ ] **WEB-03**: `@elysiajs/swagger` 自動生成 OpenAPI 3.x spec，`/swagger` 可訪問
-- [ ] **WEB-04**: Request logger 使用 `@bogeychan/elysia-logger` + Pino 產結構化 JSON logs（含 request id、duration、status）
+- [x] **WEB-01**: Elysia `^1.4.28` app 啟動並掛載全域 plugin（error handler / logger / CORS / Swagger）
+- [x] **WEB-02**: `/health` endpoint 回 200 OK 且含 DB 連線健康檢查
+- [x] **WEB-03**: `@elysiajs/swagger` 自動生成 OpenAPI 3.x spec，`/swagger` 可訪問
+- [x] **WEB-04**: Request logger 使用 `@bogeychan/elysia-logger` + Pino 產結構化 JSON logs（含 request id、duration、status）
 
 ### Authentication — Foundation
 
@@ -192,10 +192,10 @@ Which phases cover which requirements. Per-requirement mapping confirmed at road
 | ADR-05 | Phase 1 | Pending |
 | AGM-01 | Phase 1 | Pending |
 | AGM-02 | Phase 1 | Pending |
-| WEB-01 | Phase 2 | Pending |
-| WEB-02 | Phase 2 | Pending |
-| WEB-03 | Phase 2 | Pending |
-| WEB-04 | Phase 2 | Pending |
+| WEB-01 | Phase 2 | Complete |
+| WEB-02 | Phase 2 | Complete |
+| WEB-03 | Phase 2 | Complete |
+| WEB-04 | Phase 2 | Complete |
 | AUTH-01 | Phase 3 | Pending |
 | AUTH-02 | Phase 3 | Pending |
 | AUTH-03 | Phase 3 | Pending |

@@ -17,8 +17,8 @@ Rigging v1 交付一個 opinionated、API-first 的 TypeScript backend Reference
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Stack lock、DDD 骨架、shared kernel、ADR 機制、AGENTS.md 就位
-- [ ] **Phase 2: App Skeleton** - Elysia root app、全域 plugin、`/health`、Swagger，驗證 DDD 四層模板
+- [x] **Phase 1: Foundation** - Stack lock、DDD 骨架、shared kernel、ADR 機制、AGENTS.md 就位 (completed 2026-04-19)
+- [x] **Phase 2: App Skeleton** - Elysia root app、全域 plugin、`/health`、Swagger，驗證 DDD 四層模板 (completed 2026-04-19)
 - [ ] **Phase 3: Auth Foundation** - BetterAuth + 雙軌 AuthContext macro + Runtime Guards + CVE regression suite（atomic，不可拆）
 - [ ] **Phase 4: Demo Domain** - Agent 元專案 dogfood（Agent / PromptVersion / EvalDataset），驗證 feature module factory 複用性
 - [ ] **Phase 5: Quality Gate** - Unit / integration / e2e tests、GitHub Actions CI、README、quickstart、architecture docs
@@ -57,7 +57,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plan list**:
 - [x] 02-01-PLAN.md — Shared Drizzle+postgres-js DB client + 4 global plugins (requestLogger / cors / errorHandler / swagger) + unit tests (completed 2026-04-19, commits a5981c6/59d3bb4/8447384)
 - [x] 02-02-PLAN.md — /health DDD four-layer walkthrough (domain value + application port/usecase + Drizzle adapter + controller + feature module factory) (completed 2026-04-19, commits 2a7d828/c03fb5c/1919d61)
-- [ ] 02-03-PLAN.md — createApp assembly + main.ts wire + ADR 0012 canonical plugin ordering + integration smoke test
+- [x] 02-03-PLAN.md — createApp assembly + main.ts wire + ADR 0012 canonical plugin ordering + integration smoke test (completed 2026-04-19, commits 60d4b01/53023a2/51fd66f)
 **UI hint**: no
 
 ### Phase 3: Auth Foundation
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-04-19 |
-| 2. App Skeleton | 2/3 | Executing | - |
+| 2. App Skeleton | 3/3 | Complete | 2026-04-19 |
 | 3. Auth Foundation | 0/TBD | Not started | - |
 | 4. Demo Domain | 0/TBD | Not started | - |
 | 5. Quality Gate | 0/TBD | Not started | - |
