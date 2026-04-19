@@ -50,7 +50,9 @@ Phase 2 在 Foundation 骨架之上掛起 **Elysia root app + 全域橫切 plugi
   - `request-logger.plugin.ts` — pino + elysia-logger + requestId derive
   - `cors.plugin.ts` — `@elysiajs/cors` wrapper（policy 可配）
   - `swagger.plugin.ts` — `@elysiajs/swagger` wrapper（security schemes pre-wired）
-- **D-05 (Assembly point)** — `src/bootstrap/app.ts` 是唯一組裝點（`createApp(config): Promise<Elysia>`）
+- **D-05 (Assembly point)** — `src/bootstrap/app.ts` 是唯一組裝點（`createApp(config, deps): Elysia`）
+  - Synchronous factory — DB connection probe happens at first `/health` request, not at startup. See `<specifics>` and ADR 0012 consequence section.
+  - `deps: AppDeps` shape allows tests to inject a stub `db` and/or `probe` override without re-wiring the plugin chain; production boot uses defaults derived from `config.DATABASE_URL`.
   - Feature module `.use()` 寫在 bootstrap（P2 只掛 healthModule，P3+ 加 authModule / agentsModule）
 - **D-06 (Ordering rules — canonical)**：
   ```
@@ -58,7 +60,7 @@ Phase 2 在 Foundation 骨架之上掛起 **Elysia root app + 全域橫切 plugi
     .use(requestLoggerPlugin)   // 1. 最先 — 產生 requestId，後續 plugin 都能引用
     .use(corsPlugin)            // 2. CORS 先於 route handler，預flight 處理
     .use(errorHandlerPlugin)    // 3. onError 掛根、global scope，攔所有下游 throw
-    .use(swaggerPlugin)         // 4. Swagger 自身 routes 不走 auth，最後掛位
+    .use(swaggerPlugin)         // 4. Swagger 自身 routes 不走 auth,最後掛位
     .use(createHealthModule(shared))  // 5. Feature modules
   ```
   - **Why this order:**
@@ -182,7 +184,7 @@ Phase 2 在 Foundation 骨架之上掛起 **Elysia root app + 全域橫切 plugi
 - **Biome rule: Application/Presentation 不可 import `domain/internal/**`**（P1 D-11，D-16 之前配套）
 
 ### Integration Points
-- **`src/main.ts`** — 目前是 stub（P1 D-06）；P2 改為 `const app = await createApp(loadConfig()); app.listen(config.PORT)`
+- **`src/main.ts`** — 目前是 stub（P1 D-06）；P2 改為 `const app = createApp(loadConfig()); app.listen(config.PORT)`（synchronous, per D-05）
 - **`src/bootstrap/app.ts`** — P2 新增，未來 P3 加 `authModule` / P4 加 `agentsModule` 都 `.use()` 在此
 - **`src/shared/infrastructure/db/client.ts`** — P2 新增的 Drizzle client factory；P3 的 BetterAuth drizzle-adapter + repos 會 inject 此 client
 - **`src/shared/presentation/plugins/`** — P2 新增的橫切 plugin 目錄；P3 會加 `auth-context.plugin.ts`（但屬 `src/auth/presentation/plugins/` 比較對）
@@ -201,7 +203,7 @@ Phase 2 在 Foundation 骨架之上掛起 **Elysia root app + 全域橫切 plugi
 - **`src/health/` 的 domain 層即使只有 `HealthStatus` value object 也必須 ship** — 這是 P2 的教學價值；下游 agent 看到「health 這麼 trivial 的 feature 都有 domain 層」就知道 P3+ 的 feature 更該遵守
 - **Swagger info.version 動態讀 package.json** — `import pkg from '../../package.json' with { type: 'json' }`，Bun 原生支援 import attributes
 - **ADR 0012 的 Decision Drivers 段** — 必列「避免 Pitfall #4 cascade」「提供 P3+ plugin 加入的 canonical 位置」「順序改動 = Plugin 生命週期改動，須 ADR 而非 PR-only 批准」三項
-- **`createApp(config)` 必非 async-lazy-init** — P2 不做 DB 連線 pre-warm（讓 healthcheck 自行驗）；`createApp` 回 `Elysia`（非 Promise<Elysia>）；`main.ts` 呼叫 `.listen()` 才開 listen
+- **`createApp(config)` 必非 async-lazy-init** — P2 不做 DB 連線 pre-warm（讓 healthcheck 自行驗）；`createApp(config, deps)` 回 `Elysia`（非 Promise<Elysia>）；`main.ts` 呼叫 `.listen()` 才開 listen。此為 D-05 的正本描述——CONTEXT `<decisions>` 段已同步採用 synchronous 簽名，ADR 0012 consequence 段亦須記錄此決策。
 - **`/health` 不套 `security` Swagger 標記**（D-15）— 明示 operational route 不需 auth；P3 才加其他 route 的 `security`
 - **redact paths 用 pino 的 path syntax**（D-11）— `req.headers.cookie` 非 `request.cookie`；寫錯會 silent miss，executor 必查 pino docs 驗證
 
