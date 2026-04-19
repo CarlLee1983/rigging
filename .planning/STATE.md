@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
+status: ready_to_plan
 stopped_at: ~
-last_updated: "2026-04-19T15:09:24.000Z"
-last_activity: 2026-04-19 -- Phase 04 executed (04-01..04-04); tests + ADR 0017 + friction verifier
+last_updated: "2026-04-19T15:27:00.000Z"
+last_activity: 2026-04-19 -- Phase 04 UAT complete (4/4 passed); summaries backfilled + roadmap/state transitioned
 progress:
   total_phases: 5
   completed_phases: 4
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-18)
 
 ## Current Position
 
-Phase: 04 (Demo Domain) — Complete (04-01..04-04)
-Plan: 4 of 4
-Status: Integration suite green; ADR 0017 + friction tally verifier; destructive spike probe opt-in via RIGGING_RUN_DESTRUCTIVE_SPIKE
-Last activity: 2026-04-19 -- Phase 04 execute-phase finished (demo domain + agents API + regression fixes)
+Phase: 05 (Quality Gate) — Not started
+Plan: Not started
+Status: Ready to plan — Phase 04 closed via UAT (4/4 passed): cold start + bun test + Swagger + friction tally verifier
+Last activity: 2026-04-19 -- Phase 04 UAT complete; summaries 04-01..04-04 backfilled; ROADMAP Phase 4 [x] marked
 
 Progress: [████████░░] 80%
 
@@ -77,13 +77,14 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 3 建議先觸發 `/gsd-research-phase` 跑三件 spike：BetterAuth schema generation × Elysia 1.4.28 相容性、API Key vs cookie resolver precedence、password reset session invalidation 行為
-- Phase 4 EvalDataset entity shape 需在 planning 階段 light domain modeling + ADR
+- Phase 04 SECURITY review not yet run — $gsd-secure-phase 04 deferred; no $-SECURITY.md artifact for threat-mitigation audit. Relevant because Phase 04 ships auth-gated API routes + API Key verify path hardening.
+- Phase 04 commit 91eed76 bundled hardening scope beyond PLAN.md files_modified (auth.module / identity-service adapter / error-handler plugin / api-key repo / create-prompt-version retry budget 3→24). Recorded as "adopted scope expansion" in 04-04-SUMMARY.md Deviations.
+- Phase 04 EvalDataset entity shape resolved via ADR 0017 (jsonb immutable, no in-place mutation).
 
 ## Session Continuity
 
-Last session: 2026-04-19T06:11:33.511Z
-Stopped at: context exhaustion at 90% (2026-04-19)
+Last session: 2026-04-19T15:27:00.000Z
+Stopped at: Phase 04 closed, ready to plan Phase 05 (Quality Gate)
 Resume file: None
-Next: $gsd-plan-phase 3 — plan first emphasis on Plan 03-01 BetterAuth schema-gen spike (D-17: standalone spike to derisk Pitfall #5446 before committing auth domain / ports code). Other plans per ROADMAP estimate: auth domain + ports / auth infrastructure (repos + adapters + ConsoleEmailAdapter) / use cases (register / verify / reset / API Key CRUD) / authContext plugin + macro + resolver + Runtime Guards + regression tests.
-Decisions commit: cfb226a (docs(03): capture phase 3 auth-foundation context).
+Next: $gsd-plan-phase 5 — Quality Gate. Estimate 3-4 plans per ROADMAP: (1) unit + integration test coverage (incl. P3 regression suite consolidation); (2) e2e tests via bun:test + edenTreaty; (3) GitHub Actions CI (biome check / tsc / bun test / drizzle-kit generate --name=ci-drift); (4) README + quickstart.md + architecture.md + ADR index polish. Optionally run $gsd-secure-phase 04 first to close the deferred security review before starting P5.
+Decisions commit: d4c56e9 (docs(04): backfill SUMMARY.md for out-of-band phase execution), a02203b (test(04): complete UAT 4/4 passed).

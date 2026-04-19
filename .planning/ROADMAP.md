@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Stack lock、DDD 骨架、shared kernel、ADR 機制、AGENTS.md 就位 (completed 2026-04-19)
 - [x] **Phase 2: App Skeleton** - Elysia root app、全域 plugin、`/health`、Swagger,驗證 DDD 四層模板 (completed 2026-04-19)
 - [x] **Phase 3: Auth Foundation** - BetterAuth + 雙軌 AuthContext macro + Runtime Guards + CVE regression suite(atomic,不可拆) (completed 2026-04-19)
-- [ ] **Phase 4: Demo Domain** - Agent 元專案 dogfood(Agent / PromptVersion / EvalDataset),驗證 feature module factory 複用性
+- [x] **Phase 4: Demo Domain** - Agent 元專案 dogfood(Agent / PromptVersion / EvalDataset),驗證 feature module factory 複用性 (completed 2026-04-19)
 - [ ] **Phase 5: Quality Gate** - Unit / integration / e2e tests、GitHub Actions CI、README、quickstart、architecture docs
 
 ## Phase Details
@@ -91,10 +91,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Demo domain 完整走過 feature module factory pattern;若複用成本高(>3 次「要解釋 harness」事件)則已開 ADR 記錄 P1 template 設計債與調整方向
 **Plans:** 4 plans
 **Plan list**:
-- [ ] 04-01-PLAN.md — Domain + ports + schemas + migration + friction-log template (DEMO-01/02/03/06)
-- [ ] 04-02-PLAN.md — Mappers + Drizzle repositories + 13 use cases + unit tests (scope+ownership+retry)
-- [ ] 04-03-PLAN.md — TypeBox DTOs + 3 controllers + createAgentsModule + createApp wire + smoke test
-- [ ] 04-04-PLAN.md — 8 integration tests + ADR 0017 + friction-tally verifier + checkpoint (DEMO-04/05 + D-09/12)
+- [x] 04-01-PLAN.md — Domain + ports + schemas + migration + friction-log template (DEMO-01/02/03/06) (completed 2026-04-19, commits ae41a92/b71663a/7849f94/656a6d6)
+- [x] 04-02-PLAN.md — Mappers + Drizzle repositories + 13 use cases + unit tests (scope+ownership+retry) (completed 2026-04-19, commits 956bcf2/0ecf3e8/54c57fc)
+- [x] 04-03-PLAN.md — TypeBox DTOs + 3 controllers + createAgentsModule + createApp wire + smoke test (completed 2026-04-19, commit 618939b)
+- [x] 04-04-PLAN.md — 8 integration tests + ADR 0017 + friction-tally verifier + checkpoint (DEMO-04/05 + D-09/12) (completed 2026-04-19, commit 91eed76)
 **UI hint**: no
 
 ### Phase 5: Quality Gate
