@@ -19,6 +19,10 @@ See `0000-use-madr-for-adrs.md` for the MADR 4.0 template and workflow.
 | [0010](0010-postgres-driver-postgres-js.md) | Postgres driver: postgres-js (NOT bun:sql) | accepted | 2026-04-19 | — |
 | [0011](0011-resolver-precedence-apikey-over-cookie.md) | Resolver precedence: API Key over cookie | accepted | 2026-04-19 | — |
 | [0012](0012-global-plugin-ordering.md) | Global plugin ordering for the Elysia root app | accepted | 2026-04-19 | — |
+| [0013](0013-api-key-storage-hash-plus-index.md) | API Key storage: prefix + hash + indexed | accepted | 2026-04-19 | — |
+| [0014](0014-api-key-hashing-sha256.md) | API Key hashing: SHA-256 explicit | accepted | 2026-04-19 | — |
+| [0015](0015-rate-limit-memory-v1-persistent-v2.md) | Rate limit: memory store v1 / persistent v2 | accepted | 2026-04-19 | — |
+| [0016](0016-betterauth-defaults-trust.md) | Trust BetterAuth session cookie defaults + AUTH-11 | accepted | 2026-04-19 | — |
 
 ## Workflow
 
