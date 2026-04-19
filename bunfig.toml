@@ -1,2 +1,17 @@
 [test]
-# P1 zero-config; Phase 5 may add coverage thresholds
+# Phase 5: enable coverage by default; per-path enforcement via scripts/coverage-gate.ts
+coverage = true
+coverageReporter = ["text", "lcov"]
+coveragePathIgnorePatterns = [
+  "tests/",
+  "node_modules/",
+  "drizzle/",
+  "scripts/",
+  "src/**/infrastructure/**",
+  "src/**/presentation/**",
+  "src/bootstrap/**",
+  "src/main.ts",
+  "src/types/**",
+]
+# NOTE: no `coverageThreshold` here — Bun's threshold is single project-wide value;
+# per-tier 80% gate is enforced by scripts/coverage-gate.ts (run after `bun test --coverage`).

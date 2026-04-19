@@ -46,7 +46,7 @@ describe('[Regression T-03-401-BODY] uniform 401 body shape', () => {
     const bodies = [
       await get401Body({}),
       await get401Body({ headers: { 'x-api-key': 'not-a-rig-key' } }),
-      await get401Body({ headers: { 'x-api-key': `rig_live_${'X'.repeat(43)}` } }),
+      await get401Body({ headers: { 'x-api-key': `rig_live_${'X'.repeat(64)}` } }),
       await get401Body({ headers: { 'x-api-key': revokedRawKey } }),
       await get401Body({ headers: { 'x-api-key': expiredRawKey } }),
       await get401Body({ headers: { cookie: 'better-auth.session_token=bogus' } }),

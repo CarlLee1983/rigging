@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import { createHash, timingSafeEqual } from 'node:crypto'
 import type { IApiKeyRepository } from '../../application/ports/api-key-repository.port'
 import type { IIdentityService } from '../../application/ports/identity-service.port'
@@ -5,8 +6,14 @@ import type { AuthContext, UserId } from '../../domain'
 import type { AuthInstance } from './auth-instance'
 
 const API_KEY_PREFIX = 'rig_live_'
-const RAW_KEY_LENGTH = 52
+/** Total raw key length from BetterAuth api-key plugin (prefix + secret segment). */
+const RAW_KEY_LENGTH = 73
 const DUMMY_HASH = createHash('sha256').update('dummy').digest()
+
+/** BetterAuth stores SHA-256(rawKey) as base64url (43 chars), not hex. */
+function sha256StorageKey(rawKey: string): string {
+  return Buffer.from(createHash('sha256').update(rawKey).digest()).toString('base64url')
+}
 
 function isAscii(value: string): boolean {
   for (let index = 0; index < value.length; index += 1) {
@@ -40,14 +47,14 @@ export class BetterAuthIdentityService implements IIdentityService {
     ) {
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
       // Align DB round-trips with the valid-format miss path (findByKeyHash + findByPrefix).
-      await this.apiKeys.findByKeyHash('0'.repeat(64))
+      await this.apiKeys.findByKeyHash('0'.repeat(43))
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
       await this.apiKeys.findByPrefix('xxxxxxxx')
       return null
     }
 
-    const digestHex = createHash('sha256').update(rawKey).digest('hex')
-    const row = await this.apiKeys.findByKeyHash(digestHex)
+    const storageKey = sha256StorageKey(rawKey)
+    const row = await this.apiKeys.findByKeyHash(storageKey)
     if (!row) {
       timingSafeEqual(DUMMY_HASH, DUMMY_HASH)
       await this.apiKeys.findByPrefix('xxxxxxxx')

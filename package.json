@@ -14,8 +14,12 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
-    "test": "bun scripts/ensure-agent-schema.ts && bun test",
-    "test:contract": "bun test tests/biome-contract tests/contract"
+    "test": "bun run db:migrate && bun test",
+    "test:contract": "bun test tests/biome-contract tests/contract",
+    "test:regression": "bun test tests/integration/auth/*.regression.test.ts",
+    "test:coverage": "bun test --coverage --coverage-reporter=lcov && bun run scripts/coverage-gate.ts",
+    "test:ci": "bun test --coverage --coverage-reporter=lcov",
+    "coverage:gate": "bun run scripts/coverage-gate.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.12",

@@ -4,6 +4,7 @@ import {
   DomainError,
   ForbiddenError,
   NotFoundError,
+  ResourceNotFoundError,
   UnauthorizedError,
   ValidationError,
 } from '@/shared/kernel/errors'
@@ -15,6 +16,7 @@ describe('DomainError hierarchy', () => {
     [ForbiddenError, 403, 'FORBIDDEN'],
     [NotFoundError, 404, 'NOT_FOUND'],
     [ConflictError, 409, 'CONFLICT'],
+    [ResourceNotFoundError, 404, 'RESOURCE_NOT_FOUND'],
   ] as const
 
   for (const [Ctor, status, code] of cases) {

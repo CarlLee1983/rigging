@@ -13,7 +13,7 @@ function makeIdentity(overrides?: Partial<Pick<FakeIdentity, 'createApiKey'>>): 
       calls.push(params)
       return {
         id: 'api-key-1',
-        rawKey: `rig_live_${'a'.repeat(43)}`,
+        rawKey: `rig_live_${'a'.repeat(64)}`,
         prefix: 'rig_live_',
         createdAt: new Date('2026-04-19T00:00:00.000Z'),
       }
@@ -79,7 +79,7 @@ describe('CreateApiKeyUseCase', () => {
     )
     expect(dto).toEqual({
       id: 'api-key-1',
-      key: `rig_live_${'a'.repeat(43)}`,
+      key: `rig_live_${'a'.repeat(64)}`,
       prefix: 'rig_live_',
       label: 'key',
       scopes: ['*'],

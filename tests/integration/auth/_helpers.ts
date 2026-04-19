@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import { createHash, randomBytes, randomUUID } from 'node:crypto'
 import { serializeSignedCookie } from 'better-call'
 import { Elysia } from 'elysia'
@@ -242,10 +243,10 @@ export async function insertTestApiKey(
   userId: string,
   opts: { scopes?: string[]; expiresAt?: Date | null } = {},
 ) {
-  const suffix = randomBytes(32).toString('base64url')
+  const suffix = randomBytes(48).toString('base64url')
   const rawKey = `rig_live_${suffix}`
   const prefix = rawKey.slice(0, 8)
-  const hash = createHash('sha256').update(rawKey).digest('hex')
+  const hash = Buffer.from(createHash('sha256').update(rawKey).digest()).toString('base64url')
   const id = randomUUID()
   const now = new Date().toISOString()
   const expiresAt = opts.expiresAt ? opts.expiresAt.toISOString() : null

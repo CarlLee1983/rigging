@@ -31,7 +31,7 @@ describe('[Regression AUX-04 / D-10] API key timing alignment', () => {
   test('1000-iteration latency: |t_malformed - t_valid_wrong_hash| / t_valid_wrong_hash < 0.2', async () => {
     const N = 1000
     const malformedKey = 'not-rig-format'
-    const validFormatWrongKey = `rig_live_${'X'.repeat(43)}`
+    const validFormatWrongKey = `rig_live_${'X'.repeat(64)}`
 
     for (let i = 0; i < 100; i += 1) {
       await harness.app.handle(

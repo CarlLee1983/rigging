@@ -16,9 +16,9 @@ function makeApiKeyRepo(rowsByHash: Map<string, ApiKeyRow> = new Map()) {
       lookupCount++
       return null
     },
-    async findByKeyHash(hex: string) {
+    async findByKeyHash(storage: string) {
       lookupCount++
-      return rowsByHash.get(hex) ?? null
+      return rowsByHash.get(storage) ?? null
     },
     async listByUserId() {
       return []
@@ -73,14 +73,14 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
   test('verifyApiKey valid prefix without row returns null', async () => {
     const repo = makeApiKeyRepo()
     const svc = new BetterAuthIdentityService(makeFakeAuth(), repo)
-    const ctx = await svc.verifyApiKey(`rig_live_${'a'.repeat(43)}`)
+    const ctx = await svc.verifyApiKey(`rig_live_${'a'.repeat(64)}`)
     expect(ctx).toBeNull()
     expect(repo.lookupCount).toBe(2)
   })
 
   test('verifyApiKey returns agent AuthContext when hash matches', async () => {
-    const rawKey = `rig_live_${'b'.repeat(43)}`
-    const hash = createHash('sha256').update(rawKey).digest('hex')
+    const rawKey = `rig_live_${'b'.repeat(64)}`
+    const hash = Buffer.from(createHash('sha256').update(rawKey).digest()).toString('base64url')
     const prefix = rawKey.slice(0, 8)
     const row: ApiKeyRow = {
       id: 'k-42',
@@ -106,8 +106,8 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
   })
 
   test('verifyApiKey returns null for revoked key', async () => {
-    const rawKey = `rig_live_${'c'.repeat(43)}`
-    const hash = createHash('sha256').update(rawKey).digest('hex')
+    const rawKey = `rig_live_${'c'.repeat(64)}`
+    const hash = Buffer.from(createHash('sha256').update(rawKey).digest()).toString('base64url')
     const prefix = rawKey.slice(0, 8)
     const row: ApiKeyRow = {
       id: 'k',
@@ -126,8 +126,8 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
   })
 
   test('verifyApiKey returns null for expired key', async () => {
-    const rawKey = `rig_live_${'d'.repeat(43)}`
-    const hash = createHash('sha256').update(rawKey).digest('hex')
+    const rawKey = `rig_live_${'d'.repeat(64)}`
+    const hash = Buffer.from(createHash('sha256').update(rawKey).digest()).toString('base64url')
     const prefix = rawKey.slice(0, 8)
     const row: ApiKeyRow = {
       id: 'k',
@@ -153,7 +153,7 @@ describe('BetterAuthIdentityService (D-03 / D-10 / D-11)', () => {
 
     const repo2 = makeApiKeyRepo()
     const svc2 = new BetterAuthIdentityService(makeFakeAuth(), repo2)
-    await svc2.verifyApiKey(`rig_live_${'z'.repeat(43)}`)
+    await svc2.verifyApiKey(`rig_live_${'z'.repeat(64)}`)
     expect(repo2.lookupCount).toBe(2)
   })
 })
