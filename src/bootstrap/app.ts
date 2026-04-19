@@ -1,4 +1,5 @@
 import { Elysia } from 'elysia'
+import { createAgentsModule } from '../agents/agents.module'
 import { createAuthModule } from '../auth/auth.module'
 import type { AuthInstance } from '../auth/infrastructure/better-auth/auth-instance'
 import type { IDbHealthProbe } from '../health/application/ports/db-health-probe.port'
@@ -57,6 +58,7 @@ export function createApp(config: Config, deps: AppDeps = {}) {
     .use(errorHandlerPlugin(logger))
     .use(swaggerPlugin())
     .use(createAuthModule(authDeps))
+    .use(createAgentsModule({ db, logger }))
     .use(createHealthModule(healthDeps))
 }
 
