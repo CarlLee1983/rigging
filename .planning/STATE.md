@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: ready_to_plan
-stopped_at: ~
-last_updated: "2026-04-19T15:27:00.000Z"
-last_activity: 2026-04-19 -- Phase 04 UAT complete (4/4 passed); summaries backfilled + roadmap/state transitioned
+stopped_at: "Phase 5 context gathered"
+last_updated: "2026-04-19T23:35:00.000Z"
+last_activity: 2026-04-19 -- Phase 05 CONTEXT gathered (interactive, 4 areas, 17 D-xx decisions); ready for $gsd-plan-phase 5
 progress:
   total_phases: 5
   completed_phases: 4
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-18)
 
 ## Current Position
 
-Phase: 05 (Quality Gate) — Not started
+Phase: 05 (Quality Gate) — Context gathered, ready to plan
 Plan: Not started
-Status: Ready to plan — Phase 04 closed via UAT (4/4 passed): cold start + bun test + Swagger + friction tally verifier
-Last activity: 2026-04-19 -- Phase 04 UAT complete; summaries 04-01..04-04 backfilled; ROADMAP Phase 4 [x] marked
+Status: Ready to plan — Phase 05 CONTEXT (17 D-xx decisions + plan structure estimate) committed as fdd4409
+Last activity: 2026-04-19 -- Phase 05 discuss-phase interactive session complete (4 areas × 3-4 Qs, all recommended options accepted); 05-CONTEXT.md + 05-DISCUSSION-LOG.md shipped
 
 Progress: [████████░░] 80%
 
@@ -83,8 +83,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T15:27:00.000Z
-Stopped at: Phase 04 closed, ready to plan Phase 05 (Quality Gate)
-Resume file: None
-Next: $gsd-plan-phase 5 — Quality Gate. Estimate 3-4 plans per ROADMAP: (1) unit + integration test coverage (incl. P3 regression suite consolidation); (2) e2e tests via bun:test + edenTreaty; (3) GitHub Actions CI (biome check / tsc / bun test / drizzle-kit generate --name=ci-drift); (4) README + quickstart.md + architecture.md + ADR index polish. Optionally run $gsd-secure-phase 04 first to close the deferred security review before starting P5.
-Decisions commit: d4c56e9 (docs(04): backfill SUMMARY.md for out-of-band phase execution), a02203b (test(04): complete UAT 4/4 passed).
+Last session: 2026-04-19T23:35:00.000Z
+Stopped at: Phase 05 context gathered (discuss-phase complete)
+Resume file: .planning/phases/05-quality-gate/05-CONTEXT.md
+Next: $gsd-plan-phase 5 — Quality Gate. CONTEXT 已鎖 17 條 D-xx 決策 + 估 4 plans：(05-01) 測試策略改造：package.json scripts + bunfig.toml coverage + scripts/coverage-gate.ts + 刪 scripts/ensure-agent-schema.ts + unit 補齊；(05-02) E2E 三條 journey（dogfood happy path / password-reset session isolation / cross-user 404）via bun:test + app.handle；(05-03) CI rewrite：3 parallel jobs + postgres services + migration drift via git status + coverage gate；(05-04) Docs ship：README narrative rewrite + docs/quickstart.md 兩條路徑 dogfood 物語 + docs/architecture.md prose+mermaid 三章 + AGENTS.md onboarding TOC + ADR 0018 testcontainers deviation + ADR index polish. Deferred：$gsd-secure-phase 04 獨立 out-of-band 動作。
+Decisions commit: fdd4409 (docs(05): capture phase context).
