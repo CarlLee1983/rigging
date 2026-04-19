@@ -964,32 +964,37 @@ it('API Key + cookie simultaneous ⇒ identityKind === "agent", no sessionId', a
 
 **Net:** Most HIGH-confidence claims cite Context7 / official docs or existing P1/P2 code. Two MEDIUM-risk items (A1, A2) are explicitly the targets of the Plan 03-01 spike.
 
-## Open Questions
+## Spike-Driven Decisions (Plan 03-01 closes) (RESOLVED)
 
 ### Q1: Should BetterAuth `apiKey` plugin's `prefix` config be set, or do we generate prefix manually?
 - What we know: BetterAuth `apiKey()` plugin accepts `prefix` config; D-19 locks `rig_live_` as the required format.
 - What's unclear: Does setting `apiKey({ prefix: 'rig_live_' })` make BetterAuth generate `rig_live_<43-chars>` natively, or must Rigging generate the raw key and pass it in?
 - Recommendation: Plan 03-01 spike verifies via one-shot `auth.api.createApiKey({ body: { prefix: 'rig_live_' } })` call; if generated key starts with `rig_live_`, done. If not, Rigging wraps the create endpoint to prepend prefix manually. Low-risk either way.
+- **RESOLVED (spike-driven):** Plan 03-01 Task 01 will run `bunx @better-auth/cli generate` and inspect emitted `api-key.schema.ts`; if plugin emits `prefix` natively (BetterAuth injects `rig_live_` into the generated raw key), use native. Else prepend manually in `identity-service.adapter.ts` `createApiKey` body (wrap the BetterAuth `{ key }` return with `API_KEY_PREFIX + key` if it arrives prefix-less). Closure point: Plan 03-01 `03-01-SUMMARY.md` records the observed shape + chosen path.
 
 ### Q2: Will BetterAuth `apiKey` plugin's built-in `permissions: {...}` conflict with Rigging's `scopes: string[]` shape (D-01/D-04)?
 - What we know: Context7 shows `auth.api.verifyApiKey({ body: { key, permissions: { ... } } })` takes object-shaped permissions; Rigging wants flat string array.
 - What's unclear: Does BetterAuth store `permissions` in its own schema field, or can Rigging store `scopes` in a sibling column via schema extension?
 - Recommendation: Plan 03-01 spike. Easiest path: use BetterAuth's metadata field (verified in Context7 `enableMetadata: true`) to store `{ scopes: ['*'] }`. Rigging's port `findByPrefix` reads from metadata. Rigging doesn't use BetterAuth's built-in `permissions` verify — Rigging's resolver does its own check per D-02 (use-case-layer scope check).
+- **RESOLVED:** Use the BetterAuth `metadata` field to store `{ scopes: string[] }` (confirmed by Context7 BetterAuth apiKey docs — `enableMetadata: true` on the plugin; metadata is serialized JSON on the row). Do NOT use the built-in `permissions` — it is an object-shaped RBAC construct intended for resource-action matrices and is overkill for v1's two-value vocabulary (D-01 `['*', 'read:*']`). Rigging's `ApiKeyMapper.toDomain` parses `row.metadata.scopes`; `CreateApiKeyUseCase` + `verifyApiKey` read/write this exclusively. v2 (TEN-02 RBAC) may migrate to `permissions` later — tracked by ADR supersede.
 
 ### Q3: When exactly does `auth.api.createApiKey` return the raw key plaintext?
 - What we know: Context7 confirms response contains `{ key: '<raw>', ApiKey: {...} }` (see Reference docs).
 - What's unclear: Is `key` the full `rig_live_<suffix>` or just the suffix? Is it returned once only (server does not log/persist raw)?
 - Recommendation: Plan 03-01 spike. Test: create key; inspect response; query DB to verify only hash stored.
+- **RESOLVED (spike-driven):** Plan 03-01 Task 01 verifies the actual output shape against BetterAuth 1.6.5. Contract: the `key` field returned by `auth.api.createApiKey` is the FULL `rig_live_<43chars>` string. If BetterAuth returns only the suffix (prefix-less key), prepend `API_KEY_PREFIX` inside `CreateApiKeyUseCase.execute` return mapping (or inside the adapter's `createApiKey` method, whichever is architecturally cleaner — adapter preferred since it hides the BetterAuth shape from the use case). Closure point: Plan 03-01 SUMMARY records the observed return shape + chosen compensation path (if any).
 
 ### Q4: Rate-limit hit log format — does BetterAuth expose a hook for rate-limit events, or must we sample DB table?
 - What we know: BetterAuth `rateLimit.storage: 'memory'` documented; in-process Map.
 - What's unclear: Is there an `onRateLimit` hook or do we attach via Elysia `.onError` catching 429?
 - Recommendation: Defer to planner — executor checks BetterAuth config surface; if hook exists, use it; otherwise `.onError` catching the 429 response and emitting `log.warn({ event: 'rate_limit_hit', ... })` in the error-handler plugin works as a fallback (D-16 acceptable).
+- **RESOLVED:** BetterAuth 1.6.5 does NOT expose an `onRateLimit` callback directly on the `rateLimit` config object. Two viable paths: (a) use `rateLimit.customRules` (documented) with a log.warn side effect via the storage layer, OR (b) wrap via Elysia `.onError` catching status 429 at `createAuthModule` level and emitting `log.warn({ event: 'rate_limit_hit', path, ip })` through pino. Prefer (b) for Phase 3 because D-16 only requires memory-store + log visibility (no DB-persisted counters); (b) keeps the rate-limit concern in the presentation-boundary error path where requestId is already attached. Implementation lands in Plan 03-04 Task 01 at the `createAuthModule` level — NOT a new ADR (tracked only by CONTEXT D-16).
 
 ### Q5: AUTH-08 "未驗證 email 之使用者嘗試特定受保護操作時回 403" — concrete endpoint list for v1?
 - What we know: CONTEXT deferred this to v1 extension point only — interface hook exists but no wire-up.
 - What's unclear: Which exact routes should enforce `requireEmailVerified` check in v1? None? `/api-keys`? `/me`?
 - Recommendation: None in v1 — ship the use-case-layer hook pattern (`if (!user.emailVerified) throw ForbiddenError('EMAIL_NOT_VERIFIED')`) but don't wire it to any route. P4 demo domain or v2 decides concrete routes.
+- **RESOLVED:** Phase 3 ships the INTERFACE hook only — `EmailNotVerifiedError` (Plan 03-02) exists and `RequireVerifiedEmail` guard/middleware (if any) is defined but is NOT wired to any route in P3. Phase 4 (demo domain) decides the concrete endpoint list when it lands. Consequence: `/me`, `/api-keys` CRUD, and BetterAuth's own mount routes all work for unverified-email users in v1. This matches CONTEXT's deferred list for AUTH-08 (interface-only v1 ship).
 
 ## Environment Availability
 
