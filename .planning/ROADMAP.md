@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: App Skeleton** - Elysia root app、全域 plugin、`/health`、Swagger,驗證 DDD 四層模板 (completed 2026-04-19)
 - [x] **Phase 3: Auth Foundation** - BetterAuth + 雙軌 AuthContext macro + Runtime Guards + CVE regression suite(atomic,不可拆) (completed 2026-04-19)
 - [x] **Phase 4: Demo Domain** - Agent 元專案 dogfood(Agent / PromptVersion / EvalDataset),驗證 feature module factory 複用性 (completed 2026-04-19)
-- [ ] **Phase 5: Quality Gate** - Unit / integration / e2e tests、GitHub Actions CI、README、quickstart、architecture docs
+- [x] **Phase 5: Quality Gate** - Unit / integration / e2e tests、GitHub Actions CI、README、quickstart、architecture docs (completed 2026-04-20)
 
 ## Phase Details
 
@@ -107,7 +107,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. 開 PR 觸發 `.github/workflows/ci.yml`:`biome check` / `tsc --noEmit` / `bun test` / `drizzle-kit generate --name=ci-drift` 四項全 pass;若 schema drift 則 CI fail
   4. `README.md` 首屏呈現 Core Value(harness engineering + AuthContext 強制邊界)而非 file layout;`docs/architecture.md` 摘要 DDD 分層 + AuthContext macro + 雙軌解析模式
   5. 「Looks Done But Isn't」checklist 全數 pass:ADR 索引實質 status、AGENTS.md 含「AI Agent 接手必讀」段、regression suite 可獨立執行、無 `@ts-ignore` 在 auth-critical 路徑
-**Plans**: TBD (estimate: 3-4 plans — unit + integration tests(含 regression suite)、e2e tests + `bun:test` + edenTreaty、GitHub Actions CI + migration drift、README + quickstart + architecture.md + ADR index polish)
+**Plans:** 4 plans
+**Plan list**:
+- [x] 05-01-PLAN.md — 測試基礎設施 + 16 個單元測試 + API Key hash 格式修正 (completed 2026-04-20, commit a50ead3)
+- [x] 05-02-PLAN.md — 三條 E2E user journey (dogfood / password-reset isolation / cross-user 404) (completed 2026-04-20, commit efa25e6)
+- [x] 05-03-PLAN.md — CI rewrite：3 parallel jobs + postgres service + coverage gate + migration drift (completed 2026-04-20, commit f546f2e)
+- [x] 05-04-PLAN.md — Docs ship：README + quickstart + architecture + ADR 0018 + AGENTS.md TOC (completed 2026-04-20, commits b404a1f→076fa9c)
 **UI hint**: no
 
 ## Progress
@@ -120,8 +125,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation | 5/5 | Complete | 2026-04-19 |
 | 2. App Skeleton | 3/3 | Complete | 2026-04-19 |
 | 3. Auth Foundation | 5/5 | Complete | 2026-04-19 |
-| 4. Demo Domain | 0/TBD | Not started | - |
-| 5. Quality Gate | 0/TBD | Not started | - |
+| 4. Demo Domain | 4/4 | Complete | 2026-04-19 |
+| 5. Quality Gate | 4/4 | Complete | 2026-04-20 |
 
 ## Dependency Notes
 

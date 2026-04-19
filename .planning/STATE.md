@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 05 context gathered (discuss-phase complete)
-last_updated: "2026-04-19T23:13:11.773Z"
-last_activity: 2026-04-19 -- Phase 5 planning complete
+status: milestone_complete
+stopped_at: Phase 05 shipped — all 4 plans atomic-committed, v1.0 feature-complete
+last_updated: "2026-04-20T00:00:00.000Z"
+last_activity: 2026-04-20 -- Phase 5 Quality Gate 完成，milestone v1.0 feature-complete
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 21
-  completed_plans: 17
-  percent: 81
+  completed_plans: 21
+  percent: 100
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-04-18)
 
 ## Current Position
 
-Phase: 05 (Quality Gate) — Context gathered, ready to plan
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-04-19 -- Phase 5 planning complete
+Phase: 05 (Quality Gate) — COMPLETE (2026-04-20)
+Plan: 4/4 complete
+Status: Milestone v1.0 feature-complete — ready for PR / merge / release
+Last activity: 2026-04-20 -- Phase 5 reconcile-in-place + 05-04 docs ship
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -49,10 +49,12 @@ Progress: [████████░░] 80%
 
 **Recent Trend:**
 
-- Plan 02-03: createApp(config, deps) synchronous factory + ADR 0012 (canonical plugin ordering) + main.ts wire + 7 integration tests via REAL createApp (no hand-rewired chain) — all 4 WEB-* requirements exercised end-to-end; 3 atomic commits (60d4b01, 53023a2, 51fd66f); 66 tests pass + 10 contract tests pass
-- Plan 02-02: /health DDD four-layer walkthrough (domain value + IDbHealthProbe port + CheckHealthUseCase + DrizzleDbHealthProbe w/ AbortController + healthController + createHealthModule factory) + 9 unit tests — all green, 3 atomic commits (2a7d828, c03fb5c, 1919d61)
-- Plan 02-01: shared Drizzle+postgres-js client + 4 global plugins (requestLogger/cors/errorHandler/swagger) + http-error shape + 8 unit tests — all green, 3 atomic commits (a5981c6, 59d3bb4, 8447384)
-- Last 8 plans: 01-01..01-05 + 02-01..02-03 all green
+- Plan 05-04 (commits b404a1f → 076fa9c): Docs ship — README narrative rewrite + docs/quickstart.md 10-min dogfood 物語 + docs/architecture.md 三章 + mermaid ×3 + regression 對照表 + ADR 0018 testcontainers deviation + AGENTS.md 頂部 TOC；G22 「Looks Done But Isn't」 9/10 pass (CI 首 run 為 manual follow-up)
+- Plan 05-03 (f546f2e): CI rewrite — 3 parallel jobs + postgres service + coverage gate + migration drift
+- Plan 05-02 (efa25e6): 3 E2E user journey — dogfood happy path / password-reset session isolation / cross-user 404
+- Plan 05-01 (a50ead3): 測試基礎設施 + 16 新單元測試 + API Key hash 格式修正（adopted scope：hex→base64url + RAW_KEY_LENGTH 52→73，coverage backfill 撰寫時暴露）
+- Full test suite: 221 pass / 1 skip / 0 fail (unit 140 + integration 59 + e2e 11 + contract/regression 11)
+- Coverage gate: 100% lines / 100% functions (33 files in domain+application+kernel)
 
 *Updated after each plan completion*
 
@@ -83,8 +85,11 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-19T23:35:00.000Z
-Stopped at: Phase 05 context gathered (discuss-phase complete)
-Resume file: .planning/phases/05-quality-gate/05-CONTEXT.md
-Next: $gsd-plan-phase 5 — Quality Gate. CONTEXT 已鎖 17 條 D-xx 決策 + 估 4 plans：(05-01) 測試策略改造：package.json scripts + bunfig.toml coverage + scripts/coverage-gate.ts + 刪 scripts/ensure-agent-schema.ts + unit 補齊；(05-02) E2E 三條 journey（dogfood happy path / password-reset session isolation / cross-user 404）via bun:test + app.handle；(05-03) CI rewrite：3 parallel jobs + postgres services + migration drift via git status + coverage gate；(05-04) Docs ship：README narrative rewrite + docs/quickstart.md 兩條路徑 dogfood 物語 + docs/architecture.md prose+mermaid 三章 + AGENTS.md onboarding TOC + ADR 0018 testcontainers deviation + ADR index polish. Deferred：$gsd-secure-phase 04 獨立 out-of-band 動作。
-Decisions commit: fdd4409 (docs(05): capture phase context).
+Last session: 2026-04-20T00:00:00.000Z
+Stopped at: Phase 05 COMPLETE — milestone v1.0 feature-complete
+Resume file: N/A (milestone close)
+Next options:
+  1. $gsd-secure-phase 04 — 補做 Phase 4 的 threat-mitigation audit（Blockers/Concerns 第 1 項）
+  2. $gsd-complete-milestone — 打包 v1.0、歸檔 .planning/phases/、準備 v1.1 規劃
+  3. 手動 push + 開 PR → GHA 首次實跑 CI（G22 checklist 唯一 manual follow-up）
+Reconcile-in-place session (2026-04-20): out-of-band 已寫好的 05-01/02/03 drift 被驗證測試綠燈後切成 3 個 atomic commits（a50ead3 / efa25e6 / f546f2e），05-04 docs 由 gsd-executor subagent 執行共 5 commits（b404a1f..076fa9c）。全數保留 Phase 4 同模式的「adopted scope」記錄。
