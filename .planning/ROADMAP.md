@@ -55,7 +55,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. 故意 throw 一個 `DomainError` 子類可正確被全域 error handler 映射為對應 HTTP status（400/401/403/404/409）而非裸 500
 **Plans:** 3 plans
 **Plan list**:
-- [ ] 02-01-PLAN.md — Shared Drizzle+postgres-js DB client + 4 global plugins (requestLogger / cors / errorHandler / swagger) + unit tests
+- [x] 02-01-PLAN.md — Shared Drizzle+postgres-js DB client + 4 global plugins (requestLogger / cors / errorHandler / swagger) + unit tests (completed 2026-04-19, commits a5981c6/59d3bb4/8447384)
 - [ ] 02-02-PLAN.md — /health DDD four-layer walkthrough (domain value + application port/usecase + Drizzle adapter + controller + feature module factory)
 - [ ] 02-03-PLAN.md — createApp assembly + main.ts wire + ADR 0012 canonical plugin ordering + integration smoke test
 **UI hint**: no
@@ -106,8 +106,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
-| 2. App Skeleton | 0/TBD | Not started | - |
+| 1. Foundation | 5/5 | Complete | 2026-04-19 |
+| 2. App Skeleton | 1/3 | Executing | - |
 | 3. Auth Foundation | 0/TBD | Not started | - |
 | 4. Demo Domain | 0/TBD | Not started | - |
 | 5. Quality Gate | 0/TBD | Not started | - |
