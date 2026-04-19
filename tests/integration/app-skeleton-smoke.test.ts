@@ -3,6 +3,7 @@ import { createApp } from '../../src/bootstrap/app'
 import type { Config } from '../../src/bootstrap/config'
 import type { IDbHealthProbe } from '../../src/health/application/ports/db-health-probe.port'
 import { NotFoundError } from '../../src/shared/kernel/errors'
+import { createFakeAuthInstance } from './auth/_helpers'
 
 // Minimal test Config — avoids invoking loadConfig() which hits real env.
 // LOG_LEVEL uses the real 'error' enum value per the config schema; no type-system escape hatch needed.
@@ -27,6 +28,7 @@ describe('app skeleton smoke (real createApp)', () => {
   test('/health → 200 on DB up + x-request-id UUID v4 echoed', async () => {
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('up')),
     })
     const res = await app.handle(new Request('http://localhost/health'))
@@ -45,6 +47,7 @@ describe('app skeleton smoke (real createApp)', () => {
   test('/health → 503 on DB probe returning "down"', async () => {
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('down')),
     })
     const res = await app.handle(new Request('http://localhost/health'))
@@ -57,6 +60,7 @@ describe('app skeleton smoke (real createApp)', () => {
   test('/health → 503 on DB probe rejection (controller catches, NOT global 500)', async () => {
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.reject(new Error('conn refused'))),
     })
     const res = await app.handle(new Request('http://localhost/health'))
@@ -69,6 +73,7 @@ describe('app skeleton smoke (real createApp)', () => {
   test('/swagger → 200 with non-trivial body (OpenAPI served)', async () => {
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('up')),
     })
     const res = await app.handle(new Request('http://localhost/swagger'))
@@ -82,6 +87,7 @@ describe('app skeleton smoke (real createApp)', () => {
     // inside createApp and adds one extra route — the same way Phase 3 / Phase 4 will extend the app.
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('up')),
     }).get('/demo-404', () => {
       throw new NotFoundError('user X missing')
@@ -103,6 +109,7 @@ describe('app skeleton smoke (real createApp)', () => {
   test('client-supplied x-request-id is echoed in response header', async () => {
     const app = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('up')),
     })
     const res = await app.handle(
@@ -119,6 +126,7 @@ describe('app skeleton smoke (real createApp)', () => {
     // so `'then' in maybeApp` is the type-system-safe assertion (no @ts-expect-error needed).
     const maybeApp = createApp(TEST_CONFIG, {
       db: fakeDb,
+      authInstance: createFakeAuthInstance(),
       probe: stubProbe(() => Promise.resolve('up')),
     })
     expect('then' in maybeApp).toBe(false)

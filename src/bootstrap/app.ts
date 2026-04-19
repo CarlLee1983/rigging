@@ -1,4 +1,6 @@
 import { Elysia } from 'elysia'
+import { createAuthModule } from '../auth/auth.module'
+import type { AuthInstance } from '../auth/infrastructure/better-auth/auth-instance'
 import type { IDbHealthProbe } from '../health/application/ports/db-health-probe.port'
 import { createHealthModule, type HealthModuleDeps } from '../health/health.module'
 import { createDbClient, type DrizzleDb } from '../shared/infrastructure/db/client'
@@ -19,6 +21,7 @@ import type { Config } from './config'
 export interface AppDeps {
   db?: DrizzleDb // override for tests; defaults to createDbClient(config).db
   probe?: IDbHealthProbe // override for tests; defaults to DrizzleDbHealthProbe(db) inside createHealthModule
+  authInstance?: AuthInstance
 }
 
 /**
@@ -44,12 +47,16 @@ export function createApp(config: Config, deps: AppDeps = {}) {
   // in its type (tsconfig `exactOptionalPropertyTypes: true`), so we must OMIT it rather than
   // pass `undefined`. createHealthModule defaults to DrizzleDbHealthProbe(db) when probe is absent.
   const healthDeps: HealthModuleDeps = deps.probe ? { db, probe: deps.probe } : { db }
+  const authDeps = deps.authInstance
+    ? { db, logger, config, authInstance: deps.authInstance }
+    : { db, logger, config }
 
   return new Elysia({ name: 'rigging/app' })
     .use(requestLoggerPlugin(logger))
     .use(corsPlugin())
     .use(errorHandlerPlugin(logger))
     .use(swaggerPlugin())
+    .use(createAuthModule(authDeps))
     .use(createHealthModule(healthDeps))
 }
 
