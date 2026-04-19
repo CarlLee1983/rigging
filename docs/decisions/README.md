@@ -24,6 +24,7 @@ See `0000-use-madr-for-adrs.md` for the MADR 4.0 template and workflow.
 | [0015](0015-rate-limit-memory-v1-persistent-v2.md) | Rate limit: memory store v1 / persistent v2 | accepted | 2026-04-19 | — |
 | [0016](0016-betterauth-defaults-trust.md) | Trust BetterAuth session cookie defaults + AUTH-11 | accepted | 2026-04-19 | — |
 | [0017](0017-eval-dataset-shape-jsonb-immutable.md) | EvalDataset Shape Frozen at v1 (jsonb cases, immutable) | accepted | 2026-04-19 | — |
+| [0018](0018-testcontainers-deviation-via-docker-compose.md) | testcontainers for v1 satisfied via docker-compose + GitHub Actions services | accepted | 2026-04-19 | — |
 
 ## Workflow
 
