@@ -42,3 +42,10 @@ export class ConflictError extends DomainError {
   readonly code = 'CONFLICT'
   readonly httpStatus = 409
 }
+
+// D-09 (P4): Ownership-aware 404 for cross-user resource access.
+// Distinct from NotFoundError so controllers + tests can match on code === 'RESOURCE_NOT_FOUND'.
+export class ResourceNotFoundError extends DomainError {
+  readonly code = 'RESOURCE_NOT_FOUND'
+  readonly httpStatus = 404
+}
