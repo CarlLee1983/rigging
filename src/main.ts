@@ -1,7 +1,13 @@
+import { createApp } from './bootstrap/app'
 import { loadConfig } from './bootstrap/config'
 
 const config = loadConfig()
+const app = createApp(config)
 
-console.log('[rigging] P1 foundation ready.')
-console.log(`[rigging] env loaded: NODE_ENV=${config.NODE_ENV}, PORT=${config.PORT}`)
-console.log('[rigging] Next: Phase 2 will mount the Elysia root app.')
+app.listen(config.PORT, ({ hostname, port }) => {
+  // Startup log uses console.log (pino isn't in scope here; it's bound to the Elysia context).
+  // Request logs use pino internally via requestLoggerPlugin.
+  console.log(`[rigging] listening on http://${hostname}:${port}`)
+  console.log(`[rigging] health:  http://${hostname}:${port}/health`)
+  console.log(`[rigging] swagger: http://${hostname}:${port}/swagger`)
+})
