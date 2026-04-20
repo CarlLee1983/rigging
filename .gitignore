@@ -38,3 +38,6 @@ tests/biome-contract/**/*-violation.ts
 
 #omx
 .omx
+
+# Scaffold engine — template/ is built by scripts/build-template.js, not tracked in git
+packages/create-rigging/template/
