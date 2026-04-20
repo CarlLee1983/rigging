@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: milestone_complete
-stopped_at: Phase 05 shipped — all 4 plans atomic-committed, v1.0 feature-complete
+milestone_name: Reference App (MVP)
+status: milestone_archived
+stopped_at: v1.0 milestone closed — 21 plans / 5 phases archived, awaiting $gsd-new-milestone for v1.1 scope
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- Phase 5 Quality Gate 完成，milestone v1.0 feature-complete
+last_activity: 2026-04-20 -- v1.0 milestone archive committed (MILESTONES.md + milestones/v1.0-ROADMAP.md + milestones/v1.0-REQUIREMENTS.md); ROADMAP.md collapsed; PROJECT.md evolved; REQUIREMENTS.md removed
 progress:
   total_phases: 5
   completed_phases: 5
@@ -18,78 +18,75 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-18)
+See: .planning/PROJECT.md (updated 2026-04-20 after v1.0 milestone)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
-**Current focus:** Phase 05 — next milestone (see ROADMAP)
+**Current focus:** v1.0 archived — planning v1.1 via `$gsd-new-milestone`
 
 ## Current Position
 
-Phase: 05 (Quality Gate) — COMPLETE (2026-04-20)
-Plan: 4/4 complete
-Status: Milestone v1.0 feature-complete — ready for PR / merge / release
-Last activity: 2026-04-20 -- Phase 5 reconcile-in-place + 05-04 docs ship
+Milestone: v1.0 Reference App — ARCHIVED (2026-04-20)
+Phases: 5/5 complete · 21/21 plans complete
+Status: Milestone archived — ready for `$gsd-new-milestone` to scope v1.1
+Last activity: 2026-04-20 -- v1.0 milestone close: MILESTONES.md + milestones/ archives committed, ROADMAP collapsed, PROJECT evolved, REQUIREMENTS removed via git rm
 
-Progress: [██████████] 100%
+Progress: v1.0 [██████████] 100%
 
-## Performance Metrics
+## v1.0 Retrospective Snapshot
 
-**Velocity:**
+**Shipped:** 2026-04-20
+**Timeline:** 2026-04-18 → 2026-04-20 (~2 days, 80 commits)
+**Summary:** Harness Engineering reference app with DDD + ADR discipline, dual-track AuthContext (session + API Key), CVE-regression suite, dogfood demo domain, community-ready test/CI/docs.
+**Full archives:** `milestones/v1.0-ROADMAP.md` · `milestones/v1.0-REQUIREMENTS.md` · `MILESTONES.md`
 
-- Total plans completed: 8
-- Average duration: adopted (plans executed out-of-band, committed atomically 2026-04-19)
-- Total execution time: —
+Recent plans (final reconcile-in-place + docs):
 
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1 — Foundation | 5 | — | — |
-| 2 — App Skeleton | 3 | ~27 min | ~9 min |
-
-**Recent Trend:**
-
-- Plan 05-04 (commits b404a1f → 076fa9c): Docs ship — README narrative rewrite + docs/quickstart.md 10-min dogfood 物語 + docs/architecture.md 三章 + mermaid ×3 + regression 對照表 + ADR 0018 testcontainers deviation + AGENTS.md 頂部 TOC；G22 「Looks Done But Isn't」 9/10 pass (CI 首 run 為 manual follow-up)
-- Plan 05-03 (f546f2e): CI rewrite — 3 parallel jobs + postgres service + coverage gate + migration drift
-- Plan 05-02 (efa25e6): 3 E2E user journey — dogfood happy path / password-reset session isolation / cross-user 404
-- Plan 05-01 (a50ead3): 測試基礎設施 + 16 新單元測試 + API Key hash 格式修正（adopted scope：hex→base64url + RAW_KEY_LENGTH 52→73，coverage backfill 撰寫時暴露）
+- Plan 05-04 (b404a1f → 076fa9c): Docs ship — README narrative + `docs/quickstart.md` + `docs/architecture.md` + ADR 0018 + AGENTS.md TOC
+- Plan 05-03 (f546f2e): CI rewrite — 3 parallel jobs + postgres service + coverage gate + drift
+- Plan 05-02 (efa25e6): 3 E2E user journey — dogfood / password-reset isolation / cross-user 404
+- Plan 05-01 (a50ead3): 16 unit tests + API Key hash 格式修正 (hex → base64url, RAW_KEY_LENGTH 52 → 73)
 - Full test suite: 221 pass / 1 skip / 0 fail (unit 140 + integration 59 + e2e 11 + contract/regression 11)
 - Coverage gate: 100% lines / 100% functions (33 files in domain+application+kernel)
 
-*Updated after each plan completion*
+## Deferred Items (acknowledged at v1.0 close)
+
+Items carried forward — candidates for v1.1 Active scope when `$gsd-new-milestone` runs:
+
+| Category | Item | Status |
+|----------|------|--------|
+| secure-phase | Phase 04 SECURITY audit (`$gsd-secure-phase 04`) | Deferred — threat-mitigation retroactive audit not yet run |
+| verification | CI first real run (GitHub Actions after push + PR) | Deferred — G22 checklist item 10, pending manual trigger |
+| doc-hygiene | REQUIREMENTS.md traceability table fidelity | Resolved via archive — live file deleted, `milestones/v1.0-REQUIREMENTS.md` is source of truth |
+| doc-hygiene | Phase 5 plan-level SUMMARY (05-01/02/03) | Accepted — phase-level `05-SUMMARY.md` Plan Completion Matrix covers |
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
+Decisions are logged in PROJECT.md Key Decisions table (updated 2026-04-20 with outcomes for all 18 v1 entries).
 
-- Stack locked: Bun 1.3.12 + Elysia 1.4.28 + Drizzle 0.45.2 + BetterAuth 1.6.5（pin exact）+ postgres-js 3.4.9（NOT bun:sql）
-- Architecture: DDD 四層 × feature vertical slice，`src/{feature}/{domain,application,infrastructure,presentation}/`
-- AuthContext via Elysia `.macro({ requireAuth: { resolve } })`, 單一根層掛載，scope = global
-- Phase 3 atomic：BetterAuth + 雙軌 AuthContext + Runtime Guards + CVE regression 不可拆
-- Plan 02-01 deviations: (a) CORS `origin: true` 取代 callback — `@elysiajs/cors@1.4.1` `Origin` 型別為 `(context) => boolean | void`，`true` 同樣 echo Origin + credentials 行為（dist/index.mjs L58-65）；(b) pino options 條件式組裝以避開 `exactOptionalPropertyTypes`；(c) onError `ctx` 以 defensive read 取 `requestId`（跨 plugin derive 不反映至型別）
-- Plan 02-02 decisions: (a) /health domain 四層 template 正式落地，framework-free 由 Biome noRestrictedImports + `test:contract` 雙重 enforce；(b) 層層防線 503：Drizzle adapter 吞所有錯誤 → `'down'`，controller try/catch 為 belt-and-suspenders（port contract 仍允許未來 adapter reject）；(c) Adapter 用 `Pick<DrizzleDb, 'execute'>` 構造，測試可傳 fake 無需起 Drizzle 真連線；(d) Controller catch-path inline 組 body（不呼叫 `makeHealthStatus`）因 clock 未在 catch scope，兩處 shape mirror 但各僅一行；(e) Feature module factory `createHealthModule({ db, probe?, clock? })` 為 Phase 3+ 模板
-- Plan 02-03 decisions: (a) `createApp(config, deps?): Elysia` 同步回傳（非 Promise）——D-05 reconciled，main.ts 直線執行不需 await，啟動時不 pre-warm DB；(b) AppDeps `{ db?, probe? }` 在 exactOptionalPropertyTypes: true 下以 conditional spread 傳給 HealthModuleDeps（省略 key 而非傳 undefined）；(c) 7 個 integration tests 呼叫真的 createApp（不 hand-rewire plugin chain）——ADR 0012 ordering 一旦被改，test 5 (body.error.requestId === x-request-id header) 立即失敗；(d) ADR 0012 accepted 並 index 進 README 作為 Rigidity Tier 2 「plugin ordering 可 ADR 逃生」的具體參照；(e) test 7 用 runtime `'then' in maybeApp` 檢查 createApp 同步性，不用 @ts-expect-error（Elysia 型別無 .then，directive 反而會被視為 unused suppression）
+Highlights from v1.0:
+
+- Stack locked and proved: Bun 1.3.12 + Elysia 1.4.28 + Drizzle 0.45.2 + BetterAuth 1.6.5 + postgres-js 3.4.9
+- Adopted-scope commit pattern (Phase 4/5 both applied) ✓ Good
+- BetterAuth integration ⚠️ Revisit — API Key hash-lookup correction + AUTH-11 wrap revokeSessions (ADR 0016)
+- Integration tests shared Postgres (ADR 0018, adopted deviation) ⚠️ Revisit — trade-off on test isolation
+- 18 ADRs accepted (0000..0018), MADR 4.0 format 機制 self-enforcing via adr-check PR workflow
 
 ### Pending Todos
 
-None yet.
+None at milestone close. Next milestone's Active scope will be defined via `$gsd-new-milestone`.
 
 ### Blockers/Concerns
 
-- Phase 04 SECURITY review not yet run — $gsd-secure-phase 04 deferred; no $-SECURITY.md artifact for threat-mitigation audit. Relevant because Phase 04 ships auth-gated API routes + API Key verify path hardening.
-- Phase 04 commit 91eed76 bundled hardening scope beyond PLAN.md files_modified (auth.module / identity-service adapter / error-handler plugin / api-key repo / create-prompt-version retry budget 3→24). Recorded as "adopted scope expansion" in 04-04-SUMMARY.md Deviations.
-- Phase 04 EvalDataset entity shape resolved via ADR 0017 (jsonb immutable, no in-place mutation).
+- None blocking v1.0 close. Forward-looking items captured under Deferred Items above.
 
 ## Session Continuity
 
 Last session: 2026-04-20T00:00:00.000Z
-Stopped at: Phase 05 COMPLETE — milestone v1.0 feature-complete
-Resume file: N/A (milestone close)
+Stopped at: v1.0 milestone archived (MILESTONES.md + milestones/ 兩份 archive + collapsed ROADMAP + evolved PROJECT.md + git rm REQUIREMENTS.md + tag v1.0)
+Resume file: N/A
 Next options:
-  1. $gsd-secure-phase 04 — 補做 Phase 4 的 threat-mitigation audit（Blockers/Concerns 第 1 項）
-  2. $gsd-complete-milestone — 打包 v1.0、歸檔 .planning/phases/、準備 v1.1 規劃
-  3. 手動 push + 開 PR → GHA 首次實跑 CI（G22 checklist 唯一 manual follow-up）
-Reconcile-in-place session (2026-04-20): out-of-band 已寫好的 05-01/02/03 drift 被驗證測試綠燈後切成 3 個 atomic commits（a50ead3 / efa25e6 / f546f2e），05-04 docs 由 gsd-executor subagent 執行共 5 commits（b404a1f..076fa9c）。全數保留 Phase 4 同模式的「adopted scope」記錄。
+  1. `$gsd-new-milestone` — questioning → research → requirements → roadmap for v1.1
+  2. `$gsd-secure-phase 04` — 補做 Phase 4 的 threat-mitigation audit（Deferred #1）
+  3. Manual follow-up: push branch + PR → GitHub Actions 首次實跑（Deferred #2）
