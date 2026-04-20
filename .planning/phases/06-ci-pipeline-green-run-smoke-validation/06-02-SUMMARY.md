@@ -12,14 +12,16 @@
 | # | Fail-mode | 破壞內容（patch 摘要） | 預期 red job / step | Check run URL |
 |---|-----------|------------------------|---------------------|---------------|
 | 1 | Lint (biome noDebugger) | `src/main.ts` 加 `debugger` statement（biome `recommended` → `noDebugger` error） | `CI / Lint (biome check)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653524789/job/72081452273 |
-| 2 | Typecheck (unused @ts-expect-error) | — | — | — |
+| 2 | Typecheck (unused @ts-expect-error) | `src/main.ts`: `// @ts-expect-error` 放在 `const config = loadConfig()` 之前（無型別錯可壓抑） | `CI / Typecheck (tsc --noEmit)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653608782/job/72081720411 |
 | 3 | Test (flipped assertion) | — | — | — |
 | 4 | Drift (unused column, no migration) | — | — | — |
 | 5 | Smoke (SMOKE_TRIPWIRE env tripwire) | — | — | — |
 
 ## `[ASSUMED]` Verification Log
 
-- A1 (RESEARCH): `tsc --noEmit` fails on unused `@ts-expect-error`（TS2578） — result: (to be filled by Task 2)
+- A1 (RESEARCH): `tsc --noEmit` fails on unused `@ts-expect-error`（TS2578） — **result: VERIFIED**
+  (local `bunx tsc --noEmit --strict /tmp/ts-a1/test.ts` emits `error TS2578: Unused '@ts-expect-error' directive.`；
+  CI job `Typecheck (tsc --noEmit)` 於 FM#2 force-push 後 state=FAILURE 確認行為一致)
 - A2 (RESEARCH): drift fail with unused column does not red `Test (with coverage)` step — result: (to be filled by Task 4)
 
 ## Notes
