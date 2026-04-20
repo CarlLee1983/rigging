@@ -5,14 +5,14 @@ milestone_name: "Create Rigging"
 status: active
 stopped_at: ""
 last_updated: "2026-04-20T22:00:00.000Z"
-last_activity: 2026-04-20 — $gsd-roadmap-milestone v1.2 roadmap created (Phase 9-10)
+last_activity: 2026-04-20 — Phase 9 Scaffold Engine complete (5/5 plans, 71 tests pass)
 resume_file: .planning/ROADMAP.md
 progress:
   total_phases: 2
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 5
+  completed_plans: 5
+  percent: 50
 ---
 
 # Project State
@@ -23,27 +23,27 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.2 Create Rigging started)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** v1.2 Create Rigging — Phase 9: Scaffold Engine (not started)
+**Current focus:** v1.2 Create Rigging — Phase 10: Publish & Docs (not started)
 
 ## Current Position
 
 Milestone: **v1.2 Create Rigging**
 
-Phase: 9 — Scaffold Engine (not started)
+Phase: 10 — Publish & Docs (not started)
 
 Plan: —
 
-Status: Roadmap defined, ready to plan Phase 9
+Status: Phase 9 complete — ready to plan Phase 10
 
-Last activity: 2026-04-20 — v1.2 roadmap created (2 phases, 8 requirements mapped)
+Last activity: 2026-04-20 — Phase 9 Scaffold Engine complete (5/5 plans)
 
-Progress: ░░░░░░░░░░ 0% (0/2 phases complete)
+Progress: █████░░░░░ 50% (1/2 phases complete)
 
 ## v1.2 Phase Overview
 
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
-| 9 | Scaffold Engine | SCAF-01, SCAF-03, SCAF-04, SCAF-05, SCAF-06, SCAF-07 | Not started |
+| 9 | Scaffold Engine | SCAF-01, SCAF-03, SCAF-04, SCAF-05, SCAF-06, SCAF-07 | Complete (2026-04-20) — 5/5 plans |
 | 10 | Publish & Docs | SCAF-02, SCAF-08 | Not started |
 
 ## v1.1 Phase Overview (archived)
@@ -100,8 +100,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-20
 
-Stopped at: v1.2 roadmap defined — Phase 9 not started
+Stopped at: Phase 9 complete — 5/5 plans, 71 scaffold tests pass (100% helpers.js coverage)
 
 Resume file: `.planning/ROADMAP.md`
 
-Next: `/gsd-plan-phase 9`
+Next: `/gsd-discuss-phase 10` or `/gsd-plan-phase 10`

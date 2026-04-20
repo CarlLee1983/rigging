@@ -34,7 +34,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 ### v1.2 Create Rigging — Phases 9-10
 
-- [ ] **Phase 9: Scaffold Engine** — Build CLI + template generation machinery with full project output
+- [x] **Phase 9: Scaffold Engine** — Build CLI + template generation machinery with full project output — completed 2026-04-20
 - [ ] **Phase 10: Publish & Docs** — Ship `create-rigging` to npm and update documentation entry points
 
 ## Phase Details
@@ -52,11 +52,11 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 **Plans**: 5 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Package foundation: packages/create-rigging/package.json + lib/helpers.js + .gitignore
-- [ ] 09-02-PLAN.md — Unit tests: substitution, extension-whitelist, cli-validation (TDD)
-- [ ] 09-03-PLAN.md — Build script: scripts/build-template.js (git ls-files → template/)
-- [ ] 09-04-PLAN.md — CLI entry: packages/create-rigging/bin/create-rigging.js (wires helpers + copyDir)
-- [ ] 09-05-PLAN.md — Integration test + human verification checkpoint
+- [x] 09-01-PLAN.md — Package foundation: packages/create-rigging/package.json + lib/helpers.js + .gitignore
+- [x] 09-02-PLAN.md — Unit tests: substitution, extension-whitelist, cli-validation (TDD)
+- [x] 09-03-PLAN.md — Build script: scripts/build-template.js (git ls-files → template/)
+- [x] 09-04-PLAN.md — CLI entry: packages/create-rigging/bin/create-rigging.js (wires helpers + copyDir)
+- [x] 09-05-PLAN.md — Integration test + human verification checkpoint
 
 ### Phase 10: Publish & Docs
 **Goal**: `create-rigging` is publicly available on npm and all documentation directs developers to `npx create-rigging` as the primary entry point
@@ -81,7 +81,7 @@ Plans:
 | 6. CI Pipeline Green-Run & Smoke Validation | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 7. Phase 04 Security Audit Back-fill | v1.1 | 1/1 | Complete | 2026-04-20 |
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
-| 9. Scaffold Engine | v1.2 | 0/5 | Not started | - |
+| 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
 | 10. Publish & Docs | v1.2 | 0/? | Not started | - |
 
 ---
