@@ -65,16 +65,17 @@ v1.1 是 hygiene milestone，專心關閉 v1.0 遺留；以下明確不在 v1.1 
 
 ## Traceability
 
-每條 v1.1 requirement 對應到 ROADMAP.md 的 phase。下表在 ROADMAP 建立後由 `gsd-roadmapper` 填寫。
+每條 v1.1 requirement 對應到 ROADMAP.md 的 phase。下表由 `gsd-roadmapper` 在 ROADMAP 建立時填寫。
 
-| REQ-ID | Phase | Status |
-|--------|-------|--------|
-| CI-04  | —     | Pending |
-| CI-05  | —     | Pending |
-| SEC-01 | —     | Pending |
-| ADR-06 | —     | Pending |
-| OBS-01 | —     | Pending |
+| REQ-ID | Phase    | Status  |
+|--------|----------|---------|
+| CI-04  | Phase 6  | Pending |
+| CI-05  | Phase 6  | Pending |
+| OBS-01 | Phase 6  | Pending |
+| SEC-01 | Phase 7  | Pending |
+| ADR-06 | Phase 8  | Pending |
 
 ---
 
 _Created: 2026-04-20 — milestone v1.1 start via `$gsd-new-milestone`_
+_Traceability filled: 2026-04-20 — `gsd-roadmapper` mapped 5 requirements across Phases 6-8_
