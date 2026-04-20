@@ -11,7 +11,7 @@
 |------|-------|
 | Branch | local execution (`gsd-sdk` unavailable in runner — inline execute-phase) |
 | PR / merge | — (land via normal PR to `main`) |
-| Merge commit SHA | _fill after merge_ |
+| Merge commit SHA | 5f5a7fd (local `main`; update after push/PR merge to `origin/main`) |
 
 ## §Audit — ADR 0000..0018 + README (Task 1–2)
 
