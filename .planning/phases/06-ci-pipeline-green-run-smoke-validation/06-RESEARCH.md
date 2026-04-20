@@ -520,22 +520,22 @@ git push origin :phase-6-failmode-demo
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Plan 1 PR 是否要在 PR body 內附 smoke step 的預期 log snippet？**
    - What we know：D-03 要求 check URL 進 SUMMARY；D-04 要求 PR merge。
    - What's unclear：PR body 格式是否也要舉證 smoke 綠燈（除了 check URL 外）？
-   - Recommendation：PR body 寫一句「Smoke step expected log: `✓ Smoke OK — createApp boot + /health 200 + db up`」，check URL 只在 SUMMARY。Planner 可自由決定是否沿用。
+   - RESOLVED：PR body 寫一句「Smoke step expected log: `✓ Smoke OK — createApp boot + /health 200 + db up`」，check URL 只在 SUMMARY。已於 Plan 1 Task 3 PR body 模板採納。
 
 2. **Plan 2 sacrificial PR 的 PR body 要不要提前宣告「DO NOT MERGE」？**
    - What we know：D-05 明定 close 不 merge；D-11-D concurrency 會 cancel 舊 run。
    - What's unclear：是否有 GitHub branch protection rule 會阻擋「no reviewer approval」的 PR merge？本 repo 未見 CODEOWNERS / branch protection config（無從 repo 內驗證）。
-   - Recommendation：Plan 2 PR title 前加「[DO NOT MERGE]」+ body 首行標 `<!-- phase-6-plan-2 sacrificial PR; will be closed, not merged -->`。保險。
+   - RESOLVED：Plan 2 PR title 前加「[DO NOT MERGE]」+ body 首行標 `<!-- phase-6-plan-2 sacrificial PR; will be closed, not merged -->`。已於 Plan 2 Task 1 明確採納。
 
 3. **OBS-01 的「smoke fail 時 log 要長什麼樣」有無具體模板？**
    - What we know：REQUIREMENTS.md OBS-01 要求 fail-mode 驗證但沒規定 log 模板。
    - What's unclear：SUMMARY 記 check URL 就夠，或還要附 CI log 片段？
-   - Recommendation：SUMMARY 表格額外加一欄「預期 error line」（e.g. fail-mode #5 預期 `✗ Smoke threw: Error: Smoke tripwire...`），審計時可 `gh run view --log \| grep <期望 line>` 快速驗證。
+   - RESOLVED：SUMMARY 表格額外加一欄「預期 error line」（e.g. fail-mode #5 預期 `✗ Smoke threw: Error: Smoke tripwire...`），審計時可 `gh run view --log | grep <期望 line>` 快速驗證。Plan 2 Task 5 acceptance 已明示預期 log line。
 
 ---
 
