@@ -14,7 +14,7 @@
 | 1 | Lint (biome noDebugger) | `src/main.ts` 加 `debugger` statement（biome `recommended` → `noDebugger` error） | `CI / Lint (biome check)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653524789/job/72081452273 |
 | 2 | Typecheck (unused @ts-expect-error) | `src/main.ts`: `// @ts-expect-error` 放在 `const config = loadConfig()` 之前（無型別錯可壓抑） | `CI / Typecheck (tsc --noEmit)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653608782/job/72081720411 |
 | 3 | Test (flipped assertion) | `tests/unit/health/check-health.usecase.test.ts:13`: `ok: true` → `ok: false`（`CheckHealthUseCase > DB up → ok:true` 會 fail） | `CI / Test + coverage gate + migration drift` → `Test (with coverage)` step | https://github.com/CarlLee1983/rigging/actions/runs/24653675915/job/72081938123 |
-| 4 | Drift (unused column, no migration) | — | — | — |
+| 4 | Drift (unused table, no migration) | 新增 `src/agents/infrastructure/schema/drift-demo.schema.ts`：定義一個完全未被 repository / query 引用的 `drift_demo` table；不跑 `bun run db:generate`（保留 porcelain dirty） | `CI / Test + coverage gate + migration drift` → `Migration drift check` step (Smoke step: **skipped** per R6 fail-fast) | https://github.com/CarlLee1983/rigging/actions/runs/24653784718/job/72082282721 |
 | 5 | Smoke (SMOKE_TRIPWIRE env tripwire) | — | — | — |
 
 ## `[ASSUMED]` Verification Log
@@ -22,7 +22,14 @@
 - A1 (RESEARCH): `tsc --noEmit` fails on unused `@ts-expect-error`（TS2578） — **result: VERIFIED**
   (local `bunx tsc --noEmit --strict /tmp/ts-a1/test.ts` emits `error TS2578: Unused '@ts-expect-error' directive.`；
   CI job `Typecheck (tsc --noEmit)` 於 FM#2 force-push 後 state=FAILURE 確認行為一致)
-- A2 (RESEARCH): drift fail with unused column does not red `Test (with coverage)` step — result: (to be filled by Task 4)
+- A2 (RESEARCH): drift fail with unused column does not red `Test (with coverage)` step — **result: FALLBACK**
+  採用新增 **unused table**（`drift-demo.schema.ts`）而非 unused column，理由：Drizzle 0.45 的
+  `db.select().from(X)` 會依 schema 明示列出所有 columns，若加 column 到 existing schema 但
+  migration 未產生，DB 實際無該欄位 → Postgres 回 `column does not exist` → `Test (with coverage)`
+  step 也會紅（污染隔離）。新 table 完全未被 repository / query 引用 → `Test (with coverage)` 綠
+  （CI 實測 step `success`），只有 `Migration drift check` step fail（CI log 包含
+  `::error::Schema drift detected` 與 `drift_demo 2 columns 0 indexes 0 fks`）。A2 原假設語義
+  （「drift fail-mode 隔離 Test step」）已達成，只是 patch 用 new-table 而非 new-column。
 
 ## Notes
 
