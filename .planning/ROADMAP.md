@@ -38,7 +38,9 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   3. 刻意製造 biome lint 錯誤的 commit 推上 PR，lint job 變紅並擋住 merge（截圖或 check run URL 可舉證）
   4. 刻意製造 `// @ts-expect-error` 無誤用或改 schema 不補 migration 的 commit 推上 PR，對應 typecheck / test / migration-drift job 變紅（至少 3 類 fail-mode 各驗證一次）
   5. 刻意破壞 config 校驗或 plugin wiring 使 `createApp` 無法啟動，smoke step 變紅並擋住 merge
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 06-01-PLAN.md — Green baseline: smoke script + ci.yml smoke step + first green PR merged to main (CI-04 + OBS-01)
+  - [ ] 06-02-PLAN.md — Fail-mode matrix: sacrificial PR force-pushed ×5 (lint / typecheck / test / drift / smoke) closed not merged (CI-05)
 
 ### Phase 7: Phase 04 Security Audit Back-fill
 **Goal**: 對 v1.0 Phase 04 shipped 的 auth-gated API + API Key hash verify path 做 retroactive threat-mitigation audit，產出 `phases/04-demo-domain/SECURITY.md` 讓 v1.0 從「理論 secure」升級為「文件 self-verified secure」。
@@ -72,7 +74,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 | 3. Auth Foundation                         | v1.0      | 5/5   | Complete    | 2026-04-19 |
 | 4. Demo Domain                             | v1.0      | 4/4   | Complete    | 2026-04-19 |
 | 5. Quality Gate                            | v1.0      | 4/4   | Complete    | 2026-04-20 |
-| 6. CI Pipeline Green-Run & Smoke Validation| v1.1      | 0/0   | Not started | —          |
+| 6. CI Pipeline Green-Run & Smoke Validation| v1.1      | 0/2   | Not started | —          |
 | 7. Phase 04 Security Audit Back-fill       | v1.1      | 0/0   | Not started | —          |
 | 8. ADR Process Self-Check                  | v1.1      | 0/0   | Not started | —          |
 
