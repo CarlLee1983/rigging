@@ -41,6 +41,9 @@ export interface AppDeps {
  * consequence section. No DB pre-warm; /health validates DB at request time (D-02, D-03).
  */
 export function createApp(config: Config, deps: AppDeps = {}) {
+  if (process.env.SMOKE_TRIPWIRE === '1') {
+    throw new Error('Smoke tripwire: createApp intentionally failed for fail-mode #5')
+  }
   const logger = createPinoLogger({ NODE_ENV: config.NODE_ENV, LOG_LEVEL: config.LOG_LEVEL })
   const db = deps.db ?? createDbClient({ DATABASE_URL: config.DATABASE_URL }).db
 

@@ -102,6 +102,8 @@ jobs:
           fi
 
       - name: Smoke (createApp boot + /health 200)
+        env:
+          SMOKE_TRIPWIRE: '1'
         run: bun run smoke
 
       - name: Upload coverage artifact
