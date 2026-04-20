@@ -72,9 +72,9 @@
 
 - [x] `main` (after merge of this work) contains `scripts/validate-adr-frontmatter.ts` and conditional `adr-check` validation steps.
 - [x] Validator fails fast on missing MADR keys or bad title line (`::error::`).
-- [ ] Sacrificial PR fail-mode evidence is **08-02** (manual: branch, malformed ADR, checkbox PR body, `adr-check` red, close without merge).
+- [x] Sacrificial PR fail-mode evidence — see **`08-02-SUMMARY.md`** (PR #3, `adr-check` FAILURE, closed without merge).
 
-ADR-06(a) is **not** claimed complete here — that is **08-02**.
+ADR-06(a) evidence is recorded in **08-02**, not here.
 
 ## Self-Check: PASSED
 

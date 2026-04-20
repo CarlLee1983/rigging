@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 Reference App (MVP)** — Phases 1-5 (shipped 2026-04-20) · [archive](milestones/v1.0-ROADMAP.md)
-- 🚧 **v1.1 Release Validation** — Phases 6-8 (started 2026-04-20)
+- ✅ **v1.1 Release Validation** — Phases 6-8 (complete 2026-04-20)
 
 ## Phases
 
@@ -24,7 +24,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 
 - [x] **Phase 6: CI Pipeline Green-Run & Smoke Validation** — push + PR 驗證 3 jobs + drift-check + `/health` smoke 首次全綠，並逐 gate 製造破壞驗證 fail-mode (completed 2026-04-20)
 - [x] **Phase 7: Phase 04 Security Audit Back-fill** — SEC-01 evidence in `04-SECURITY.md`（CVE + timing-safe + cross-user matrix）(completed 2026-04-20)
-- [ ] **Phase 8: ADR Process Self-Check** — 08-01 done (audit + validator + ADR 0019); **08-02** sacrificial PR fail-mode evidence pending
+- [x] **Phase 8: ADR Process Self-Check** — ADR audit + validator + ADR 0019 + sacrificial PR `adr-check` fail-mode (completed 2026-04-20)
 
 ## Phase Details
 
@@ -66,7 +66,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   4. 若 v1.1 milestone 過程產生新決策（e.g. CI pipeline 改動、smoke step 加入），新 ADR 0019+ 以 MADR 4.0 格式寫入 `docs/decisions/` 並加入索引；若無新決策則在 milestone close summary 明示「v1.1 無新 ADR」
 **Plans**: 2 plans
   - [x] `08-01-PLAN.md` — ADR 0000..0018 + README audit; `validate-adr-frontmatter` + `adr-check` wiring; ADR 0019 or no-new-ADR note (ADR-06 b/c) — completed 2026-04-20
-  - [ ] `08-02-PLAN.md` — Sacrificial PR: malformed ADR + `adr-check` red evidence; `08-02-SUMMARY.md` (ADR-06 a)
+  - [x] `08-02-PLAN.md` — Sacrificial PR: malformed ADR + `adr-check` red evidence; `08-02-SUMMARY.md` (ADR-06 a) — completed 2026-04-20
 
 ## Progress
 
@@ -79,7 +79,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 | 5. Quality Gate                            | v1.0      | 4/4   | Complete    | 2026-04-20 |
 | 6. CI Pipeline Green-Run & Smoke Validation| v1.1      | 2/2   | Complete    | 2026-04-20 |
 | 7. Phase 04 Security Audit Back-fill       | v1.1      | 1/1   | Complete    | 2026-04-20 |
-| 8. ADR Process Self-Check                  | v1.1      | 1/2   | In progress | —          |
+| 8. ADR Process Self-Check                  | v1.1      | 2/2   | Complete    | 2026-04-20 |
 
 ---
 
