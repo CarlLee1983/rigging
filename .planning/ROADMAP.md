@@ -67,7 +67,12 @@ Plans:
   2. `npm show create-rigging` returns package metadata confirming the package is publicly available on the npm registry
   3. `README.md` opens with a "Getting Started" section whose first instruction is `npx create-rigging <project-name>` (not a `git clone`)
   4. `docs/quickstart.md` reflects the scaffold-first workflow — scaffold invocation precedes any environment setup steps
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Version bump (0.0.1 → 0.1.0) + README Getting Started section + What NOT Included cleanup
+- [ ] 10-02-PLAN.md — docs/quickstart.md scaffold-first restructure (Scaffold section first, git clone demoted)
+- [ ] 10-03-PLAN.md — npm publish checkpoint (pre-publish verification + manual human publish)
 
 ## Progress
 
@@ -82,7 +87,7 @@ Plans:
 | 7. Phase 04 Security Audit Back-fill | v1.1 | 1/1 | Complete | 2026-04-20 |
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
-| 10. Publish & Docs | v1.2 | 0/? | Not started | - |
+| 10. Publish & Docs | v1.2 | 0/3 | Not started | - |
 
 ---
 
