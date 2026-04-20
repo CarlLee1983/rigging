@@ -28,7 +28,10 @@ const repoRoot = join(__dirname, '..');
 const templateDest = join(repoRoot, 'packages', 'create-rigging', 'template');
 
 // D-10: directories excluded from generated output (beyond .gitignore)
-const EXCLUDE_PREFIXES = ['.planning/', 'packages/'];
+// tests/unit/scaffold/ contains unit tests for the create-rigging CLI tool itself
+// (they import ../../../packages/create-rigging/lib/helpers.js) — not valid in a
+// generated project, and would cause bun test to fail in generated projects.
+const EXCLUDE_PREFIXES = ['.planning/', 'packages/', 'tests/unit/scaffold/'];
 
 function main() {
   // Clean previous build (idempotent — safe to re-run)
