@@ -21,7 +21,9 @@ jobs:
           else
             echo "required=false" >> "$GITHUB_OUTPUT"
           fi
-      - if: steps.adr-required.outputs.required == 'true'
+      - name: Require new ADR file when checkbox set
+        id: adr-new-files
+        if: steps.adr-required.outputs.required == 'true'
         run: |
           added=$(git diff --name-only --diff-filter=A origin/${{ github.base_ref }}...HEAD -- 'docs/decisions/*.md' | wc -l)
           if [ "$added" -eq 0 ]; then
@@ -29,3 +31,26 @@ jobs:
             exit 1
           fi
           echo "ADR check passed: $added new ADR(s) added."
+      - name: Setup Bun
+        if: steps.adr-required.outputs.required == 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+      - name: Cache bun deps
+        if: steps.adr-required.outputs.required == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - name: Install dependencies
+        if: steps.adr-required.outputs.required == 'true'
+        run: bun install --frozen-lockfile
+      - name: Validate new ADR MADR front matter
+        if: steps.adr-required.outputs.required == 'true'
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            bun run scripts/validate-adr-frontmatter.ts "$file"
+          done < <(git diff --name-only --diff-filter=A "origin/${{ github.base_ref }}"...HEAD -- 'docs/decisions/*.md')

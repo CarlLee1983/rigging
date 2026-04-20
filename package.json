@@ -20,7 +20,8 @@
     "test:coverage": "bun test --coverage --coverage-reporter=lcov && bun run scripts/coverage-gate.ts",
     "test:ci": "bun test --coverage --coverage-reporter=lcov",
     "coverage:gate": "bun run scripts/coverage-gate.ts",
-    "smoke": "bun run scripts/smoke-health.ts"
+    "smoke": "bun run scripts/smoke-health.ts",
+    "validate:adr": "bun run scripts/validate-adr-frontmatter.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.12",

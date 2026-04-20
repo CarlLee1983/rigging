@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Release Validation
 status: in_progress
-stopped_at: Phase 8 discuss-phase complete (2026-04-20) — 08-CONTEXT.md; next $gsd-plan-phase 8
-last_updated: "2026-04-20T12:00:00.000Z"
-last_activity: 2026-04-20 — $gsd-discuss-phase 8 — 08-CONTEXT.md + 08-DISCUSSION-LOG.md
-resume_file: .planning/phases/08-adr-process-self-check/08-CONTEXT.md
+stopped_at: Phase 8 — 08-01 complete (2026-04-20); next 08-02 sacrificial PR on GitHub
+last_updated: "2026-04-20T18:00:00.000Z"
+last_activity: 2026-04-20 — $gsd-execute-phase 8 — 08-01 inline execution
+resume_file: .planning/phases/08-adr-process-self-check/08-02-PLAN.md
 progress:
   total_phases: 3
   completed_phases: 2
@@ -27,12 +27,12 @@ See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milest
 ## Current Position
 
 Milestone: v1.1 Release Validation — IN PROGRESS (2026-04-20)
-Phase: 8 — Context gathered (2026-04-20); next: plan + execute Phase 8 (ADR-06)
-Plan: — (Phase 8 plans TBD until `$gsd-plan-phase 8`)
-Status: Phase 8 discuss complete — `08-CONTEXT.md` (two plans: audit + README, then sacrificial PR mirroring 06-02)
-Last activity: 2026-04-20 — Phase 8 discuss-phase
+Phase: 8 — ADR Process Self-Check (08-01 complete; 08-02 pending)
+Plan: 08-02 (sacrificial PR — manual GitHub)
+Status: 08-01 complete — validator + `adr-check` wiring + ADR 0019 + `08-01-SUMMARY.md`; **08-02** not started
+Last activity: 2026-04-20 — `$gsd-execute-phase 8` inline (08-01)
 
-Progress: v1.1 [======    ]  ~67% (2/3 v1.1 phases execution-complete; Phase 8 planning next)
+Progress: v1.1 [======    ]  ~67% (2/3 v1.1 phases complete; Phase 8 in progress — 1/2 plans)
 
 ## v1.1 Phase Overview
 
@@ -40,7 +40,7 @@ Progress: v1.1 [======    ]  ~67% (2/3 v1.1 phases execution-complete; Phase 8 p
 |-------|--------------------------------------------|-------------------------|----------------|
 | 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | Complete (2026-04-20) |
 | 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Complete (2026-04-20) — 07-01 |
-| 8     | ADR Process Self-Check                     | ADR-06                  | Discuss complete — planning next |
+| 8     | ADR Process Self-Check                     | ADR-06                  | In progress — 08-01 done; 08-02 pending |
 
 Full phase details: `.planning/ROADMAP.md` (section `### 📋 v1.1 Release Validation — Phases 6-8`)
 
@@ -89,7 +89,7 @@ Highlights from v1.0 (carried into v1.1):
 
 ### Pending Todos
 
-- Phase 8 plan — ADR-06 (`$gsd-plan-phase 8` after `08-CONTEXT.md`)
+- Phase 8 plan **08-02** — sacrificial PR + `08-02-SUMMARY.md` (ADR-06(a)); requires merge of 08-01 to `main` first
 
 ### Blockers/Concerns
 
@@ -97,9 +97,10 @@ Highlights from v1.0 (carried into v1.1):
 
 ## Session Continuity
 
-Last session: 2026-04-20T12:00:00.000Z
-Stopped at: Phase 8 discuss-phase complete — `08-CONTEXT.md` / `08-DISCUSSION-LOG.md`.
-Resume file: .planning/phases/08-adr-process-self-check/08-CONTEXT.md
+Last session: 2026-04-20T18:00:00.000Z
+Stopped at: 08-01 execution complete locally — push/merge then run **08-02** (sacrificial PR) on GitHub.
+Resume file: .planning/phases/08-adr-process-self-check/08-02-PLAN.md
 Next options:
-  1. `$gsd-plan-phase 8` — Phase 8 ADR Process Self-Check (ADR-06)
-  2. `$gsd-execute-phase 8` — after plans exist
+  1. Merge 08-01 work to `main` (if not already)
+  2. Follow `08-02-PLAN.md` — branch `phase-8-adr-failmode-demo`, malformed ADR, PR with ADR checkbox, capture failing `adr-check` URL in `08-02-SUMMARY.md`
+  3. `$gsd-execute-phase 8` after merge — resumes at 08-02 if SUMMARY missing
