@@ -5,6 +5,7 @@
 - ✅ **v1.0 Reference App (MVP)** — Phases 1-5 (shipped 2026-04-20) · [archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v1.1 Release Validation** — Phases 6-8 (shipped 2026-04-20) · [archive](milestones/v1.1-ROADMAP.md)
 - ✅ **v1.2 Create Rigging** — Phases 9-10 (shipped 2026-04-20)
+- 🔄 **v1.3 Production Hardening** — Phases 11-13 (in progress)
 
 ## Phases
 
@@ -32,10 +33,19 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 </details>
 
-### v1.2 Create Rigging — Phases 9-10
+<details>
+<summary>✅ v1.2 Create Rigging — Phases 9-10 — SHIPPED 2026-04-20</summary>
 
 - [x] **Phase 9: Scaffold Engine** — Build CLI + template generation machinery with full project output — completed 2026-04-20
 - [x] **Phase 10: Publish & Docs** — Ship `create-rigging` to npm and update documentation entry points — completed 2026-04-20
+
+</details>
+
+### v1.3 Production Hardening — Phases 11-13
+
+- [ ] **Phase 11: Resend Email Adapter** — Replace ConsoleEmailAdapter with a real Resend-backed adapter, configured via environment variables
+- [ ] **Phase 12: Redis Rate Limit Store** — Upgrade the in-memory rate limit store to a Redis-backed persistent store, configured via environment variables
+- [ ] **Phase 13: OpenTelemetry Tracing** — Add an Elysia middleware that emits OTLP-compatible trace spans for every HTTP request
 
 ## Phase Details
 
@@ -74,6 +84,42 @@ Plans:
 - [x] 10-02-PLAN.md — docs/quickstart.md scaffold-first restructure (Scaffold section first, git clone demoted)
 - [x] 10-03-PLAN.md — npm publish checkpoint (pre-publish verification + manual human publish)
 
+### Phase 11: Resend Email Adapter
+**Goal**: A developer deploying to production can configure real email delivery by setting two environment variables, and email verification and password reset flows immediately deliver to real inboxes
+**Depends on**: Nothing (IEmailPort interface already exists; this is a pure adapter swap)
+**Requirements**: PROD-01
+**Success Criteria** (what must be TRUE):
+  1. Setting `RESEND_API_KEY` and `RESEND_FROM_ADDRESS` in the environment causes the application to use `ResendEmailAdapter` instead of `ConsoleEmailAdapter` at startup — no code change required
+  2. A developer who leaves either variable unset receives a clear startup error identifying the missing configuration, not a runtime failure mid-request
+  3. An email verification request (`POST /api/auth/sign-up`) results in a real email arriving at the recipient inbox (verifiable via Resend dashboard or inbox)
+  4. A password reset request (`POST /api/auth/forget-password`) results in a real reset-link email arriving at the recipient inbox
+  5. The existing test suite continues to pass without a real Resend API key — `ConsoleEmailAdapter` remains the default in test environments
+**Plans**: TBD
+
+### Phase 12: Redis Rate Limit Store
+**Goal**: A developer deploying multiple instances (or restarting a single instance) can configure Redis as the rate limit backend, ensuring rate limiting state is shared and persists across restarts
+**Depends on**: Nothing (rate limit plugin already exists; this upgrades its backing store)
+**Requirements**: PROD-02
+**Success Criteria** (what must be TRUE):
+  1. Setting `REDIS_URL` in the environment causes the rate limiter to use a Redis-backed store — no code change required
+  2. Rate limit counters survive application restarts: a client who has consumed N requests before restart still sees those N requests counted after restart
+  3. Two application instances sharing the same Redis URL enforce a single shared rate limit budget, not two independent budgets
+  4. Leaving `REDIS_URL` unset causes the application to fall back to the in-memory store (preserving existing behavior for local development)
+  5. The existing test suite continues to pass without a Redis instance — the in-memory store remains the default for tests
+**Plans**: TBD
+
+### Phase 13: OpenTelemetry Tracing
+**Goal**: Every HTTP request processed by the application automatically produces an OpenTelemetry trace span, collectable by any OTLP-compatible backend without any configuration from the application developer
+**Depends on**: Nothing (new middleware layer on top of existing Elysia app)
+**Requirements**: PROD-03
+**Success Criteria** (what must be TRUE):
+  1. Starting the application with `OTEL_EXPORTER_OTLP_ENDPOINT` set causes trace spans to be exported to that endpoint — no code change required
+  2. Each exported span includes the HTTP route (e.g. `/api/agents/:id`), HTTP method, response status code, and request latency as span attributes
+  3. A developer running a local Jaeger or Grafana Tempo instance can see individual request traces in the UI after exercising any endpoint
+  4. Requests that result in errors (4xx, 5xx) produce spans with appropriate `error` status so they are distinguishable in any OTLP UI
+  5. The existing test suite continues to pass with OTel instrumentation loaded — spans export is a no-op when no exporter endpoint is configured
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans | Status | Completed |
@@ -88,6 +134,9 @@ Plans:
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
+| 11. Resend Email Adapter | v1.3 | 0/? | Not started | - |
+| 12. Redis Rate Limit Store | v1.3 | 0/? | Not started | - |
+| 13. OpenTelemetry Tracing | v1.3 | 0/? | Not started | - |
 
 ---
 
@@ -96,3 +145,4 @@ _v1.0 milestone closed: 2026-04-20 — see `milestones/v1.0-ROADMAP.md`_
 _v1.1 milestone closed: 2026-04-20 — see `milestones/v1.1-ROADMAP.md`_
 _v1.2 roadmap added: 2026-04-20_
 _v1.2 milestone closed: 2026-04-20 — create-rigging@0.1.0 shipped to npm_
+_v1.3 roadmap added: 2026-04-20_

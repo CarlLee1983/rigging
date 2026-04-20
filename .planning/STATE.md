@@ -5,10 +5,10 @@ milestone_name: "Production Hardening"
 status: active
 stopped_at: ""
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 — Milestone v1.3 started (defining requirements)
+last_activity: 2026-04-20 — Roadmap created (3 phases defined)
 resume_file: .planning/ROADMAP.md
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -23,25 +23,29 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.3 Production Hardening st
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** v1.3 Production Hardening — Defining requirements
+**Current focus:** v1.3 Production Hardening — Phase 11 next (Resend Email Adapter)
 
 ## Current Position
 
 Milestone: **v1.3 Production Hardening** — In Progress
 
-Phase: Not started (defining requirements)
+Phase: Phase 11 (not started)
 
 Plan: —
 
-Status: Defining requirements
+Status: Roadmap created — ready for planning
 
-Last activity: 2026-04-20 — Milestone v1.3 started
+Last activity: 2026-04-20 — Roadmap created (3 phases: 11 Resend Email, 12 Redis Rate Limit, 13 OTel Tracing)
 
-Progress: ░░░░░░░░░░ 0% (0/? phases complete)
+Progress: ░░░░░░░░░░ 0% (0/3 phases complete)
 
 ## v1.3 Phase Overview
 
-_(To be populated after roadmap is created)_
+| Phase | Name | Requirements | Status |
+|-------|------|--------------|--------|
+| 11 | Resend Email Adapter | PROD-01 | Not started |
+| 12 | Redis Rate Limit Store | PROD-02 | Not started |
+| 13 | OpenTelemetry Tracing | PROD-03 | Not started |
 
 ## v1.2 Phase Overview (archived)
 
@@ -68,6 +72,12 @@ Full phase details: `milestones/v1.1-ROADMAP.md`
 
 See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes).
 
+### v1.3 Architecture Notes
+
+- **PROD-01**: `IEmailPort` interface already exists; `ResendEmailAdapter` is a pure adapter swap. No domain change. Env vars: `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`. Default to `ConsoleEmailAdapter` when unset (preserves test behavior).
+- **PROD-02**: Elysia's built-in rate limiter in use. Redis upgrade via env var `REDIS_URL`; falls back to in-memory when unset. Will need ADR if introducing new infrastructure dependency.
+- **PROD-03**: New Elysia middleware (plugin) layer. OTLP export via `OTEL_EXPORTER_OTLP_ENDPOINT`. No-op when env var absent. Spans must include route, method, status, latency. Will need ADR for OTel SDK choice.
+
 ### Pending Todos
 
 - _(none)_
@@ -80,8 +90,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-20
 
-Stopped at: v1.3 milestone started — requirements phase
+Stopped at: Roadmap created for v1.3
 
 Resume file: `.planning/ROADMAP.md`
 
-Next: Define requirements → create roadmap → `$gsd-plan-phase 11`
+Next: `$gsd-plan-phase 11`

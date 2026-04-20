@@ -61,15 +61,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROD-01 | — | Pending |
-| PROD-02 | — | Pending |
-| PROD-03 | — | Pending |
+| PROD-01 | Phase 11 | Pending |
+| PROD-02 | Phase 12 | Pending |
+| PROD-03 | Phase 13 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 3 total
-- Mapped to phases: 0 (to be filled by roadmapper)
-- Unmapped: 3
+- Mapped to phases: 3
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 — initial v1.3 requirements*
+*Last updated: 2026-04-20 — traceability table populated after roadmap creation*
