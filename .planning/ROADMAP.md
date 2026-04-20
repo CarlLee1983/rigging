@@ -52,7 +52,8 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   3. 該文件記錄 CVE-2025-61928 attack pattern 在 v1.1 head commit 上的 regression 現況（test 名稱 + 通過狀態）
   4. 該文件驗證 API Key hash verify path 為 timing-safe compare（引用現有 1000-iter ratio 0.006 benchmark 或補做一次）
   5. 該文件確認 cross-user 404 matrix 在 Phase 04 代碼 4 個動詞（read/update/delete/list）上皆覆蓋（測試檔 + 行號舉證）
-**Plans**: TBD
+**Plans**: 1 plan
+  - [ ] 07-01-PLAN.md — SEC-01 compliance evidence: run evidence suites + add CVE/timing-safe/cross-user sections to 04-SECURITY.md (D-07 Branch B)
 
 ### Phase 8: ADR Process Self-Check
 **Goal**: 驗證 ADR 機制（MADR 4.0 格式 + `adr-check` PR workflow + `docs/decisions/README.md` 索引）在 v1.1 實務上能運作，並整理 ADR 0000..0018 的 status 欄；若 v1.1 過程有新決策，補寫 ADR 0019+。
@@ -75,7 +76,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 | 4. Demo Domain                             | v1.0      | 4/4   | Complete    | 2026-04-19 |
 | 5. Quality Gate                            | v1.0      | 4/4   | Complete    | 2026-04-20 |
 | 6. CI Pipeline Green-Run & Smoke Validation| v1.1      | 2/2   | Complete    | 2026-04-20 |
-| 7. Phase 04 Security Audit Back-fill       | v1.1      | 0/0   | Not started | —          |
+| 7. Phase 04 Security Audit Back-fill       | v1.1      | 1/1   | In progress | —          |
 | 8. ADR Process Self-Check                  | v1.1      | 0/0   | Not started | —          |
 
 ---
