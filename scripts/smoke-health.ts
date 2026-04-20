@@ -32,6 +32,8 @@ async function main() {
   }
 
   console.log('✓ Smoke OK — createApp boot + /health 200 + db up')
+  // postgres-js keeps the pool open; without an explicit exit, the runner would hang after success.
+  process.exit(0)
 }
 
 main().catch((err) => {
