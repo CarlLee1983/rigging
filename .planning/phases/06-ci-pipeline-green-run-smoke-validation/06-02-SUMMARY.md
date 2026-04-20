@@ -13,7 +13,7 @@
 |---|-----------|------------------------|---------------------|---------------|
 | 1 | Lint (biome noDebugger) | `src/main.ts` 加 `debugger` statement（biome `recommended` → `noDebugger` error） | `CI / Lint (biome check)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653524789/job/72081452273 |
 | 2 | Typecheck (unused @ts-expect-error) | `src/main.ts`: `// @ts-expect-error` 放在 `const config = loadConfig()` 之前（無型別錯可壓抑） | `CI / Typecheck (tsc --noEmit)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653608782/job/72081720411 |
-| 3 | Test (flipped assertion) | — | — | — |
+| 3 | Test (flipped assertion) | `tests/unit/health/check-health.usecase.test.ts:13`: `ok: true` → `ok: false`（`CheckHealthUseCase > DB up → ok:true` 會 fail） | `CI / Test + coverage gate + migration drift` → `Test (with coverage)` step | https://github.com/CarlLee1983/rigging/actions/runs/24653675915/job/72081938123 |
 | 4 | Drift (unused column, no migration) | — | — | — |
 | 5 | Smoke (SMOKE_TRIPWIRE env tripwire) | — | — | — |
 
