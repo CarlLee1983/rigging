@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Release Validation
-status: phase_complete
-stopped_at: Phase 6 complete (2026-04-20) — CI-04 + CI-05 + OBS-01 validated; ready for Phase 7 discuss/plan
+status: in_progress
+stopped_at: Phase 7 context gathered (2026-04-20) — SEC-01 decisions in 07-CONTEXT.md; ready for $gsd-plan-phase 7
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- Phase 6 execution complete; gsd-verifier passed 15/15 must_haves, nyquist_compliant true; VERIFICATION.md committed (9e26787)
-resume_file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-VERIFICATION.md
+last_activity: 2026-04-20 -- $gsd-discuss-phase 7 complete; 07-CONTEXT.md + 07-DISCUSSION-LOG.md written
+resume_file: .planning/phases/07-phase-04-security-audit-back-fill/07-CONTEXT.md
 progress:
   total_phases: 3
   completed_phases: 1
@@ -27,19 +27,19 @@ See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milest
 ## Current Position
 
 Milestone: v1.1 Release Validation — IN PROGRESS (2026-04-20)
-Phase: 6 — Complete (2026-04-20); next: Phase 7 Security Audit Back-fill (SEC-01)
+Phase: 7 — Discuss complete (2026-04-20); next: `$gsd-plan-phase 7` (SEC-01 back-fill)
 Plan: —
-Status: Phase 6 gsd-verifier passed 15/15 must_haves (CI-04 + CI-05 + OBS-01); ready for `$gsd-discuss-phase 7` or `$gsd-plan-phase 7`
-Last activity: 2026-04-20 — `/gsd-execute-phase 6` completed; PR #1 merged (green baseline), PR #2 CLOSED not merged (5-row fail-mode matrix), VERIFICATION.md status=passed
+Status: Phase 7 discuss-phase delivered 07-CONTEXT.md (delta on 04-SECURITY.md + CVE/timing/matrix evidence locks)
+Last activity: 2026-04-20 — `$gsd-discuss-phase 7` — context + discussion log committed
 
-Progress: v1.1 [===       ]  ~33% (1/3 phases complete, 2/2 plans in Phase 6)
+Progress: v1.1 [===       ]  ~33% (1/3 phases execution-complete; Phase 7 planning next)
 
 ## v1.1 Phase Overview
 
 | Phase | Name                                       | Requirements            | Status         |
 |-------|--------------------------------------------|-------------------------|----------------|
 | 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | Complete (2026-04-20) |
-| 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Not started    |
+| 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Context ready (2026-04-20) |
 | 8     | ADR Process Self-Check                     | ADR-06                  | Not started    |
 
 Full phase details: `.planning/ROADMAP.md` (section `### 📋 v1.1 Release Validation — Phases 6-8`)
@@ -98,9 +98,8 @@ Highlights from v1.0 (carried into v1.1):
 ## Session Continuity
 
 Last session: 2026-04-20T00:00:00.000Z
-Stopped at: Phase 6 discuss-phase complete — 06-CONTEXT.md + 06-DISCUSSION-LOG.md committed. Six structural decisions locked (plan split, order, acceptance, merge, sacrificial PR, fail-mode scope).
-Resume file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-CONTEXT.md
+Stopped at: Phase 7 discuss-phase complete — 07-CONTEXT.md + 07-DISCUSSION-LOG.md committed (SEC-01: delta on 04-SECURITY.md, CVE + timing + cross-user matrix locks).
+Resume file: .planning/phases/07-phase-04-security-audit-back-fill/07-CONTEXT.md
 Next options:
-  1. `$gsd-plan-phase 6` — write PLAN.md for Phase 6 (Plan 1 green + smoke, Plan 2 fail-mode matrix)
-  2. `$gsd-plan-phase 7` — skip Phase 6 planning temporarily, start Phase 7 (SEC-01 Phase 04 security audit back-fill) in parallel
-  3. `$gsd-discuss-phase 7` — gather context for Phase 7 before planning (if SEC-01 approach needs discussion)
+  1. `$gsd-plan-phase 7` — write PLAN.md for Phase 7 (04-SECURITY.md SEC-01 evidence + optional list-verb test)
+  2. `$gsd-execute-phase 7` — after plan exists
