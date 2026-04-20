@@ -74,6 +74,7 @@ created: 2026-04-20
 | Audit Date | Threats Total | Closed | Open | Run By |
 |------------|---------------|--------|------|--------|
 | 2026-04-20 | 19 | 19 | 0 | Claude Code ($gsd-secure-phase 04, State B run-from-artifacts) |
+| 2026-04-20 | 19 | 19 | 0 | Claude Code ($gsd-secure-phase 04, State A re-verification) |
 
 ### Audit 2026-04-20 — Run-from-Artifacts (State B)
 
@@ -82,6 +83,19 @@ created: 2026-04-20
 - No open threats — 16 dispositions verified as `mitigate` (control exists in code), 3 as `accept` (documented in Accepted Risks Log above).
 - Deviation noted (not security-regressing): T-04-09 `MAX_RETRY` raised 3 → 24 to support monotonic parallel integration test; still bounded; documented in `04-04-SUMMARY.md` Adopted Scope Deviations.
 - Step 4 user gate (AskUserQuestion) and Step 5 auditor spawn both skipped per workflow rule: `threats_open: 0 → skip to Step 6 directly`.
+
+### Audit 2026-04-20 — Re-verification (State A)
+
+- Trigger: 使用者再次呼叫 `$gsd-secure-phase 04`；SECURITY.md 已存在，入口進入 State A「audit existing」分支。
+- Spot-check sample (5/19)：重新 grep 關鍵證據鏈，確認稽核底稿仍有效——
+  - **T-04-01** `RESOURCE_NOT_FOUND` 常數存在於 `src/shared/kernel/errors.ts:47-49` ✓
+  - **T-04-03** 3× `onDelete: 'cascade'` 仍在 `src/agents/infrastructure/schema/{agent,eval-dataset,prompt-version}.schema.ts` ✓
+  - **T-04-04** `biome.json` 對 `src/**/domain/**` 的 6 條 `noRestrictedImports`（drizzle-orm / postgres / elysia / better-auth / @bogeychan/elysia-logger / pino）皆存在並含 ADR 引用 ✓
+  - **T-04-09** `MAX_RETRY = 24` 仍在 `src/agents/application/usecases/create-prompt-version.usecase.ts:19` ✓
+  - **T-04-11** `tests/integration/agents/module-smoke.test.ts` 等 9 支整合測試檔案齊備 ✓
+- 無新威脅引入（自 2026-04-20 B 輪以來 `src/agents/**`、`drizzle/0002_demo_domain.sql`、`biome.json` 未再變更）。
+- 3 項 Accepted Risks (AR-04-01/02/03) 狀態維持不變。
+- Step 4 gate 與 Step 5 auditor spawn 再次依 `threats_open: 0 → skip to Step 6` 規則略過。
 
 ---
 
@@ -92,4 +106,4 @@ created: 2026-04-20
 - [x] `threats_open: 0` confirmed
 - [x] `status: verified` set in frontmatter
 
-**Approval:** verified 2026-04-20
+**Approval:** verified 2026-04-20 (re-verified 2026-04-20 via State A spot-check)
