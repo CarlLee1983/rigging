@@ -49,8 +49,8 @@ created: 2026-04-20
 
 | Requirement | Success Criteria | Verification Signal | Signal Source | Sampling Trigger | Status |
 |-------------|------------------|---------------------|---------------|------------------|--------|
-| **CI-04** (SC #1) | 非 master 分支 PR 首次全綠 (lint/typecheck/test+coverage/drift) | 4 個 check run item 皆 `SUCCESS` | `gh pr checks <PR#>` + PR 頁面 URL | Plan 1 PR push 後 | ⬜ pending |
-| **OBS-01** (SC #2) | smoke step 真實 boot `createApp` + HTTP GET `/health` → 200 | `smoke` step `SUCCESS` + log 顯示 `/health -> 200` | ci.yml `smoke` step log + check run URL | Plan 1 PR push 後 | ⬜ pending |
+| **CI-04** (SC #1) | 非 master 分支 PR 首次全綠 (lint/typecheck/test+coverage/drift) | 4 個 check run item 皆 `SUCCESS` | `gh pr checks <PR#>` + PR 頁面 URL | Plan 1 PR push 後 | ✅ green |
+| **OBS-01** (SC #2) | smoke step 真實 boot `createApp` + HTTP GET `/health` → 200 | `smoke` step `SUCCESS` + log 顯示 `/health -> 200` | ci.yml `smoke` step log + check run URL | Plan 1 PR push 後 | ✅ green |
 | **CI-05** FM#1 lint (SC #3) | 刻意 biome lint 錯誤 → `lint` job 紅燈 | `lint` job `FAILURE`；其他 3 job 不必紅 | Plan 2 PR push#1 check run URL | Plan 2 force-push #1 | ⬜ pending |
 | **CI-05** FM#2 typecheck (SC #4a) | 刻意 `@ts-expect-error` 無誤用 → `typecheck` job 紅 | `typecheck` job `FAILURE` | Plan 2 PR push#2 check run URL | Plan 2 force-push #2 | ⬜ pending |
 | **CI-05** FM#3 test (SC #4b) | 刻意刪/改 test assertion → `test` job 紅 | `test` job step (test) `FAILURE` | Plan 2 PR push#3 check run URL | Plan 2 force-push #3 | ⬜ pending |
@@ -69,8 +69,8 @@ created: 2026-04-20
 
 - [x] Bun test framework 已存在（Phase 1-5 持續使用）—— 不需新裝
 - [x] `bun run test:ci` / `coverage:gate` / `db:generate` 既有 script 不需新增
-- [ ] **Plan 1 Wave 0:** 新增 `scripts/smoke-health.ts` 檔案 stub + `package.json` 新增 `"smoke": "bun run scripts/smoke-health.ts"`
-- [ ] **Plan 1 Wave 0:** `.github/workflows/ci.yml` `test` job `env` 補 `PORT: 3000`（若 smoke 需 `loadConfig()` 跑過 PORT 驗證）
+- [x] **Plan 1 Wave 0:** 新增 `scripts/smoke-health.ts` 檔案 stub + `package.json` 新增 `"smoke": "bun run scripts/smoke-health.ts"`
+- [x] **Plan 1 Wave 0:** `.github/workflows/ci.yml` `test` job `env` 補 `PORT: 3000`（若 smoke 需 `loadConfig()` 跑過 PORT 驗證）
 - [ ] **Plan 2 Wave 0:** sacrificial PR branch 建立（e.g. `experiment/ci-fail-mode-matrix`），base = Plan 1 merge 後的 main HEAD
 
 ---
@@ -89,7 +89,7 @@ created: 2026-04-20
 
 - [ ] 每個 Plan 1 / Plan 2 task 皆有 `<acceptance_criteria>` 可以 grep / gh / shell 驗證（planner 必須產出）
 - [ ] 連續 3 個 task 不得皆缺 automated verify（planner 必須確保）
-- [ ] Wave 0 `smoke` script 落地 + `PORT` env 補上
+- [x] Wave 0 `smoke` script 落地 + `PORT` env 補上（含 `DATABASE_URL` → `postgresql://` scheme）
 - [ ] No watch-mode flags in CI
 - [ ] Feedback latency < 60s local / < 6min CI
 - [ ] 5 種 fail-mode 各有獨立 check run URL 舉證，無 cancelled evidence
