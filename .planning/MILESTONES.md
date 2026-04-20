@@ -58,4 +58,31 @@ Historical record of shipped versions. Detailed archives live in `.planning/mile
 
 ---
 
-_Last updated: 2026-04-20 after v1.0 milestone close_
+## v1.1 — Release Validation
+
+**Shipped:** 2026-04-20
+**Timeline:** 2026-04-20 (execution wave; ~38 commits since tag `v1.0`)
+**Phases:** 6 → 8 (3 phases / 5 plans complete)
+**Requirements:** 5 v1.1 IDs (CI-04, CI-05, OBS-01, SEC-01, ADR-06) — see `milestones/v1.1-REQUIREMENTS.md`
+**Known deferred items at close:** 1 — Phase 3 `03-VERIFICATION.md` `human_needed` (see `STATE.md` Deferred Items)
+
+### Delivered
+
+Release hygiene milestone：GitHub Actions 在真實 PR 上首次全綠 + 五類 fail-mode 舉證；`04-SECURITY.md` SEC-01 補齊；ADR 0019 + `validate-adr-frontmatter` + sacrificial PR #3 證明 `adr-check` 可擋 malformed ADR。
+
+### Key Accomplishments
+
+1. **CI self-verified** — PR #1 merged baseline；PR #2 closed not merged — lint / typecheck / test / drift / smoke 紅燈證據（`06-02-SUMMARY.md`）。
+2. **SECURITY evidence** — Phase 7 將 CVE / timing-safe / cross-user matrix 寫入 `04-SECURITY.md`（`07-01-SUMMARY.md`）。
+3. **ADR gate** — PR #3 + `adr-check` FAILURE URL；README 與 0000..0018 審計（`08-01-SUMMARY.md`, `08-02-SUMMARY.md`）。
+4. **Smoke as last gate** — `scripts/smoke-health.ts` + OBS-01 與 fail-mode #5。
+
+### Archives
+
+- Roadmap: `milestones/v1.1-ROADMAP.md`
+- Requirements: `milestones/v1.1-REQUIREMENTS.md`
+- Phase directories: `.planning/phases/06-*` … `08-*`（可用 `$gsd-cleanup` 後續歸檔）
+
+---
+
+_Last updated: 2026-04-20 after v1.1 milestone close_

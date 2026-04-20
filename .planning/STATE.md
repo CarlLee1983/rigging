@@ -1,40 +1,43 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Release Validation
-status: completed
-stopped_at: v1.1 Release Validation — Phases 6–8 complete (2026-04-20); Phase 8 `08-02-SUMMARY.md` landed
-last_updated: "2026-04-20T20:00:00.000Z"
-last_activity: 2026-04-20 — $gsd-execute-phase 8 — 08-02 sacrificial PR + evidence
+milestone: pending_next
+milestone_name: ""
+status: between_milestones
+stopped_at: v1.1 archived — milestone close 2026-04-20
+last_updated: "2026-04-20T22:00:00.000Z"
+last_activity: 2026-04-20 — $gsd-complete-milestone v1.1
 resume_file: .planning/ROADMAP.md
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milestone started)
+See: `.planning/PROJECT.md` (updated 2026-04-20 — after v1.1 milestone close)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
-**Current focus:** v1.1 Release Validation — 收尾 milestone，CI 首跑綠燈 / Phase 04 SECURITY audit / ADR self-check / Observability smoke
+
+**Current focus:** Planning next milestone — `$gsd-new-milestone` (fresh `REQUIREMENTS.md`).
 
 ## Current Position
 
-Milestone: v1.1 Release Validation — COMPLETE (2026-04-20)
-Phase: 8 — ADR Process Self-Check — **complete** (`08-01` + `08-02` SUMMARYs)
+Milestone: **—** (v1.1 closed and archived)
+
+Phase: —
+
 Plan: —
-Status: Phase 8 done — malformed-ADR sacrificial PR #3 closed without merge; `08-02-SUMMARY.md` records `adr-check` FAILURE URL
-Last activity: 2026-04-20 — Phase 8 `08-02` executed (GitHub)
 
-Progress: v1.1 [==========] 100% (3/3 phases; 5/5 plans)
+Status: Between milestones — `REQUIREMENTS.md` removed; archives `milestones/v1.1-ROADMAP.md`, `milestones/v1.1-REQUIREMENTS.md`
 
-## v1.1 Phase Overview
+Last activity: 2026-04-20 — v1.1 milestone archived; git tag `v1.1`
+
+## v1.1 Phase Overview (archived)
 
 | Phase | Name                                       | Requirements            | Status         |
 |-------|--------------------------------------------|-------------------------|----------------|
@@ -42,7 +45,7 @@ Progress: v1.1 [==========] 100% (3/3 phases; 5/5 plans)
 | 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Complete (2026-04-20) — 07-01 |
 | 8     | ADR Process Self-Check                     | ADR-06                  | Complete (2026-04-20) — 08-01 + 08-02 |
 
-Full phase details: `.planning/ROADMAP.md` (section `### 📋 v1.1 Release Validation — Phases 6-8`)
+Full phase details: `milestones/v1.1-ROADMAP.md`
 
 ## v1.0 Retrospective Snapshot
 
@@ -60,46 +63,36 @@ Recent plans (final reconcile-in-place + docs):
 - Full test suite: 221 pass / 1 skip / 0 fail (unit 140 + integration 59 + e2e 11 + contract/regression 11)
 - Coverage gate: 100% lines / 100% functions (33 files in domain+application+kernel)
 
-## Deferred Items (acknowledged at v1.0 close — status updated 2026-04-20)
+## Deferred Items (acknowledged at v1.1 milestone close — 2026-04-20)
 
-Items carried forward from v1.0 close. With v1.1 roadmap landed, most are now scheduled into Phases 6-8:
+From `audit-open` at milestone close:
 
 | Category | Item | Status |
 |----------|------|--------|
-| secure-phase | Phase 04 SECURITY audit (`$gsd-secure-phase 04`) | Scheduled — Phase 7 (SEC-01) |
-| verification | CI first real run (GitHub Actions after push + PR) | Scheduled — Phase 6 (CI-04) + fail-mode Phase 6 (CI-05) |
-| verification | CI smoke step (createApp + `/health` ping) | Scheduled — Phase 6 (OBS-01) |
-| process | ADR process self-check + status audit | Scheduled — Phase 8 (ADR-06) |
-| doc-hygiene | REQUIREMENTS.md traceability table fidelity | Resolved via archive — `milestones/v1.0-REQUIREMENTS.md` is source of truth |
-| doc-hygiene | Phase 5 plan-level SUMMARY (05-01/02/03) | Accepted — phase-level `05-SUMMARY.md` Plan Completion Matrix covers |
+| verification | Phase 03 `03-VERIFICATION.md` — `human_needed` (optional SC1/SC2 manual API flows; 7/7 automated truths) | Deferred — optional human UAT |
+
+v1.0 carry-forward items (CI / SECURITY / ADR / smoke) were **shipped in v1.1** — see `milestones/v1.1-REQUIREMENTS.md`.
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table (updated 2026-04-20 with outcomes for all 18 v1 entries).
-
-Highlights from v1.0 (carried into v1.1):
-
-- Stack locked and proved: Bun 1.3.12 + Elysia 1.4.28 + Drizzle 0.45.2 + BetterAuth 1.6.5 + postgres-js 3.4.9
-- Adopted-scope commit pattern (Phase 4/5 both applied) ✓ Good
-- BetterAuth integration ⚠️ Revisit — API Key hash-lookup correction + AUTH-11 wrap revokeSessions (ADR 0016)
-- Integration tests shared Postgres (ADR 0018, adopted deviation) ⚠️ Revisit — trade-off on test isolation
-- 19 ADRs in index (0000..0019), MADR 4.0 + `validate-adr-frontmatter` + sacrificial PR fail-mode verified (Phase 8)
+See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes).
 
 ### Pending Todos
 
-- _(none for v1.1 roadmap — Phases 6–8 execution-complete)_
+- _(none)_
 
 ### Blockers/Concerns
 
-- None. v1.1 roadmap is internally coherent (100% requirement coverage, 3 phases, observable success criteria, no orphans). Phase 8 soft-depends on Phase 6 only in that `adr-check` gate behavior is best verified after CI infrastructure has had a clean run; Phase 7 is fully independent and could run in parallel if desired.
+- None.
 
 ## Session Continuity
 
-Last session: 2026-04-20T20:00:00.000Z
-Stopped at: Phase 8 complete — PR https://github.com/CarlLee1983/rigging/pull/3 closed (merged=false); evidence in `08-02-SUMMARY.md`.
+Last session: 2026-04-20
+
+Stopped at: v1.1 archived — tag `v1.1` (local)
+
 Resume file: `.planning/ROADMAP.md`
-Next options:
-  1. Milestone close / archive v1.1 if desired (`$gsd-complete-milestone` or project ritual)
-  2. `$gsd-progress` — confirm roadmap + STATE
+
+Next: `$gsd-new-milestone`
