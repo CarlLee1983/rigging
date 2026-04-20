@@ -19,7 +19,8 @@
     "test:regression": "bun test tests/integration/auth/*.regression.test.ts",
     "test:coverage": "bun test --coverage --coverage-reporter=lcov && bun run scripts/coverage-gate.ts",
     "test:ci": "bun test --coverage --coverage-reporter=lcov",
-    "coverage:gate": "bun run scripts/coverage-gate.ts"
+    "coverage:gate": "bun run scripts/coverage-gate.ts",
+    "smoke": "bun run scripts/smoke-health.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.12",
