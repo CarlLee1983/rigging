@@ -1,75 +1,75 @@
-# Requirements: Rigging v1.2 Create Rigging
+# Requirements: Rigging v1.3 Production Hardening
 
 **Defined:** 2026-04-20
 **Core Value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-## v1.2 Requirements
+## v1.3 Requirements
 
-### CLI & Distribution
+### Email Delivery
 
-- [ ] **SCAF-01**: Developer can run `npx create-rigging <project-name>` to scaffold a new project
-- [ ] **SCAF-02**: `create-rigging` package is published to npm (public) and invocable via `npx`
+- [ ] **PROD-01**: Developer can configure a Resend API key and sender address via environment variables so that email verification and password reset emails are delivered to real inboxes in production (replacing ConsoleEmailAdapter)
 
-### Template Generation
+### Rate Limiting
 
-- [ ] **SCAF-03**: Generated project contains full reference app — DDD 四層 + AuthContext + demo domain + tests + CI workflow
-- [ ] **SCAF-04**: Project name is automatically substituted in `package.json` and relevant identifiers throughout the generated codebase
-- [ ] **SCAF-05**: `.planning/` directory and scaffold-internal files are excluded from generated output
-- [ ] **SCAF-06**: Generated project includes `.env.example` with all required environment variables documented
+- [ ] **PROD-02**: Developer can enable a Redis-backed rate limit store via environment configuration so that rate limiting state survives application restarts and is shared across multiple instances
 
-### Developer Experience
+### Observability
 
-- [ ] **SCAF-07**: CLI outputs clear next-steps guidance after scaffolding (cd / bun install / docker compose up / bun test)
-- [ ] **SCAF-08**: `README.md` and `docs/quickstart.md` updated to use scaffold as primary entry point
+- [ ] **PROD-03**: All HTTP requests automatically emit OpenTelemetry trace spans (route, method, status code, latency) via an Elysia middleware, collectable by any OTLP-compatible backend
 
 ## Future Requirements
 
-### Extended Scaffold Options (v1.3+)
+### Extended Email (v1.4+)
 
-- **SCAF-09**: Interactive mode — CLI prompts for optional features (demo domain yes/no, CI yes/no)
-- **SCAF-10**: Minimal harness variant — DDD skeleton + AuthContext only, no demo domain
+- **PROD-01b**: Postmark email adapter (alternative to Resend)
+- **PROD-01c**: Bounce / delivery status webhook endpoint (`POST /webhooks/email`)
 
-### Production Hardening (v1.3+)
+### Extended Rate Limiting (v1.4+)
 
-- **PROD-01**: Real email adapter (Resend / Postmark) + bounce handling
-- **PROD-02**: Rate limit persistent store
-- **PROD-03**: OpenTelemetry instrumentation
+- **PROD-02b**: PostgreSQL-backed rate limit store (no extra infra)
+- **PROD-02c**: Rate limit response headers (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `Retry-After`)
 
-### Extended Identity (v1.3+)
+### Extended Observability (v1.4+)
+
+- **PROD-03b**: Drizzle DB query spans in traces
+- **PROD-03c**: OTLP metrics export (request count, latency histogram, error rate)
+
+### Extended Identity (v1.4+)
 
 - **IDN-01**: OAuth provider login (GitHub / Google)
 - **IDN-02**: Two-factor authentication (TOTP)
 - **IDN-03**: Magic link login
 
+### Extended Scaffold (v1.4+)
+
+- **SCAF-09**: Interactive CLI mode (optional feature prompts)
+- **SCAF-10**: Minimal harness variant (DDD skeleton + AuthContext only)
+
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Interactive feature selection | v1.2 先用 opinionated 單一輸出；互動式選項留 v1.3 |
-| Multiple template variants | 先驗證完整 reference app 複本的 UX，再抽最小化變體 |
-| GitHub template repo | CLI 是主要分發管道；GitHub template 為替代方案留 v1.3+ |
-| Monorepo structure | 單 CLI 套件已足夠；monorepo 是過度設計 |
+| Postmark adapter | Resend covers v1.3; Postmark is additive and can be its own phase |
+| Bounce webhooks | Requires external webhook infrastructure; deferred to v1.4 |
+| DB-backed rate limit | Redis is the standard; Postgres fallback is additive, not blocking |
+| DB query spans | HTTP traces deliver the core observability value; DB spans are additive |
+| OTel metrics | Traces first; metrics require separate instrumentation setup |
+| OAuth / SSO / 2FA | Deferred IDN-01..03, not blocking production hardening |
 | 前端 UI | API-first 設計持續有效 |
-| OAuth / SSO / 2FA / Magic Link | 留 IDN-01..03 候選池 |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCAF-01 | Phase 9 | Pending |
-| SCAF-02 | Phase 10 | Pending |
-| SCAF-03 | Phase 9 | Pending |
-| SCAF-04 | Phase 9 | Pending |
-| SCAF-05 | Phase 9 | Pending |
-| SCAF-06 | Phase 9 | Pending |
-| SCAF-07 | Phase 9 | Pending |
-| SCAF-08 | Phase 10 | Pending |
+| PROD-01 | — | Pending |
+| PROD-02 | — | Pending |
+| PROD-03 | — | Pending |
 
 **Coverage:**
-- v1.2 requirements: 8 total
-- Mapped to phases: 8 (100%) ✓
-- Unmapped: 0
+- v1.3 requirements: 3 total
+- Mapped to phases: 0 (to be filled by roadmapper)
+- Unmapped: 3
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 — traceability mapped after v1.2 roadmap creation*
+*Last updated: 2026-04-20 — initial v1.3 requirements*
