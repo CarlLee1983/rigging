@@ -12,8 +12,8 @@
 
 ### CI Pipeline Validation (CI-04..05)
 
-- [ ] **CI-04**: 在 master 以外的分支 push commit 並開 PR 後，GitHub Actions 三個 parallel jobs（`lint` / `typecheck` / `test+coverage`）與 `migration-drift` job 首次實跑且全數 green；PR check summary 可看到 ≥4 個 check items 全綠
-- [ ] **CI-05**: 任一 CI gate 破壞時 PR 會被擋下（fail-mode 驗證）——刻意製造以下 4 種狀況之一並在 PR 上觀察結果：biome lint 錯誤 → lint job fail / `// @ts-expect-error` 無誤用 → typecheck fail / 砍掉一個必經 test → test job fail / 手動改 schema 不補 migration → migration-drift fail
+- [x] **CI-04**: 在 master 以外的分支 push commit 並開 PR 後，GitHub Actions 三個 parallel jobs（`lint` / `typecheck` / `test+coverage`）與 `migration-drift` job 首次實跑且全數 green；PR check summary 可看到 ≥4 個 check items 全綠 — **Validated Phase 6 / Plan 1 (2026-04-20)** — PR #1 merged `bf9eaf4`, run `24652628305` all green
+- [x] **CI-05**: 任一 CI gate 破壞時 PR 會被擋下（fail-mode 驗證）——刻意製造以下 4 種狀況之一並在 PR 上觀察結果：biome lint 錯誤 → lint job fail / `// @ts-expect-error` 無誤用 → typecheck fail / 砍掉一個必經 test → test job fail / 手動改 schema 不補 migration → migration-drift fail — **Validated Phase 6 / Plan 2 (2026-04-20)** — PR #2 CLOSED (not merged); 5 independent red CI runs captured in `06-02-SUMMARY.md`
 
 ### Security Audit Back-fill (SEC-01)
 
@@ -25,7 +25,7 @@
 
 ### Observability Smoke (OBS-01)
 
-- [ ] **OBS-01**: CI 新增 smoke step——`createApp(config)` 實際 boot 後對 `/health` 發真 HTTP request 並驗 200 OK；此 step 為 PR gate 的最後一關（所有型別與 test 都過但 app 起不來時會 red）；同時驗證 smoke fail-mode（故意破壞 config 校驗或 plugin wiring）確實會擋 PR
+- [x] **OBS-01**: CI 新增 smoke step——`createApp(config)` 實際 boot 後對 `/health` 發真 HTTP request 並驗 200 OK；此 step 為 PR gate 的最後一關（所有型別與 test 都過但 app 起不來時會 red）；同時驗證 smoke fail-mode（故意破壞 config 校驗或 plugin wiring）確實會擋 PR — **Validated Phase 6 / Plans 1+2 (2026-04-20)** — `scripts/smoke-health.ts` + ci.yml smoke step green on PR #1; smoke fail-mode red (`SMOKE_TRIPWIRE`) on PR #2 row #5
 
 ---
 
@@ -69,9 +69,9 @@ v1.1 是 hygiene milestone，專心關閉 v1.0 遺留；以下明確不在 v1.1 
 
 | REQ-ID | Phase    | Status  |
 |--------|----------|---------|
-| CI-04  | Phase 6  | Pending |
-| CI-05  | Phase 6  | Pending |
-| OBS-01 | Phase 6  | Pending |
+| CI-04  | Phase 6  | Validated (2026-04-20) |
+| CI-05  | Phase 6  | Validated (2026-04-20) |
+| OBS-01 | Phase 6  | Validated (2026-04-20) |
 | SEC-01 | Phase 7  | Pending |
 | ADR-06 | Phase 8  | Pending |
 
