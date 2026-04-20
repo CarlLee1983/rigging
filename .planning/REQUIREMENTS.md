@@ -56,20 +56,20 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCAF-01 | TBD | Pending |
-| SCAF-02 | TBD | Pending |
-| SCAF-03 | TBD | Pending |
-| SCAF-04 | TBD | Pending |
-| SCAF-05 | TBD | Pending |
-| SCAF-06 | TBD | Pending |
-| SCAF-07 | TBD | Pending |
-| SCAF-08 | TBD | Pending |
+| SCAF-01 | Phase 9 | Pending |
+| SCAF-02 | Phase 10 | Pending |
+| SCAF-03 | Phase 9 | Pending |
+| SCAF-04 | Phase 9 | Pending |
+| SCAF-05 | Phase 9 | Pending |
+| SCAF-06 | Phase 9 | Pending |
+| SCAF-07 | Phase 9 | Pending |
+| SCAF-08 | Phase 10 | Pending |
 
 **Coverage:**
 - v1.2 requirements: 8 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 8 ⚠️
+- Mapped to phases: 8 (100%) ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 after initial v1.2 definition*
+*Last updated: 2026-04-20 — traceability mapped after v1.2 roadmap creation*

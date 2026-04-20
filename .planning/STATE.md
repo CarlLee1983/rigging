@@ -5,10 +5,10 @@ milestone_name: "Create Rigging"
 status: active
 stopped_at: ""
 last_updated: "2026-04-20T22:00:00.000Z"
-last_activity: 2026-04-20 — $gsd-new-milestone v1.2 Create Rigging started
+last_activity: 2026-04-20 — $gsd-roadmap-milestone v1.2 roadmap created (Phase 9-10)
 resume_file: .planning/ROADMAP.md
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -23,27 +23,36 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.2 Create Rigging started)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** v1.2 Create Rigging — defining requirements and roadmap.
+**Current focus:** v1.2 Create Rigging — Phase 9: Scaffold Engine (not started)
 
 ## Current Position
 
 Milestone: **v1.2 Create Rigging**
 
-Phase: Not started (defining requirements)
+Phase: 9 — Scaffold Engine (not started)
 
 Plan: —
 
-Status: Defining requirements
+Status: Roadmap defined, ready to plan Phase 9
 
-Last activity: 2026-04-20 — Milestone v1.2 Create Rigging started
+Last activity: 2026-04-20 — v1.2 roadmap created (2 phases, 8 requirements mapped)
+
+Progress: ░░░░░░░░░░ 0% (0/2 phases complete)
+
+## v1.2 Phase Overview
+
+| Phase | Name | Requirements | Status |
+|-------|------|--------------|--------|
+| 9 | Scaffold Engine | SCAF-01, SCAF-03, SCAF-04, SCAF-05, SCAF-06, SCAF-07 | Not started |
+| 10 | Publish & Docs | SCAF-02, SCAF-08 | Not started |
 
 ## v1.1 Phase Overview (archived)
 
-| Phase | Name                                       | Requirements            | Status         |
-|-------|--------------------------------------------|-------------------------|----------------|
-| 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | Complete (2026-04-20) |
-| 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Complete (2026-04-20) — 07-01 |
-| 8     | ADR Process Self-Check                     | ADR-06                  | Complete (2026-04-20) — 08-01 + 08-02 |
+| Phase | Name | Requirements | Status |
+|-------|------|--------------|--------|
+| 6 | CI Pipeline Green-Run & Smoke Validation | CI-04, CI-05, OBS-01 | Complete (2026-04-20) |
+| 7 | Phase 04 Security Audit Back-fill | SEC-01 | Complete (2026-04-20) — 07-01 |
+| 8 | ADR Process Self-Check | ADR-06 | Complete (2026-04-20) — 08-01 + 08-02 |
 
 Full phase details: `milestones/v1.1-ROADMAP.md`
 
@@ -91,8 +100,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-20
 
-Stopped at: v1.1 archived — tag `v1.1` (local)
+Stopped at: v1.2 roadmap defined — Phase 9 not started
 
 Resume file: `.planning/ROADMAP.md`
 
-Next: `$gsd-new-milestone`
+Next: `/gsd-plan-phase 9`
