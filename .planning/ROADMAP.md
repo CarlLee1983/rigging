@@ -49,7 +49,14 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   3. `.planning/`, `packages/create-rigging/`, and any scaffold-internal files do not appear in the generated output directory
   4. The generated directory includes `.env.example` listing every required environment variable (DATABASE_URL, BETTER_AUTH_SECRET, etc.) with inline documentation
   5. After scaffolding completes the CLI prints next-steps guidance: `cd my-app`, `bun install`, `docker compose up -d`, `bun test`
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Package foundation: packages/create-rigging/package.json + lib/helpers.js + .gitignore
+- [ ] 09-02-PLAN.md — Unit tests: substitution, extension-whitelist, cli-validation (TDD)
+- [ ] 09-03-PLAN.md — Build script: scripts/build-template.js (git ls-files → template/)
+- [ ] 09-04-PLAN.md — CLI entry: packages/create-rigging/bin/create-rigging.js (wires helpers + copyDir)
+- [ ] 09-05-PLAN.md — Integration test + human verification checkpoint
 
 ### Phase 10: Publish & Docs
 **Goal**: `create-rigging` is publicly available on npm and all documentation directs developers to `npx create-rigging` as the primary entry point
@@ -74,7 +81,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 | 6. CI Pipeline Green-Run & Smoke Validation | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 7. Phase 04 Security Audit Back-fill | v1.1 | 1/1 | Complete | 2026-04-20 |
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
-| 9. Scaffold Engine | v1.2 | 0/? | Not started | - |
+| 9. Scaffold Engine | v1.2 | 0/5 | Not started | - |
 | 10. Publish & Docs | v1.2 | 0/? | Not started | - |
 
 ---
