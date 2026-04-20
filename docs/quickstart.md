@@ -11,17 +11,20 @@ Estimated time: **10 min** (5-6 if you skip reading).
 - `curl` and `jq` (any UNIX toolchain)
 - Port `3000` (Rigging dev server) and `5432` (Postgres) free
 
-## Setup (2 min)
+## Scaffold (fastest path)
+
+New project? Use the CLI — one command, no clone needed:
 
 ```bash
-git clone <this-repo> rigging && cd rigging
-cp .env.example .env
-docker-compose up -d        # boots postgres:16-alpine on localhost:5432
-bun install                 # installs deps from bun.lock
-bun run db:migrate          # applies BetterAuth + agents schema migrations
+npx create-rigging <project-name>
+cd <project-name>
+bun install
+docker compose up -d
+bun test
 ```
 
-If `docker-compose up -d` fails with port conflict on 5432, stop the conflicting service or change `DATABASE_URL` in `.env` to a free port.
+That's it. The scaffold includes a working `.env.example`, migrations, and CI workflow.
+See the [Path A / Path B curl flows](#path-a--human-session-3-min) below to dogfood the full Rigging surface.
 
 ## Dev server (30 sec)
 
@@ -152,6 +155,20 @@ Every error response in Rigging follows the `{ error: { code, message, requestId
 - [docs/decisions/](decisions/) — 19 ADRs documenting every locked design choice
 - [.planning/PROJECT.md](../.planning/PROJECT.md) — full Core Value, Constraints, Out of Scope
 - [AGENTS.md](../AGENTS.md#ai-agent-onboarding) — for AI Agents (and humans) onboarding to contribute
+
+## Developing Rigging Itself
+
+Contributing to Rigging or working on the scaffold source? Clone the reference app directly:
+
+```bash
+git clone <this-repo> rigging && cd rigging
+cp .env.example .env
+docker-compose up -d
+bun install
+bun run db:migrate
+```
+
+If `docker-compose up -d` fails with port conflict on 5432, stop the conflicting service or change `DATABASE_URL` in `.env` to a free port.
 
 ---
 
