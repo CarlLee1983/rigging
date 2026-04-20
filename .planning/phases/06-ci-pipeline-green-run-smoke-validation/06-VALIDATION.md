@@ -2,7 +2,7 @@
 phase: 06
 slug: ci-pipeline-green-run-smoke-validation
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-04-20
 ---
@@ -51,11 +51,11 @@ created: 2026-04-20
 |-------------|------------------|---------------------|---------------|------------------|--------|
 | **CI-04** (SC #1) | 非 master 分支 PR 首次全綠 (lint/typecheck/test+coverage/drift) | 4 個 check run item 皆 `SUCCESS` | `gh pr checks <PR#>` + PR 頁面 URL | Plan 1 PR push 後 | ✅ green |
 | **OBS-01** (SC #2) | smoke step 真實 boot `createApp` + HTTP GET `/health` → 200 | `smoke` step `SUCCESS` + log 顯示 `/health -> 200` | ci.yml `smoke` step log + check run URL | Plan 1 PR push 後 | ✅ green |
-| **CI-05** FM#1 lint (SC #3) | 刻意 biome lint 錯誤 → `lint` job 紅燈 | `lint` job `FAILURE`；其他 3 job 不必紅 | Plan 2 PR push#1 check run URL | Plan 2 force-push #1 | ⬜ pending |
-| **CI-05** FM#2 typecheck (SC #4a) | 刻意 `@ts-expect-error` 無誤用 → `typecheck` job 紅 | `typecheck` job `FAILURE` | Plan 2 PR push#2 check run URL | Plan 2 force-push #2 | ⬜ pending |
-| **CI-05** FM#3 test (SC #4b) | 刻意刪/改 test assertion → `test` job 紅 | `test` job step (test) `FAILURE` | Plan 2 PR push#3 check run URL | Plan 2 force-push #3 | ⬜ pending |
-| **CI-05** FM#4 drift (SC #4c) | 改 schema 不補 migration → `Migration drift check` step 紅 | `test` job `Migration drift check` step `FAILURE`；test step 本身可綠（避免污染） | Plan 2 PR push#4 check run URL | Plan 2 force-push #4 | ⬜ pending |
-| **CI-05** FM#5 smoke (SC #5) | 破壞 `createApp` boot (runtime tripwire) → smoke step 紅 | `test` job `smoke` step `FAILURE`；lint/typecheck 仍綠（隔離語意） | Plan 2 PR push#5 check run URL | Plan 2 force-push #5 | ⬜ pending |
+| **CI-05** FM#1 lint (SC #3) | 刻意 biome lint 錯誤 → `lint` job 紅燈 | `lint` job `FAILURE`；其他 3 job 不必紅 | Plan 2 PR push#1 check run URL | Plan 2 force-push #1 | ❌ red (expected) |
+| **CI-05** FM#2 typecheck (SC #4a) | 刻意 `@ts-expect-error` 無誤用 → `typecheck` job 紅 | `typecheck` job `FAILURE` | Plan 2 PR push#2 check run URL | Plan 2 force-push #2 | ❌ red (expected) |
+| **CI-05** FM#3 test (SC #4b) | 刻意刪/改 test assertion → `test` job 紅 | `test` job step (test) `FAILURE` | Plan 2 PR push#3 check run URL | Plan 2 force-push #3 | ❌ red (expected) |
+| **CI-05** FM#4 drift (SC #4c) | 改 schema 不補 migration → `Migration drift check` step 紅 | `test` job `Migration drift check` step `FAILURE`；test step 本身可綠（避免污染） | Plan 2 PR push#4 check run URL | Plan 2 force-push #4 | ❌ red (expected) |
+| **CI-05** FM#5 smoke (SC #5) | 破壞 `createApp` boot (runtime tripwire) → smoke step 紅 | `test` job `smoke` step `FAILURE`；lint/typecheck 仍綠（隔離語意） | Plan 2 PR push#5 check run URL | Plan 2 force-push #5 | ❌ red (expected) |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -92,8 +92,8 @@ created: 2026-04-20
 - [x] Wave 0 `smoke` script 落地 + `PORT` env 補上（含 `DATABASE_URL` → `postgresql://` scheme）
 - [ ] No watch-mode flags in CI
 - [ ] Feedback latency < 60s local / < 6min CI
-- [ ] 5 種 fail-mode 各有獨立 check run URL 舉證，無 cancelled evidence
-- [ ] `nyquist_compliant: true` set in frontmatter（SUMMARY 寫完後）
-- [ ] 2 條 `[ASSUMED]`（見 RESEARCH §Assumptions Log）於 Plan 2 執行時 local 驗證並記錄結果
+- [x] 5 種 fail-mode 各有獨立 check run URL 舉證，無 cancelled evidence（見 06-02-SUMMARY.md row #1-#5；5 個 `/actions/runs/\d+` URL 皆獨立）
+- [x] `nyquist_compliant: true` set in frontmatter（本檔 frontmatter line 4 已改為 `true`，2026-04-20）
+- [x] 2 條 `[ASSUMED]`（見 RESEARCH §Assumptions Log）於 Plan 2 執行時 local 驗證並記錄結果（A1 VERIFIED、A2 FALLBACK unused-table；兩條皆於 06-02-SUMMARY.md `[ASSUMED] Verification Log` 區留痕）
 
-**Approval:** pending
+**Approval:** approved (2026-04-20) — Phase 6 Plan 2 完成：5 種 fail-mode 各具獨立 red check run URL、無 cancelled、PR CLOSED 不 merge、sacrificial branch 已清。
