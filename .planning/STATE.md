@@ -1,36 +1,37 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: Reference App (MVP)
-status: milestone_archived
-stopped_at: v1.0 milestone closed — 21 plans / 5 phases archived, awaiting $gsd-new-milestone for v1.1 scope
+milestone: v1.1
+milestone_name: Release Validation
+status: defining_requirements
+stopped_at: v1.1 milestone opened — requirements being defined, roadmap pending
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- v1.0 milestone archive committed (MILESTONES.md + milestones/v1.0-ROADMAP.md + milestones/v1.0-REQUIREMENTS.md); ROADMAP.md collapsed; PROJECT.md evolved; REQUIREMENTS.md removed
+last_activity: 2026-04-20 -- v1.1 Release Validation milestone started; PROJECT.md evolved with Current Milestone section; REQUIREMENTS.md + ROADMAP.md to follow
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 21
-  completed_plans: 21
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-20 after v1.0 milestone)
+See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milestone started)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
-**Current focus:** v1.0 archived — planning v1.1 via `$gsd-new-milestone`
+**Current focus:** v1.1 Release Validation — 收尾 milestone，CI 首跑綠燈 / Phase 04 SECURITY audit / ADR self-check / Observability smoke
 
 ## Current Position
 
-Milestone: v1.0 Reference App — ARCHIVED (2026-04-20)
-Phases: 5/5 complete · 21/21 plans complete
-Status: Milestone archived — ready for `$gsd-new-milestone` to scope v1.1
-Last activity: 2026-04-20 -- v1.0 milestone close: MILESTONES.md + milestones/ archives committed, ROADMAP collapsed, PROJECT evolved, REQUIREMENTS removed via git rm
+Milestone: v1.1 Release Validation — STARTED (2026-04-20)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-20 — Milestone v1.1 started, PROJECT.md Current Milestone section written; REQUIREMENTS.md + ROADMAP.md pending
 
-Progress: v1.0 [██████████] 100%
+Progress: v1.1 [          ]   0%
 
 ## v1.0 Retrospective Snapshot
 
@@ -84,9 +85,9 @@ None at milestone close. Next milestone's Active scope will be defined via `$gsd
 ## Session Continuity
 
 Last session: 2026-04-20T00:00:00.000Z
-Stopped at: v1.0 milestone archived (MILESTONES.md + milestones/ 兩份 archive + collapsed ROADMAP + evolved PROJECT.md + git rm REQUIREMENTS.md + tag v1.0)
+Stopped at: v1.1 Release Validation milestone opened — PROJECT.md + STATE.md updated with Current Milestone section (v1.1). REQUIREMENTS.md + ROADMAP.md pending in this run.
 Resume file: N/A
 Next options:
-  1. `$gsd-new-milestone` — questioning → research → requirements → roadmap for v1.1
-  2. `$gsd-secure-phase 04` — 補做 Phase 4 的 threat-mitigation audit（Deferred #1）
-  3. Manual follow-up: push branch + PR → GitHub Actions 首次實跑（Deferred #2）
+  1. Continue current run → REQUIREMENTS.md + roadmapper spawn (this session will complete them)
+  2. `$gsd-discuss-phase 6 ${GSD_WS}` — after roadmap lands, gather context for first v1.1 phase
+  3. `$gsd-plan-phase 6 ${GSD_WS}` — skip discuss, plan Phase 6 directly
