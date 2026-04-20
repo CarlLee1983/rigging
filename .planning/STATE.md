@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Release Validation
 status: phase_in_progress
-stopped_at: Phase 6 context gathered (06-CONTEXT.md committed) — ready for $gsd-plan-phase 6
+stopped_at: Phase 6 executing — 06-01 green baseline merged (PR #1), 06-02 fail-mode demo in progress
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- Phase 6 CONTEXT.md landed: 2-plan split (green baseline + fail-mode), Plan 1 merges smoke step to main, Plan 2 single sacrificial PR force-push ×5 (incl. smoke fail-mode)
-resume_file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-CONTEXT.md
+last_activity: 2026-04-20 -- Phase 6 / 06-01 complete (CI-04 + OBS-01 evidence); starting 06-02 sacrificial PR fail-mode matrix (CI-05)
+resume_file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-02-PLAN.md
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 0
 ---
 
@@ -27,18 +27,18 @@ See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milest
 ## Current Position
 
 Milestone: v1.1 Release Validation — IN PROGRESS (2026-04-20)
-Phase: 6 — CI Pipeline Green-Run & Smoke Validation — Context gathered, awaiting plan
-Plan: —
-Status: 06-CONTEXT.md committed (6 structural decisions locked); ready for $gsd-plan-phase 6
-Last activity: 2026-04-20 — Phase 6 discuss-phase completed via Plan 分解策略 area; CONTEXT.md locks 2-plan split, green-before-fail, Plan 1 merge-to-main, Plan 2 sacrificial PR force-push ×5 (5 fail-modes incl. smoke)
+Phase: 6 — CI Pipeline Green-Run & Smoke Validation — Wave 2 in progress
+Plan: 06-02 — Sacrificial PR fail-mode matrix (CI-05)
+Status: 06-01 complete (CI-04 + OBS-01 evidence merged in PR #1 / bf9eaf4); starting 06-02 sacrificial PR × 5 force-push
+Last activity: 2026-04-20 — `/gsd-execute-phase 6` invoked; proceeding to open sacrificial PR + force-push fail-mode #1 (lint)
 
-Progress: v1.1 [          ]   0% (0/3 phases, 0/0 plans — plans TBD per phase)
+Progress: v1.1 [=         ]  ~16% (0/3 phases complete, 1/2 plans in Phase 6)
 
 ## v1.1 Phase Overview
 
-| Phase | Name                                       | Requirements            | Status      |
-|-------|--------------------------------------------|-------------------------|-------------|
-| 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | Not started |
+| Phase | Name                                       | Requirements            | Status         |
+|-------|--------------------------------------------|-------------------------|----------------|
+| 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | In progress    |
 | 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Not started |
 | 8     | ADR Process Self-Check                     | ADR-06                  | Not started |
 
