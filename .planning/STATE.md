@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
-milestone: pending_next
-milestone_name: ""
-status: between_milestones
-stopped_at: v1.1 archived — milestone close 2026-04-20
+milestone: v1.2
+milestone_name: "Create Rigging"
+status: active
+stopped_at: ""
 last_updated: "2026-04-20T22:00:00.000Z"
-last_activity: 2026-04-20 — $gsd-complete-milestone v1.1
+last_activity: 2026-04-20 — $gsd-new-milestone v1.2 Create Rigging started
 resume_file: .planning/ROADMAP.md
 progress:
   total_phases: 0
@@ -19,23 +19,23 @@ progress:
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-04-20 — after v1.1 milestone close)
+See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.2 Create Rigging started)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** Planning next milestone — `$gsd-new-milestone` (fresh `REQUIREMENTS.md`).
+**Current focus:** v1.2 Create Rigging — defining requirements and roadmap.
 
 ## Current Position
 
-Milestone: **—** (v1.1 closed and archived)
+Milestone: **v1.2 Create Rigging**
 
-Phase: —
+Phase: Not started (defining requirements)
 
 Plan: —
 
-Status: Between milestones — `REQUIREMENTS.md` removed; archives `milestones/v1.1-ROADMAP.md`, `milestones/v1.1-REQUIREMENTS.md`
+Status: Defining requirements
 
-Last activity: 2026-04-20 — v1.1 milestone archived; git tag `v1.1`
+Last activity: 2026-04-20 — Milestone v1.2 Create Rigging started
 
 ## v1.1 Phase Overview (archived)
 
