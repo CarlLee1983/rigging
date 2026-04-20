@@ -4,7 +4,7 @@
 
 - ✅ **v1.0 Reference App (MVP)** — Phases 1-5 (shipped 2026-04-20) · [archive](milestones/v1.0-ROADMAP.md)
 - ✅ **v1.1 Release Validation** — Phases 6-8 (shipped 2026-04-20) · [archive](milestones/v1.1-ROADMAP.md)
-- 🚧 **v1.2 Create Rigging** — Phases 9-10 (active)
+- ✅ **v1.2 Create Rigging** — Phases 9-10 (shipped 2026-04-20)
 
 ## Phases
 
@@ -35,7 +35,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 ### v1.2 Create Rigging — Phases 9-10
 
 - [x] **Phase 9: Scaffold Engine** — Build CLI + template generation machinery with full project output — completed 2026-04-20
-- [ ] **Phase 10: Publish & Docs** — Ship `create-rigging` to npm and update documentation entry points
+- [x] **Phase 10: Publish & Docs** — Ship `create-rigging` to npm and update documentation entry points — completed 2026-04-20
 
 ## Phase Details
 
@@ -70,9 +70,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — Version bump (0.0.1 → 0.1.0) + README Getting Started section + What NOT Included cleanup
-- [ ] 10-02-PLAN.md — docs/quickstart.md scaffold-first restructure (Scaffold section first, git clone demoted)
-- [ ] 10-03-PLAN.md — npm publish checkpoint (pre-publish verification + manual human publish)
+- [x] 10-01-PLAN.md — Version bump (0.0.1 → 0.1.0) + README Getting Started section + What NOT Included cleanup
+- [x] 10-02-PLAN.md — docs/quickstart.md scaffold-first restructure (Scaffold section first, git clone demoted)
+- [x] 10-03-PLAN.md — npm publish checkpoint (pre-publish verification + manual human publish)
 
 ## Progress
 
@@ -87,7 +87,7 @@ Plans:
 | 7. Phase 04 Security Audit Back-fill | v1.1 | 1/1 | Complete | 2026-04-20 |
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
-| 10. Publish & Docs | v1.2 | 0/3 | Not started | - |
+| 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
 
 ---
 
@@ -95,3 +95,4 @@ _Roadmap created: 2026-04-19_
 _v1.0 milestone closed: 2026-04-20 — see `milestones/v1.0-ROADMAP.md`_
 _v1.1 milestone closed: 2026-04-20 — see `milestones/v1.1-ROADMAP.md`_
 _v1.2 roadmap added: 2026-04-20_
+_v1.2 milestone closed: 2026-04-20 — create-rigging@0.1.0 shipped to npm_

@@ -4,15 +4,15 @@ milestone: v1.2
 milestone_name: "Create Rigging"
 status: active
 stopped_at: ""
-last_updated: "2026-04-20T22:00:00.000Z"
-last_activity: 2026-04-20 — Phase 9 Scaffold Engine complete (5/5 plans, 71 tests pass)
+last_updated: "2026-04-20T23:59:00.000Z"
+last_activity: 2026-04-20 — Phase 10 Publish & Docs complete (3/3 plans, create-rigging@0.1.0 shipped)
 resume_file: .planning/ROADMAP.md
 progress:
   total_phases: 2
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 50
+  completed_phases: 2
+  total_plans: 8
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -23,28 +23,28 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.2 Create Rigging started)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** v1.2 Create Rigging — Phase 10: Publish & Docs (not started)
+**Current focus:** v1.2 Create Rigging — COMPLETE (shipped 2026-04-20)
 
 ## Current Position
 
-Milestone: **v1.2 Create Rigging**
+Milestone: **v1.2 Create Rigging** — SHIPPED
 
-Phase: 10 — Publish & Docs (not started)
+Phase: 10 — Publish & Docs (complete — 3/3 plans)
 
 Plan: —
 
-Status: Phase 9 complete — ready to plan Phase 10
+Status: v1.2 milestone complete — create-rigging@0.1.0 live on npm
 
-Last activity: 2026-04-20 — Phase 9 Scaffold Engine complete (5/5 plans)
+Last activity: 2026-04-20 — Phase 10 Publish & Docs complete (3/3 plans, create-rigging@0.1.0 shipped)
 
-Progress: █████░░░░░ 50% (1/2 phases complete)
+Progress: ██████████ 100% (2/2 phases complete)
 
 ## v1.2 Phase Overview
 
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
 | 9 | Scaffold Engine | SCAF-01, SCAF-03, SCAF-04, SCAF-05, SCAF-06, SCAF-07 | Complete (2026-04-20) — 5/5 plans |
-| 10 | Publish & Docs | SCAF-02, SCAF-08 | Not started |
+| 10 | Publish & Docs | SCAF-02, SCAF-08 | Complete (2026-04-20) — 3/3 plans |
 
 ## v1.1 Phase Overview (archived)
 
@@ -100,8 +100,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-20
 
-Stopped at: Phase 9 complete — 5/5 plans, 71 scaffold tests pass (100% helpers.js coverage)
+Stopped at: v1.2 milestone complete — Phase 10 done (3/3 plans), create-rigging@0.1.0 live on npm
 
 Resume file: `.planning/ROADMAP.md`
 
-Next: `/gsd-discuss-phase 10` or `/gsd-plan-phase 10`
+Next: v1.2 milestone shipped — start v1.3 with `/gsd-new-milestone` or review with `/gsd-progress`
