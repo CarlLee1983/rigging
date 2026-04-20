@@ -1,0 +1,22 @@
+{
+  "name": "create-rigging",
+  "version": "0.1.0",
+  "description": "Scaffold a new Rigging DDD project (Bun + Elysia + BetterAuth + Drizzle)",
+  "type": "commonjs",
+  "bin": {
+    "create-rigging": "./bin/create-rigging.js"
+  },
+  "scripts": {
+    "build-template": "node ../../scripts/build-template.js",
+    "prepublishOnly": "node ../../scripts/build-template.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "template/"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}
