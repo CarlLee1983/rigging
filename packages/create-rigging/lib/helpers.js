@@ -39,9 +39,10 @@ function toTitleCase(s) {
  * @returns {string} Content with substitutions applied
  */
 function substituteProjectName(content, projectName) {
-  return content
-    .replaceAll('rigging', projectName)
-    .replaceAll('Rigging', toTitleCase(projectName));
+  // Single-pass regex avoids double-substitution when projectName contains 'Rigging'
+  return content.replace(/Rigging|rigging/g, (match) =>
+    match === 'Rigging' ? toTitleCase(projectName) : projectName
+  );
 }
 
 /**
@@ -57,6 +58,12 @@ function substituteProjectName(content, projectName) {
 function validateProjectName(projectName) {
   if (!projectName || projectName.trim() === '') {
     return { valid: false, error: 'Usage: create-rigging <project-name>' };
+  }
+  if (projectName === '.' || projectName === '..') {
+    return {
+      valid: false,
+      error: 'Error: project name cannot be "." or "..".'
+    };
   }
   if (projectName === 'rigging') {
     return {

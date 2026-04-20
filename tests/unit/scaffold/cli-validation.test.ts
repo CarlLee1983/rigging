@@ -17,6 +17,16 @@ describe('validateProjectName', () => {
     expect(result.error).toContain('rigging')
   })
 
+  test('"." → invalid (current dir)', () => {
+    const result = validateProjectName('.')
+    expect(result.valid).toBe(false)
+  })
+
+  test('".." → invalid (parent dir)', () => {
+    const result = validateProjectName('..')
+    expect(result.valid).toBe(false)
+  })
+
   test('"../evil" → invalid (path traversal)', () => {
     const result = validateProjectName('../evil')
     expect(result.valid).toBe(false)

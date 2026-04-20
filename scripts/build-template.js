@@ -31,7 +31,13 @@ const templateDest = join(repoRoot, 'packages', 'create-rigging', 'template');
 // tests/unit/scaffold/ contains unit tests for the create-rigging CLI tool itself
 // (they import ../../../packages/create-rigging/lib/helpers.js) — not valid in a
 // generated project, and would cause bun test to fail in generated projects.
-const EXCLUDE_PREFIXES = ['.planning/', 'packages/', 'tests/unit/scaffold/'];
+const EXCLUDE_PREFIXES = [
+  '.planning/',
+  'packages/',
+  'scripts/',
+  'tests/unit/scaffold/',
+  'tests/integration/scaffold/',
+];
 
 function main() {
   // Clean previous build (idempotent — safe to re-run)
