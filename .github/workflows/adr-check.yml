@@ -13,12 +13,13 @@ jobs:
         with:
           fetch-depth: 0
       - id: adr-required
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          body="${{ github.event.pull_request.body }}"
-          if echo "$body" | grep -qE '\- \[x\] This PR introduces a decision that requires a new ADR'; then
-            echo "required=true" >> $GITHUB_OUTPUT
+          if printf '%s\n' "$PR_BODY" | grep -qE '\- \[x\] This PR introduces a decision that requires a new ADR'; then
+            echo "required=true" >> "$GITHUB_OUTPUT"
           else
-            echo "required=false" >> $GITHUB_OUTPUT
+            echo "required=false" >> "$GITHUB_OUTPUT"
           fi
       - if: steps.adr-required.outputs.required == 'true'
         run: |

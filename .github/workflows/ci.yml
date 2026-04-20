@@ -63,11 +63,12 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/rigging_test
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rigging_test
       BETTER_AUTH_SECRET: ${{ secrets.CI_BETTER_AUTH_SECRET || 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' }}
       BETTER_AUTH_URL: http://localhost:3000
       NODE_ENV: test
       LOG_LEVEL: error
+      PORT: 3000
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -99,6 +100,9 @@ jobs:
             git diff drizzle/
             exit 1
           fi
+
+      - name: Smoke (createApp boot + /health 200)
+        run: bun run smoke
 
       - name: Upload coverage artifact
         if: always()
