@@ -15,7 +15,7 @@
 | 2 | Typecheck (unused @ts-expect-error) | `src/main.ts`: `// @ts-expect-error` 放在 `const config = loadConfig()` 之前（無型別錯可壓抑） | `CI / Typecheck (tsc --noEmit)` job | https://github.com/CarlLee1983/rigging/actions/runs/24653608782/job/72081720411 |
 | 3 | Test (flipped assertion) | `tests/unit/health/check-health.usecase.test.ts:13`: `ok: true` → `ok: false`（`CheckHealthUseCase > DB up → ok:true` 會 fail） | `CI / Test + coverage gate + migration drift` → `Test (with coverage)` step | https://github.com/CarlLee1983/rigging/actions/runs/24653675915/job/72081938123 |
 | 4 | Drift (unused table, no migration) | 新增 `src/agents/infrastructure/schema/drift-demo.schema.ts`：定義一個完全未被 repository / query 引用的 `drift_demo` table；不跑 `bun run db:generate`（保留 porcelain dirty） | `CI / Test + coverage gate + migration drift` → `Migration drift check` step (Smoke step: **skipped** per R6 fail-fast) | https://github.com/CarlLee1983/rigging/actions/runs/24653784718/job/72082282721 |
-| 5 | Smoke (SMOKE_TRIPWIRE env tripwire) | — | — | — |
+| 5 | Smoke (SMOKE_TRIPWIRE env tripwire) | `src/bootstrap/app.ts` createApp 頂端加 `if (process.env.SMOKE_TRIPWIRE === '1') throw ...` + `.github/workflows/ci.yml` smoke step 加 `env: SMOKE_TRIPWIRE: '1'`；R3 runtime-only 隔離 → lint/tc/test 綠、drift 綠、只 smoke 紅 | `CI / Test + coverage gate + migration drift` → `Smoke (createApp boot + /health 200)` step；log line `✗ Smoke threw: ... Smoke tripwire: createApp intentionally failed for fail-mode #5` | https://github.com/CarlLee1983/rigging/actions/runs/24653882614/job/72082597955 |
 
 ## `[ASSUMED]` Verification Log
 
