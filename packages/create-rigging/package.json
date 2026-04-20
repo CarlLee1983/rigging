@@ -1,6 +1,6 @@
 {
   "name": "create-rigging",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Scaffold a new Rigging DDD project (Bun + Elysia + BetterAuth + Drizzle)",
   "type": "commonjs",
   "bin": {

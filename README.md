@@ -4,6 +4,18 @@
 
 > Core Value: any Domain operation must pass through `AuthContext`. Without `AuthContext`, the handler cannot even be wired.
 
+## Getting Started
+
+```bash
+npx create-rigging <project-name>
+```
+
+Then:
+
+- `cd <project-name>` → `bun install` → `docker compose up -d` → `bun test`
+- See [docs/quickstart.md](docs/quickstart.md) for the full walkthrough (session auth, API Key, dogfood story)
+- **Prerequisites:** Node 18+, Bun 1.3+, Docker
+
 ## Why Rigging
 
 AI Agents writing code without rails produce three classes of bugs that audits keep finding:
@@ -31,7 +43,6 @@ See [docs/quickstart.md](docs/quickstart.md) — clone, env, docker-compose up, 
 
 Rigging v1 is intentionally **not**:
 
-- A scaffolding CLI (`npx create-rigging` is v2)
 - An OAuth / 2FA / Magic Link / Passkey provider (only email + password + API Key in v1)
 - A real email gateway (Console adapter writes verification + reset links to stdout — read them in the terminal)
 - A multi-tenant / RBAC framework (single-tenant; scopes on API Keys; RBAC is v2)
