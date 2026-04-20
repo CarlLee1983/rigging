@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Release Validation
 status: in_progress
-stopped_at: Phase 7 context gathered (2026-04-20) — SEC-01 decisions in 07-CONTEXT.md; ready for $gsd-plan-phase 7
-last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- $gsd-discuss-phase 7 complete; 07-CONTEXT.md + 07-DISCUSSION-LOG.md written
-resume_file: .planning/phases/07-phase-04-security-audit-back-fill/07-CONTEXT.md
+stopped_at: Phase 7 execution complete (2026-04-20) — 07-01-SUMMARY.md; next Phase 8 (ADR-06)
+last_updated: "2026-04-20T12:00:00.000Z"
+last_activity: 2026-04-20 — $gsd-execute-phase 7 — SEC-01 evidence e2941a6; 07-01-SUMMARY.md
+resume_file: .planning/phases/07-phase-04-security-audit-back-fill/07-01-SUMMARY.md
 progress:
   total_phases: 3
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 33
+  completed_phases: 2
+  total_plans: 3
+  completed_plans: 3
+  percent: 67
 ---
 
 # Project State
@@ -27,19 +27,19 @@ See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milest
 ## Current Position
 
 Milestone: v1.1 Release Validation — IN PROGRESS (2026-04-20)
-Phase: 7 — Discuss complete (2026-04-20); next: `$gsd-plan-phase 7` (SEC-01 back-fill)
-Plan: —
-Status: Phase 7 discuss-phase delivered 07-CONTEXT.md (delta on 04-SECURITY.md + CVE/timing/matrix evidence locks)
-Last activity: 2026-04-20 — `$gsd-discuss-phase 7` — context + discussion log committed
+Phase: 7 — Complete (2026-04-20); next: Phase 8 ADR Process Self-Check (ADR-06)
+Plan: 07-01 — complete (`07-01-SUMMARY.md`)
+Status: Phase 7 executed — `04-SECURITY.md` SEC-01 evidence + audit trail row; commit e2941a6
+Last activity: 2026-04-20 — Phase 7 execute (tests + doc + commit + SUMMARY)
 
-Progress: v1.1 [===       ]  ~33% (1/3 phases execution-complete; Phase 7 planning next)
+Progress: v1.1 [======    ]  ~67% (2/3 v1.1 phases execution-complete; Phase 8 next)
 
 ## v1.1 Phase Overview
 
 | Phase | Name                                       | Requirements            | Status         |
 |-------|--------------------------------------------|-------------------------|----------------|
 | 6     | CI Pipeline Green-Run & Smoke Validation   | CI-04, CI-05, OBS-01    | Complete (2026-04-20) |
-| 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Context ready (2026-04-20) |
+| 7     | Phase 04 Security Audit Back-fill          | SEC-01                  | Complete (2026-04-20) — 07-01 |
 | 8     | ADR Process Self-Check                     | ADR-06                  | Not started    |
 
 Full phase details: `.planning/ROADMAP.md` (section `### 📋 v1.1 Release Validation — Phases 6-8`)
@@ -89,7 +89,7 @@ Highlights from v1.0 (carried into v1.1):
 
 ### Pending Todos
 
-- Phase 6 discuss or plan — first v1.1 phase, bundles CI-04 + CI-05 + OBS-01 in one PR cycle so first green run, fail-mode validation, and smoke step can all be demonstrated against the same pipeline
+- Phase 8 plan or discuss — ADR-06 (adr-check malformed PR + ADR 0000..0018 status audit)
 
 ### Blockers/Concerns
 
@@ -97,9 +97,9 @@ Highlights from v1.0 (carried into v1.1):
 
 ## Session Continuity
 
-Last session: 2026-04-20T00:00:00.000Z
-Stopped at: Phase 7 discuss-phase complete — 07-CONTEXT.md + 07-DISCUSSION-LOG.md committed (SEC-01: delta on 04-SECURITY.md, CVE + timing + cross-user matrix locks).
-Resume file: .planning/phases/07-phase-04-security-audit-back-fill/07-CONTEXT.md
+Last session: 2026-04-20T12:00:00.000Z
+Stopped at: Phase 7 execution complete — SEC-01 back-fill shipped (`e2941a6`); `07-01-SUMMARY.md` recorded.
+Resume file: .planning/phases/07-phase-04-security-audit-back-fill/07-01-SUMMARY.md
 Next options:
-  1. `$gsd-plan-phase 7` — write PLAN.md for Phase 7 (04-SECURITY.md SEC-01 evidence + optional list-verb test)
-  2. `$gsd-execute-phase 7` — after plan exists
+  1. `$gsd-discuss-phase 8` or `$gsd-plan-phase 8` — Phase 8 ADR Process Self-Check (ADR-06)
+  2. `$gsd-execute-phase 8` — after plans exist

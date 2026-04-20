@@ -23,7 +23,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 ### 📋 v1.1 Release Validation — Phases 6-8
 
 - [x] **Phase 6: CI Pipeline Green-Run & Smoke Validation** — push + PR 驗證 3 jobs + drift-check + `/health` smoke 首次全綠，並逐 gate 製造破壞驗證 fail-mode (completed 2026-04-20)
-- [ ] **Phase 7: Phase 04 Security Audit Back-fill** — 執行 `$gsd-secure-phase 04`，產出 `phases/04-demo-domain/SECURITY.md`（threat register + CVE regression + timing-safe + cross-user 404 evidence）
+- [x] **Phase 7: Phase 04 Security Audit Back-fill** — SEC-01 evidence in `04-SECURITY.md`（CVE + timing-safe + cross-user matrix）(completed 2026-04-20)
 - [ ] **Phase 8: ADR Process Self-Check** — 以 malformed ADR PR 驗證 `adr-check` workflow 擋格式錯誤 + 審計 ADR 0000..0018 status 欄一致 + 視情況補 ADR 0019+
 
 ## Phase Details
@@ -53,7 +53,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   4. 該文件驗證 API Key hash verify path 為 timing-safe compare（引用現有 1000-iter ratio 0.006 benchmark 或補做一次）
   5. 該文件確認 cross-user 404 matrix 在 Phase 04 代碼 4 個動詞（read/update/delete/list）上皆覆蓋（測試檔 + 行號舉證）
 **Plans**: 1 plan
-  - [ ] 07-01-PLAN.md — SEC-01 compliance evidence: run evidence suites + add CVE/timing-safe/cross-user sections to 04-SECURITY.md (D-07 Branch B)
+  - [x] 07-01-PLAN.md — SEC-01 compliance evidence: run evidence suites + add CVE/timing-safe/cross-user sections to 04-SECURITY.md (D-07 Branch B) — completed 2026-04-20
 
 ### Phase 8: ADR Process Self-Check
 **Goal**: 驗證 ADR 機制（MADR 4.0 格式 + `adr-check` PR workflow + `docs/decisions/README.md` 索引）在 v1.1 實務上能運作，並整理 ADR 0000..0018 的 status 欄；若 v1.1 過程有新決策，補寫 ADR 0019+。
@@ -76,7 +76,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 | 4. Demo Domain                             | v1.0      | 4/4   | Complete    | 2026-04-19 |
 | 5. Quality Gate                            | v1.0      | 4/4   | Complete    | 2026-04-20 |
 | 6. CI Pipeline Green-Run & Smoke Validation| v1.1      | 2/2   | Complete    | 2026-04-20 |
-| 7. Phase 04 Security Audit Back-fill       | v1.1      | 1/1   | In progress | —          |
+| 7. Phase 04 Security Audit Back-fill       | v1.1      | 1/1   | Complete    | 2026-04-20 |
 | 8. ADR Process Self-Check                  | v1.1      | 0/0   | Not started | —          |
 
 ---

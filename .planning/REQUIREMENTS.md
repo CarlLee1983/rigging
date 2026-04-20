@@ -17,7 +17,7 @@
 
 ### Security Audit Back-fill (SEC-01)
 
-- [ ] **SEC-01**: `$gsd-secure-phase 04` 執行完成，產出 `phases/04-demo-domain/SECURITY.md`，內容含 (a) Phase 04 threat register 每條 threat 的 mitigation evidence、(b) CVE-2025-61928 attack pattern 在 v1.1 程式碼上的 regression 現況、(c) API Key hash verify 的 timing-safe compare 驗證、(d) cross-user 404 matrix 在 Phase 04 代碼上的覆蓋確認
+- [x] **SEC-01**: Phase 04 `04-SECURITY.md` 含 threat mitigation evidence + CVE-2025-61928 regression + timing-safe API Key path + cross-user 404 matrix（含 list 動詞 D-07 Branch B 程式碼舉證）— **Validated Phase 7 / Plan 07-01 (2026-04-20)** — commit e2941a6, `07-01-SUMMARY.md`
 
 ### ADR Process Self-Check (ADR-06)
 
@@ -72,7 +72,7 @@ v1.1 是 hygiene milestone，專心關閉 v1.0 遺留；以下明確不在 v1.1 
 | CI-04  | Phase 6  | Validated (2026-04-20) |
 | CI-05  | Phase 6  | Validated (2026-04-20) |
 | OBS-01 | Phase 6  | Validated (2026-04-20) |
-| SEC-01 | Phase 7  | Pending |
+| SEC-01 | Phase 7  | Validated (2026-04-20) |
 | ADR-06 | Phase 8  | Pending |
 
 ---
