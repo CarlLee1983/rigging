@@ -12,7 +12,7 @@ npx create-rigging <project-name>
 
 Then:
 
-- `cd <project-name>` → `bun install` → `docker compose up -d` → `bun test`
+- `cd <project-name>` → `bun install` → `cp .env.example .env` → `docker compose up -d` → `bun test`
 - See [docs/quickstart.md](docs/quickstart.md) for the full walkthrough (session auth, API Key, dogfood story)
 - **Prerequisites:** Node 18+, Bun 1.3+, Docker
 
@@ -25,10 +25,6 @@ AI Agents writing code without rails produce three classes of bugs that audits k
 - **Inconsistent error shapes.** Each handler invents its own `{ message }` envelope. Rigging mounts one global error handler that maps every `DomainError` subclass to its declared HTTP status — handlers throw, the boundary translates.
 
 These aren't policies. They're shapes the framework imposes — Biome rules ban `import { db } from 'drizzle-orm'` inside `src/**/domain/`; `requireAuth: true` is the only way `ctx.authContext` enters scope; `apiKey.hash` is the only column the repository can `.select()`.
-
-## Quickstart
-
-See [docs/quickstart.md](docs/quickstart.md) — clone, env, docker-compose up, migrate, dev — and you're issuing your first authenticated request in 10 minutes (both session and API Key paths).
 
 ## Stack
 
@@ -65,4 +61,4 @@ See [AGENTS.md anti-features](AGENTS.md#anti-features-do-not-propose-extending) 
 
 ## License
 
-TBD — placeholder until v1 ship; expect MIT or Apache-2.0.
+MIT

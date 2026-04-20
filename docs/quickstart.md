@@ -7,7 +7,7 @@ Estimated time: **10 min** (5-6 if you skip reading).
 ## Prerequisites
 
 - [Bun](https://bun.com) 1.3.12+
-- [Docker](https://www.docker.com) + docker-compose (or Colima / Rancher Desktop)
+- [Docker](https://www.docker.com) + Docker Compose v2 (or Colima / Rancher Desktop)
 - `curl` and `jq` (any UNIX toolchain)
 - Port `3000` (Rigging dev server) and `5432` (Postgres) free
 
@@ -19,6 +19,7 @@ New project? Use the CLI — one command, no clone needed:
 npx create-rigging <project-name>
 cd <project-name>
 bun install
+cp .env.example .env
 docker compose up -d
 bun test
 ```
