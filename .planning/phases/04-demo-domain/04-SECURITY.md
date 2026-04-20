@@ -69,12 +69,116 @@ created: 2026-04-20
 
 ---
 
+## SEC-01 Compliance Evidence
+
+> Added 2026-04-20 — Phase 7 SEC-01 back-fill. Addresses ROADMAP Phase 7 success criteria 3–5 and REQUIREMENTS.md SEC-01 §b–§d. Evidence re-verified at HEAD commit `d15fecc623608abadef5025d95dffb0fe2e29085`.
+
+### CVE-2025-61928 Regression (SEC-01 §b)
+
+**Attack pattern:** Unauthenticated `POST /api-keys` with victim `userId` in request body — [ZeroPath advisory](https://zeropath.com/blog/breaking-authentication-unauthenticated-api-key-creation-in-better-auth-cve-2025-61928)
+
+**Defense location (Phase 3):** `CreateApiKeyUseCase` enforces `AUTH-15` — `body.userId` must equal the authenticated session's `userId`. Global `authContextPlugin` + `requireAuth: true` ensures all Phase 04 routes require authentication before any use-case is invoked.
+
+**Phase 04 coverage:** Phase 04 APIs do not duplicate CVE regression tests (Phase 3 owns the auth path). Phase 04 routes remain protected because:
+1. `createAgentsModule` assumes Phase 3 `authContextPlugin` is globally mounted (ADR 0012, `createApp` order enforced)
+2. All 13 Phase 04 routes declare `requireAuth: true`
+3. `AuthContext` is unreachable without a valid identity — routes that skip `requireAuth: true` cannot compile without a cast
+
+**Regression test:**
+- **File:** `tests/integration/auth/cve-2025-61928.regression.test.ts`
+- **Describe block:** `[Regression] CVE-2025-61928 - unauth API key creation via body.userId`
+- **Tests:**
+  - `unauthenticated POST /api-keys with body.userId -> 401 + zero keys for victim`
+  - `authenticated attacker cannot create API key for victim via body.userId -> 403 USER_ID_MISMATCH`
+- **Run command:** `bun test tests/integration/auth/cve-2025-61928.regression.test.ts`  
+  (or `bun run test:regression` to run all regression suites)
+- **Status at v1.1 HEAD `d15fecc623608abadef5025d95dffb0fe2e29085`:** PASS
+
+---
+
+### API Key Timing-Safe Verification (SEC-01 §c)
+
+**Threat:** Timing side-channel on API Key verification — malformed-path latency differs from valid-format-wrong-hash latency, revealing key format information to an attacker.
+
+**Implementation:** `src/auth/infrastructure/better-auth/identity-service.adapter.ts` — class `BetterAuthIdentityService`, method `verifyApiKey(rawKey: string)`
+
+All three rejection paths walk timing-aligned dummy operations via `crypto.timingSafeEqual` from `node:crypto`:
+
+| Rejection path | Action |
+|----------------|--------|
+| Malformed key (bad prefix / wrong length / non-ASCII) | `timingSafeEqual(DUMMY_HASH, DUMMY_HASH)` + dummy `findByKeyHash` + `timingSafeEqual(DUMMY_HASH, DUMMY_HASH)` + dummy `findByPrefix` |
+| Valid format, hash not found in DB | `timingSafeEqual(DUMMY_HASH, DUMMY_HASH)` + dummy `findByPrefix` |
+| Hash found but key revoked or expired | `timingSafeEqual(DUMMY_HASH, DUMMY_HASH)` |
+
+`DUMMY_HASH` is `createHash('sha256').update('dummy').digest()` — pre-computed Buffer, not a per-call allocation.
+
+**Benchmark test:**
+- **File:** `tests/integration/auth/timing-safe-apikey.regression.test.ts`
+- **Describe block:** `[Regression AUX-04 / D-10] API key timing alignment`
+- **Test:** `1000-iteration latency: |t_malformed - t_valid_wrong_hash| / t_valid_wrong_hash < 0.2`
+  - 100-iteration warm-up before measurement
+  - Gate: ratio must be `< 0.2` (20% tolerance)
+  - Logged output: `{ test: 'timing-safe-apikey', malMean, wrongHashMean, ratio }`
+- **Run command:** `bun test tests/integration/auth/timing-safe-apikey.regression.test.ts`
+- **Status at v1.1 HEAD `d15fecc623608abadef5025d95dffb0fe2e29085`:** PASS (ratio: 0.01585070945657452)
+
+**Phase 3 decision reference:** Phase 3 D-10 (timing alignment requirement) and D-09 (API Key fast-reject 401 without cookie fallback).
+
+---
+
+### Cross-User 404 Matrix — All Verbs (SEC-01 §d)
+
+**Threat:** HTTP response differences on cross-user access reveal resource existence (403 → resource exists; 404 → doesn't). Phase 04 mitigates via single-branch `ResourceNotFoundError` on all cross-user paths (D-09).
+
+**Ownership gate pattern (D-10):** Implemented at use-case layer. All Phase 04 use cases follow:
+```typescript
+const agent = await this.agentRepo.findById(input.agentId)
+if (!agent || agent.ownerId !== ctx.userId) {
+  throw new ResourceNotFoundError('Resource not found')
+}
+```
+
+**Evidence matrix:**
+
+| Verb | Route | Coverage Type | Evidence | Status at `d15fecc623608abadef5025d95dffb0fe2e29085` |
+|------|-------|---------------|----------|------------------------|
+| GET (single) | `/agents/:id` | integration test | `cross-user-404.test.ts` — `User B GET /agents/:userAAgentId → 404 RESOURCE_NOT_FOUND` | PASS |
+| GET (nested latest) | `/agents/:id/prompts/latest` | integration test | `dogfood-self-prompt-read.test.ts` — Variant 3: User B API Key → `GET /agents/:id/prompts/latest` → 404 `RESOURCE_NOT_FOUND` | PASS |
+| GET (list) | `/agents/:id/prompts` | code-level proof | `src/agents/application/usecases/list-prompt-versions.usecase.ts:17–21` — identical ownership gate to single-read path (see below) | n/a — code proof |
+| PATCH | `/agents/:id` | integration test | `cross-user-404.test.ts` — `User B PATCH /agents/:userAAgentId → 404 RESOURCE_NOT_FOUND` | PASS |
+| DELETE | `/agents/:id` | integration test | `cross-user-404.test.ts` — `User B DELETE /agents/:userAAgentId → 404` | PASS |
+| POST (nested) | `/agents/:id/prompts` | integration test | `cross-user-404.test.ts` — `User B POST /agents/:userAAgentId/prompts → 404 (ownership fails before scope)` | PASS |
+
+**List verb code-level proof (D-07 Branch B):**
+
+No dedicated integration test exists for `User B GET /agents/:userAAgentId/prompts` (list-prompts cross-user 404). However, the ownership gate in `ListPromptVersionsUseCase` is **identical** to the gates tested above:
+
+```typescript
+// src/agents/application/usecases/list-prompt-versions.usecase.ts:17–21
+async execute(ctx: AuthContext, input: ListPromptVersionsInput): Promise<PromptVersion[]> {
+  const agent = await this.agentRepo.findById(input.agentId)
+  if (!agent || agent.ownerId !== ctx.userId) {
+    throw new ResourceNotFoundError('Resource not found')
+  }
+  return this.promptVersionRepo.listByAgent(input.agentId)
+}
+```
+
+The controller at `src/agents/presentation/controllers/prompt-version.controller.ts` calls `deps.listPromptVersions.execute(authContext, { agentId })` with `requireAuth: true`. The ownership check is not in the controller layer — it is in the use case, which is the same code path called by all routes. The two existing cross-user read-path tests (Variant 3 of `dogfood-self-prompt-read.test.ts` + `cross-user-404.test.ts` GET) confirm the gate fires correctly for the read path; the list path uses the same gate from the same use-case pattern. Additional test cross-referencing: `tests/integration/agents/prompt-version-crud.test.ts` covers the happy-path list route (same-user `GET /prompts` → 200), confirming the route resolves.
+
+**Test run commands:**
+```bash
+bun test tests/integration/agents/cross-user-404.test.ts
+bun test tests/integration/agents/dogfood-self-prompt-read.test.ts
+```
+
 ## Security Audit Trail
 
 | Audit Date | Threats Total | Closed | Open | Run By |
 |------------|---------------|--------|------|--------|
 | 2026-04-20 | 19 | 19 | 0 | Claude Code ($gsd-secure-phase 04, State B run-from-artifacts) |
 | 2026-04-20 | 19 | 19 | 0 | Claude Code ($gsd-secure-phase 04, State A re-verification) |
+| 2026-04-20 | 19 | 19 | 0 | Claude Code (Phase 7 SEC-01 back-fill: CVE + timing + cross-user matrix evidence added; `git rev-parse HEAD` = `d15fecc623608abadef5025d95dffb0fe2e29085`; `bun run test:regression` + agents cross-user suites all green) |
 
 ### Audit 2026-04-20 — Run-from-Artifacts (State B)
 
