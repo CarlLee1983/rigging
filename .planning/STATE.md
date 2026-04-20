@@ -2,10 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Release Validation
-status: roadmap_complete
-stopped_at: v1.1 roadmap landed (Phases 6-8, 5 requirements mapped) — ready to discuss or plan Phase 6
+status: phase_in_progress
+stopped_at: Phase 6 context gathered (06-CONTEXT.md committed) — ready for $gsd-plan-phase 6
 last_updated: "2026-04-20T00:00:00.000Z"
-last_activity: 2026-04-20 -- v1.1 ROADMAP.md written with Phases 6-8; REQUIREMENTS.md traceability table filled; awaiting Phase 6 discuss/plan
+last_activity: 2026-04-20 -- Phase 6 CONTEXT.md landed: 2-plan split (green baseline + fail-mode), Plan 1 merges smoke step to main, Plan 2 single sacrificial PR force-push ×5 (incl. smoke fail-mode)
+resume_file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-CONTEXT.md
 progress:
   total_phases: 3
   completed_phases: 0
@@ -26,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-04-20 — v1.1 Release Validation milest
 ## Current Position
 
 Milestone: v1.1 Release Validation — IN PROGRESS (2026-04-20)
-Phase: 6 — CI Pipeline Green-Run & Smoke Validation — Not started
+Phase: 6 — CI Pipeline Green-Run & Smoke Validation — Context gathered, awaiting plan
 Plan: —
-Status: Roadmap complete, awaiting Phase 6 discuss or plan
-Last activity: 2026-04-20 — ROADMAP.md appended with v1.1 Phases 6-8; REQUIREMENTS.md traceability table filled (5 requirements mapped 1:1 or 1:many to phases, zero orphans)
+Status: 06-CONTEXT.md committed (6 structural decisions locked); ready for $gsd-plan-phase 6
+Last activity: 2026-04-20 — Phase 6 discuss-phase completed via Plan 分解策略 area; CONTEXT.md locks 2-plan split, green-before-fail, Plan 1 merge-to-main, Plan 2 sacrificial PR force-push ×5 (5 fail-modes incl. smoke)
 
 Progress: v1.1 [          ]   0% (0/3 phases, 0/0 plans — plans TBD per phase)
 
@@ -97,9 +98,9 @@ Highlights from v1.0 (carried into v1.1):
 ## Session Continuity
 
 Last session: 2026-04-20T00:00:00.000Z
-Stopped at: v1.1 roadmap written (Phases 6-8); REQUIREMENTS.md traceability filled. Awaiting user approval + Phase 6 kick-off.
-Resume file: N/A
+Stopped at: Phase 6 discuss-phase complete — 06-CONTEXT.md + 06-DISCUSSION-LOG.md committed. Six structural decisions locked (plan split, order, acceptance, merge, sacrificial PR, fail-mode scope).
+Resume file: .planning/phases/06-ci-pipeline-green-run-smoke-validation/06-CONTEXT.md
 Next options:
-  1. `$gsd-discuss-phase 6 ${GSD_WS}` — gather context for Phase 6 (CI green-run + fail-mode + smoke step) before planning
-  2. `$gsd-plan-phase 6 ${GSD_WS}` — skip discuss, plan Phase 6 directly
-  3. `$gsd-plan-phase 7 ${GSD_WS}` — tackle SEC-01 security audit back-fill first (Phase 7 is independent of Phase 6)
+  1. `$gsd-plan-phase 6` — write PLAN.md for Phase 6 (Plan 1 green + smoke, Plan 2 fail-mode matrix)
+  2. `$gsd-plan-phase 7` — skip Phase 6 planning temporarily, start Phase 7 (SEC-01 Phase 04 security audit back-fill) in parallel
+  3. `$gsd-discuss-phase 7` — gather context for Phase 7 before planning (if SEC-01 approach needs discussion)
