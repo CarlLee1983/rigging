@@ -16,6 +16,7 @@ import {
   requestLoggerPlugin,
 } from '../shared/presentation/plugins/request-logger.plugin'
 import { swaggerPlugin } from '../shared/presentation/plugins/swagger.plugin'
+import { tracingPlugin } from '../shared/presentation/plugins/tracing.plugin'
 import type { Config } from './config'
 
 /**
@@ -68,6 +69,7 @@ export function createApp(config: Config, deps: AppDeps = {}) {
   const app = new Elysia({ name: 'rigging/app' })
     .use(requestLoggerPlugin(logger))
     .use(corsPlugin())
+    .use(tracingPlugin()) // Before errorHandler: ensures tracing onError runs for thrown errors (PROD-03)
     .use(errorHandlerPlugin(logger))
     .use(swaggerPlugin())
 

@@ -1,7 +1,10 @@
 import { createApp } from './bootstrap/app'
 import { loadConfig } from './bootstrap/config'
+import { initTracing } from './bootstrap/otel-init'
 
 const config = loadConfig()
+initTracing(config.OTEL_EXPORTER_OTLP_ENDPOINT)
+
 const app = createApp(config)
 
 app.listen(config.PORT, ({ hostname, port }) => {
