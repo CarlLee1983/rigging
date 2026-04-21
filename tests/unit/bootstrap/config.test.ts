@@ -147,6 +147,7 @@ describe('Config contract drift guard', () => {
       'PORT',
       'NODE_ENV',
       'LOG_LEVEL',
+      'REDIS_URL',
       'RESEND_API_KEY',
       'RESEND_FROM_ADDRESS',
     ])
