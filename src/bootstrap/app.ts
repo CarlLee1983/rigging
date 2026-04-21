@@ -1,12 +1,14 @@
 import { Elysia } from 'elysia'
+import { rateLimit } from 'elysia-rate-limit'
 import type { Redis } from 'ioredis'
 import { createAgentsModule } from '../agents/agents.module'
-import { createAuthModule } from '../auth/auth.module'
+import { createAuthModule, type AuthModuleDeps } from '../auth/auth.module'
 import type { AuthInstance } from '../auth/infrastructure/better-auth/auth-instance'
 import type { IDbHealthProbe } from '../health/application/ports/db-health-probe.port'
 import { createHealthModule, type HealthModuleDeps } from '../health/health.module'
 import { createDbClient, type DrizzleDb } from '../shared/infrastructure/db/client'
 import { createRedisClient } from '../shared/infrastructure/redis/client'
+import { RedisRateLimitContext } from '../shared/infrastructure/redis/rate-limit-context'
 import { corsPlugin } from '../shared/presentation/plugins/cors.plugin'
 import { errorHandlerPlugin } from '../shared/presentation/plugins/error-handler.plugin'
 import {
@@ -52,11 +54,13 @@ export function createApp(config: Config, deps: AppDeps = {}) {
   // in its type (tsconfig `exactOptionalPropertyTypes: true`), so we must OMIT it rather than
   // pass `undefined`. createHealthModule defaults to DrizzleDbHealthProbe(db) when probe is absent.
   const healthDeps: HealthModuleDeps = deps.probe ? { db, probe: deps.probe } : { db }
-  const authDeps = {
+
+  // authDeps must also respect `exactOptionalPropertyTypes: true`
+  const authDeps: AuthModuleDeps = {
     db,
     logger,
     config,
-    redis,
+    ...(redis && { redis }),
     ...(deps.authInstance && { authInstance: deps.authInstance }),
   }
 
@@ -65,6 +69,7 @@ export function createApp(config: Config, deps: AppDeps = {}) {
     .use(corsPlugin())
     .use(errorHandlerPlugin(logger))
     .use(swaggerPlugin())
+    .use(rateLimit({ context: redis ? new RedisRateLimitContext(redis) : undefined }))
     .use(createAuthModule(authDeps))
     .use(createAgentsModule({ db, logger }))
     .use(createHealthModule(healthDeps))
