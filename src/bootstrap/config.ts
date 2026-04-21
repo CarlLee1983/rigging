@@ -33,6 +33,7 @@ export const ConfigSchema = Type.Object({
   REDIS_URL: Type.Optional(Type.String({ pattern: '^(redis|rediss)://.+' })),
   RESEND_API_KEY: Type.Optional(Type.String()),
   RESEND_FROM_ADDRESS: Type.Optional(Type.String({ format: 'email' })),
+  OTEL_EXPORTER_OTLP_ENDPOINT: Type.Optional(Type.String({ format: 'uri' })),
 })
 
 export type Config = Static<typeof ConfigSchema>
