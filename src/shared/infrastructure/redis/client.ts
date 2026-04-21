@@ -30,7 +30,7 @@ export function createRedisClient(url: string, logger: Logger): Redis {
     logger.info({ redis_url: redactedUrl }, 'Redis client ready')
   })
 
-  client.on('reconnecting', (delay) => {
+  client.on('reconnecting', (delay: number) => {
     logger.warn({ delay, redis_url: redactedUrl }, 'Redis client reconnecting')
   })
 

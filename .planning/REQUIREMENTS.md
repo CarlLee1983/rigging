@@ -7,11 +7,11 @@
 
 ### Email Delivery
 
-- [ ] **PROD-01**: Developer can configure a Resend API key and sender address via environment variables so that email verification and password reset emails are delivered to real inboxes in production (replacing ConsoleEmailAdapter)
+- [x] **PROD-01**: Developer can configure a Resend API key and sender address via environment variables so that email verification and password reset emails are delivered to real inboxes in production (replacing ConsoleEmailAdapter)
 
 ### Rate Limiting
 
-- [ ] **PROD-02**: Developer can enable a Redis-backed rate limit store via environment configuration so that rate limiting state survives application restarts and is shared across multiple instances
+- [x] **PROD-02**: Developer can enable a Redis-backed rate limit store via environment configuration so that rate limiting state survives application restarts and is shared across multiple instances
 
 ### Observability
 
@@ -61,8 +61,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROD-01 | Phase 11 | Pending |
-| PROD-02 | Phase 12 | Pending |
+| PROD-01 | Phase 11 | Complete (2026-04-21) |
+| PROD-02 | Phase 12 | Complete (2026-04-21) |
 | PROD-03 | Phase 13 | Pending |
 
 **Coverage:**
@@ -72,4 +72,4 @@
 
 ---
 *Requirements defined: 2026-04-20*
-*Last updated: 2026-04-20 — traceability table populated after roadmap creation*
+*Last updated: 2026-04-21 — PROD-01/PROD-02 marked complete after Phases 11–12*

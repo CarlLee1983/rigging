@@ -44,7 +44,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 ### v1.3 Production Hardening — Phases 11-13
 
 - [x] **Phase 11: Resend Email Adapter** — Replace ConsoleEmailAdapter with a real Resend-backed adapter, configured via environment variables
-- [ ] **Phase 12: Redis Rate Limit Store** — Upgrade the in-memory rate limit store to a Redis-backed persistent store, configured via environment variables
+- [x] **Phase 12: Redis Rate Limit Store** — Upgrade the in-memory rate limit store to a Redis-backed persistent store, configured via environment variables
 - [ ] **Phase 13: OpenTelemetry Tracing** — Add an Elysia middleware that emits OTLP-compatible trace spans for every HTTP request
 
 ## Phase Details
@@ -110,7 +110,10 @@ Plans:
   3. Two application instances sharing the same Redis URL enforce a single shared rate limit budget, not two independent budgets
   4. Leaving `REDIS_URL` unset causes the application to fall back to the in-memory store (preserving existing behavior for local development)
   5. The existing test suite continues to pass without a Redis instance — the in-memory store remains the default for tests
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [x] 12-01-PLAN.md — Redis dependencies + config + client factory + BetterAuth secondary storage + global Elysia rate limit + tests
 
 ### Phase 13: OpenTelemetry Tracing
 **Goal**: Every HTTP request processed by the application automatically produces an OpenTelemetry trace span, collectable by any OTLP-compatible backend without any configuration from the application developer
@@ -139,7 +142,7 @@ Plans:
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
 | 11. Resend Email Adapter | v1.3 | 2/2 | Complete | 2026-04-21 |
-| 12. Redis Rate Limit Store | v1.3 | 0/? | Not started | - |
+| 12. Redis Rate Limit Store | v1.3 | 1/1 | Complete | 2026-04-21 |
 | 13. OpenTelemetry Tracing | v1.3 | 0/? | Not started | - |
 
 ---

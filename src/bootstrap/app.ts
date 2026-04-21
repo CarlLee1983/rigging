@@ -2,7 +2,7 @@ import { Elysia } from 'elysia'
 import { rateLimit } from 'elysia-rate-limit'
 import type { Redis } from 'ioredis'
 import { createAgentsModule } from '../agents/agents.module'
-import { createAuthModule, type AuthModuleDeps } from '../auth/auth.module'
+import { type AuthModuleDeps, createAuthModule } from '../auth/auth.module'
 import type { AuthInstance } from '../auth/infrastructure/better-auth/auth-instance'
 import type { IDbHealthProbe } from '../health/application/ports/db-health-probe.port'
 import { createHealthModule, type HealthModuleDeps } from '../health/health.module'
@@ -48,7 +48,8 @@ export interface AppDeps {
 export function createApp(config: Config, deps: AppDeps = {}) {
   const logger = createPinoLogger({ NODE_ENV: config.NODE_ENV, LOG_LEVEL: config.LOG_LEVEL })
   const db = deps.db ?? createDbClient({ DATABASE_URL: config.DATABASE_URL }).db
-  const redis = deps.redis ?? (config.REDIS_URL ? createRedisClient(config.REDIS_URL, logger) : undefined)
+  const redis =
+    deps.redis ?? (config.REDIS_URL ? createRedisClient(config.REDIS_URL, logger) : undefined)
 
   // Build HealthModuleDeps conditionally: `probe` is an optional property without `| undefined`
   // in its type (tsconfig `exactOptionalPropertyTypes: true`), so we must OMIT it rather than
@@ -71,11 +72,15 @@ export function createApp(config: Config, deps: AppDeps = {}) {
     .use(swaggerPlugin())
 
   if (config.NODE_ENV !== 'test') {
-    app.use(
-      rateLimit({
-        context: redis ? new RedisRateLimitContext(redis) : undefined,
-      }),
-    )
+    if (redis) {
+      app.use(
+        rateLimit({
+          context: new RedisRateLimitContext(redis),
+        }),
+      )
+    } else {
+      app.use(rateLimit({}))
+    }
   }
 
   return app

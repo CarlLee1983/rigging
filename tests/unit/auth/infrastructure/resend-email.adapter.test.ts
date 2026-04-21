@@ -81,10 +81,13 @@ describe('ResendEmailAdapter', () => {
   })
 
   test('throws Error and calls logger.error when Resend returns error', async () => {
-    mockEmailsSend.mockImplementation(async () => ({
-      data: null,
-      error: { message: 'Invalid API key', name: 'validation_error' },
-    }))
+    mockEmailsSend.mockImplementation(
+      async () =>
+        ({
+          data: null,
+          error: { message: 'Invalid API key', name: 'validation_error' },
+        }) as unknown as Awaited<ReturnType<typeof mockEmailsSend>>,
+    )
 
     const { logger, errorCalls } = makeLogger()
     const adapter = new ResendEmailAdapter(API_KEY, FROM, logger)

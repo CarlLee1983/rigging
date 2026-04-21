@@ -1,20 +1,24 @@
 import { describe, expect, test } from 'bun:test'
 import {
-  validateProjectName,
   isNodeVersionSufficient,
+  validateProjectName,
 } from '../../../packages/create-rigging/lib/helpers.js'
 
 describe('validateProjectName', () => {
   test('empty string → invalid', () => {
     const result = validateProjectName('')
     expect(result.valid).toBe(false)
-    expect(result.error).toBeTruthy()
+    if (!result.valid) {
+      expect(result.error).toBeTruthy()
+    }
   })
 
   test('"rigging" → invalid (reserved name)', () => {
     const result = validateProjectName('rigging')
     expect(result.valid).toBe(false)
-    expect(result.error).toContain('rigging')
+    if (!result.valid) {
+      expect(result.error).toContain('rigging')
+    }
   })
 
   test('"." → invalid (current dir)', () => {
@@ -39,8 +43,7 @@ describe('validateProjectName', () => {
 
   test('"my-app" → valid', () => {
     const result = validateProjectName('my-app')
-    expect(result.valid).toBe(true)
-    expect(result.error).toBeUndefined()
+    expect(result).toEqual({ valid: true })
   })
 
   test('"my_project_123" → valid', () => {

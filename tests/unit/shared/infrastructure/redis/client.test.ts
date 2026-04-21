@@ -16,10 +16,7 @@ mock.module('ioredis', () => ({
 }))
 
 // Import createRedisClient after the module mock is established.
-// @ts-ignore - The module is mocked, so the real ioredis types don't apply here.
-const { createRedisClient } = await import(
-  '../../../../../src/shared/infrastructure/redis/client'
-)
+const { createRedisClient } = await import('../../../../../src/shared/infrastructure/redis/client')
 
 function makeLogger() {
   const infoCalls: Array<[unknown, string]> = []
@@ -81,9 +78,11 @@ describe('createRedisClient', () => {
     expect(onMock).toHaveBeenCalledWith('reconnecting', expect.any(Function))
     expect(onMock).toHaveBeenCalledWith('error', expect.any(Function))
 
-    // Helper to find and call the handler
-    const callHandler = (event: string, ...args: any[]) => {
-      const call = onMock.mock.calls.find((c) => c[0] === event)
+    type EventCall = [string, (...args: unknown[]) => void]
+    const calls = onMock.mock.calls as unknown as EventCall[]
+
+    const callHandler = (event: string, ...args: unknown[]) => {
+      const call = calls.find((c) => c[0] === event)
       if (call) {
         call[1](...args)
       }
@@ -98,10 +97,7 @@ describe('createRedisClient', () => {
 
     // Test 'ready'
     callHandler('ready')
-    expect(infoCalls).toContainEqual([
-      { redis_url: expectedRedactedUrl },
-      'Redis client ready',
-    ])
+    expect(infoCalls).toContainEqual([{ redis_url: expectedRedactedUrl }, 'Redis client ready'])
 
     // Test 'reconnecting'
     callHandler('reconnecting', 100)
@@ -120,17 +116,21 @@ describe('createRedisClient', () => {
   })
 
   test('maskRedisUrl (via integration) should redact password and remove trailing slash', () => {
+    onMock.mockClear()
     const { logger, infoCalls } = makeLogger()
-    
-    // User:Pass
     createRedisClient('redis://alice:secret@localhost:6379', logger)
-    const callHandler = (event: string) => {
-      const call = onMock.mock.calls.find((c) => c[0] === event)
-      if (call) call[1]()
-    }
-    
-    onMock.mock.calls.filter(c => c[0] === 'connect')[onMock.mock.calls.filter(c => c[0] === 'connect').length - 1][1]()
-    expect(infoCalls[infoCalls.length - 1][0]).toEqual({ redis_url: 'redis://alice:***@localhost:6379' })
+
+    type EventCall = [string, (...args: unknown[]) => void]
+    const connectCalls = (onMock.mock.calls as unknown as EventCall[]).filter(
+      (c) => c[0] === 'connect',
+    )
+    const lastHandler = connectCalls[connectCalls.length - 1]?.[1]
+    expect(lastHandler).toBeDefined()
+    lastHandler?.()
+
+    expect(infoCalls[infoCalls.length - 1]?.[0]).toEqual({
+      redis_url: 'redis://alice:***@localhost:6379',
+    })
   })
 
   test('maskRedisUrl should return original string if URL is invalid', () => {
@@ -138,10 +138,13 @@ describe('createRedisClient', () => {
     const { logger, infoCalls } = makeLogger()
     const invalidUrl = 'not-a-url'
     createRedisClient(invalidUrl, logger)
-    
-    const connectCall = onMock.mock.calls.find(c => c[0] === 'connect')
-    connectCall[1]()
-    
-    expect(infoCalls[infoCalls.length - 1][0]).toEqual({ redis_url: invalidUrl })
+
+    type EventCall = [string, (...args: unknown[]) => void]
+    const connectCall = (onMock.mock.calls as unknown as EventCall[]).find(
+      (c) => c[0] === 'connect',
+    )
+    connectCall?.[1]?.()
+
+    expect(infoCalls[infoCalls.length - 1]?.[0]).toEqual({ redis_url: invalidUrl })
   })
 })
