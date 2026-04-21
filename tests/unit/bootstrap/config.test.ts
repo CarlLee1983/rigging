@@ -123,6 +123,8 @@ describe('Config contract drift guard', () => {
       'PORT',
       'NODE_ENV',
       'LOG_LEVEL',
+      'RESEND_API_KEY',
+      'RESEND_FROM_ADDRESS',
     ])
 
     for (const key of schemaKeys) {

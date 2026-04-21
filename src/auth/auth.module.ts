@@ -13,6 +13,7 @@ import type { AuthInstance } from './infrastructure/better-auth/auth-instance'
 import { createAuthInstance } from './infrastructure/better-auth/auth-instance'
 import { BetterAuthIdentityService } from './infrastructure/better-auth/identity-service.adapter'
 import { ConsoleEmailAdapter } from './infrastructure/email/console-email.adapter'
+import { ResendEmailAdapter } from './infrastructure/email/resend-email.adapter'
 import { DrizzleApiKeyRepository } from './infrastructure/repositories/drizzle-api-key.repository'
 import { apiKeyController } from './presentation/controllers/api-key.controller'
 import { authController } from './presentation/controllers/auth.controller'
@@ -22,14 +23,31 @@ import { authContextPlugin } from './presentation/plugins/auth-context.plugin'
 export interface AuthModuleDeps {
   db: DrizzleDb
   logger: Logger
-  config: Pick<Config, 'BETTER_AUTH_SECRET' | 'BETTER_AUTH_URL'>
+  config: Pick<Config, 'BETTER_AUTH_SECRET' | 'BETTER_AUTH_URL' | 'RESEND_API_KEY' | 'RESEND_FROM_ADDRESS'>
   clock?: { now(): Date }
   authInstance?: AuthInstance
 }
 
 export function createAuthModule(deps: AuthModuleDeps) {
   const clock = deps.clock ?? { now: () => new Date() }
-  const emailPort = new ConsoleEmailAdapter(deps.logger)
+
+  const hasApiKey = Boolean(deps.config.RESEND_API_KEY)
+  const hasFromAddress = Boolean(deps.config.RESEND_FROM_ADDRESS)
+
+  if (hasApiKey !== hasFromAddress) {
+    const missing = hasApiKey ? 'RESEND_FROM_ADDRESS' : 'RESEND_API_KEY'
+    const present = hasApiKey ? 'RESEND_API_KEY' : 'RESEND_FROM_ADDRESS'
+    throw new Error(
+      `Invalid email configuration: ${present} is set but ${missing} is missing. ` +
+        `Either set both RESEND_API_KEY and RESEND_FROM_ADDRESS to enable Resend, ` +
+        `or leave both unset to use ConsoleEmailAdapter.`,
+    )
+  }
+
+  const emailPort =
+    deps.config.RESEND_API_KEY && deps.config.RESEND_FROM_ADDRESS
+      ? new ResendEmailAdapter(deps.config.RESEND_API_KEY, deps.config.RESEND_FROM_ADDRESS, deps.logger)
+      : new ConsoleEmailAdapter(deps.logger)
   const auth =
     deps.authInstance ??
     createAuthInstance(deps.db, {
