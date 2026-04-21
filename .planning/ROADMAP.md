@@ -125,7 +125,14 @@ Plans:
   3. A developer running a local Jaeger or Grafana Tempo instance can see individual request traces in the UI after exercising any endpoint
   4. Requests that result in errors (4xx, 5xx) produce spans with appropriate `error` status so they are distinguishable in any OTLP UI
   5. The existing test suite continues to pass with OTel instrumentation loaded — spans export is a no-op when no exporter endpoint is configured
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — ADR 0020: OTel SDK manual assembly decision record (MADR 4.0)
+- [ ] 13-02-PLAN.md — OTel packages install (exact pin) + ConfigSchema OTEL_EXPORTER_OTLP_ENDPOINT + otel-init.ts factory
+- [ ] 13-03-PLAN.md — tracing.plugin.ts + app.ts wiring + main.ts initTracing call
+- [ ] 13-04-PLAN.md — Unit tests (tracing.plugin.test.ts) + integration tests (app-otel-tracing.test.ts, InMemorySpanExporter)
+- [ ] 13-05-PLAN.md — Human verification checkpoint: local Jaeger trace visualization (PROD-03 #3)
 
 ## Progress
 
@@ -143,7 +150,7 @@ Plans:
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
 | 11. Resend Email Adapter | v1.3 | 2/2 | Complete | 2026-04-21 |
 | 12. Redis Rate Limit Store | v1.3 | 1/1 | Complete | 2026-04-21 |
-| 13. OpenTelemetry Tracing | v1.3 | 0/? | Not started | - |
+| 13. OpenTelemetry Tracing | v1.3 | 0/5 | Not started | - |
 
 ---
 
