@@ -1,25 +1,14 @@
-import { describe, expect, it, mock, beforeEach } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
+import { createAuthInstance } from '../../../../../src/auth/infrastructure/better-auth/auth-instance'
 import type { DrizzleDb } from '../../../../../src/shared/infrastructure/db/client'
 
-// Mock better-auth before importing createAuthInstance
-const mockBetterAuth = mock((config: any) => ({
-  handler: () => {},
-  api: {},
-  options: config, // Expose config for testing
-}))
-
-mock.module('better-auth', () => ({
-  betterAuth: mockBetterAuth,
-}))
-
-// Use dynamic import to ensure mock is applied
-async function getCreateAuthInstance() {
-  const mod = await import('../../../../../src/auth/infrastructure/better-auth/auth-instance')
-  return mod.createAuthInstance
-}
-
 describe('createAuthInstance', () => {
-  const mockDb = {} as DrizzleDb
+  // Mock DB adapter that satisfies better-auth/drizzle-adapter requirements
+  const mockDb = {
+    execute: async () => [],
+    query: {}
+  } as unknown as DrizzleDb
+
   const baseCfg = {
     secret: 'a'.repeat(32),
     baseURL: 'http://localhost:3000',
@@ -27,33 +16,24 @@ describe('createAuthInstance', () => {
     sendResetPassword: async () => {},
   }
 
-  beforeEach(() => {
-    mockBetterAuth.mockClear()
-  })
-
   it('should use memory storage when secondaryStorage is not provided', async () => {
-    const createAuthInstance = await getCreateAuthInstance()
-    createAuthInstance(mockDb, baseCfg)
+    const auth = createAuthInstance(mockDb, baseCfg)
     
-    expect(mockBetterAuth).toHaveBeenCalled()
-    const lastCall = mockBetterAuth.mock.calls[mockBetterAuth.mock.calls.length - 1]
-    const config = lastCall[0]
-    
-    expect(config.rateLimit.storage).toBe('memory')
-    expect(config.secondaryStorage).toBeUndefined()
+    // Verify configuration directly from the returned instance's options
+    expect(auth.options.rateLimit?.storage).toBe('memory')
+    expect(auth.options.secondaryStorage).toBeUndefined()
   })
 
   it('should use secondary-storage when secondaryStorage is provided', async () => {
-    const createAuthInstance = await getCreateAuthInstance()
-    const mockStorage = {}
+    const mockStorage = {
+      get: async () => null,
+      set: async () => {},
+      delete: async () => {},
+    }
     
-    createAuthInstance(mockDb, { ...baseCfg, secondaryStorage: mockStorage })
+    const auth = createAuthInstance(mockDb, { ...baseCfg, secondaryStorage: mockStorage })
     
-    expect(mockBetterAuth).toHaveBeenCalled()
-    const lastCall = mockBetterAuth.mock.calls[mockBetterAuth.mock.calls.length - 1]
-    const config = lastCall[0]
-    
-    expect(config.rateLimit.storage).toBe('secondary-storage')
-    expect(config.secondaryStorage).toBe(mockStorage)
+    expect(auth.options.rateLimit?.storage).toBe('secondary-storage')
+    expect(auth.options.secondaryStorage).toBe(mockStorage)
   })
 })

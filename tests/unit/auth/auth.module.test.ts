@@ -1,14 +1,7 @@
 import { describe, expect, it, mock, beforeEach, afterEach, spyOn } from 'bun:test'
 import type { Redis } from 'ioredis'
 import type { Logger } from 'pino'
-
-// Mocks
-const mockRedisStorage = mock(() => ({ storage: 'mock-storage' }))
-
-mock.module('@better-auth/redis-storage', () => ({
-  redisStorage: mockRedisStorage,
-}))
-
+import * as redisStorageModule from '@better-auth/redis-storage'
 import * as authInstanceModule from '../../../src/auth/infrastructure/better-auth/auth-instance'
 import { createAuthModule } from '../../../src/auth/auth.module'
 
@@ -22,15 +15,19 @@ describe('AuthModule', () => {
   }
 
   let spyCreateAuthInstance: any
+  let spyRedisStorage: any
 
   beforeEach(() => {
     spyCreateAuthInstance = spyOn(authInstanceModule, 'createAuthInstance')
       .mockImplementation(() => ({ handler: () => {}, api: {} } as any))
-    mockRedisStorage.mockClear()
+    
+    spyRedisStorage = spyOn(redisStorageModule, 'redisStorage')
+      .mockImplementation(() => ({ storage: 'mock-storage' } as any))
   })
 
   afterEach(() => {
     spyCreateAuthInstance.mockRestore()
+    spyRedisStorage.mockRestore()
   })
 
   it('should pass secondaryStorage to createAuthInstance when redis is present', () => {
@@ -46,7 +43,7 @@ describe('AuthModule', () => {
       redis: mockRedis,
     })
 
-    expect(mockRedisStorage).toHaveBeenCalledWith({
+    expect(spyRedisStorage).toHaveBeenCalledWith({
       client: mockRedis,
       keyPrefix: 'better-auth:',
     })

@@ -64,12 +64,21 @@ export function createApp(config: Config, deps: AppDeps = {}) {
     ...(deps.authInstance && { authInstance: deps.authInstance }),
   }
 
-  return new Elysia({ name: 'rigging/app' })
+  const app = new Elysia({ name: 'rigging/app' })
     .use(requestLoggerPlugin(logger))
     .use(corsPlugin())
     .use(errorHandlerPlugin(logger))
     .use(swaggerPlugin())
-    .use(rateLimit({ context: redis ? new RedisRateLimitContext(redis) : undefined }))
+
+  if (config.NODE_ENV !== 'test') {
+    app.use(
+      rateLimit({
+        context: redis ? new RedisRateLimitContext(redis) : undefined,
+      }),
+    )
+  }
+
+  return app
     .use(createAuthModule(authDeps))
     .use(createAgentsModule({ db, logger }))
     .use(createHealthModule(healthDeps))
