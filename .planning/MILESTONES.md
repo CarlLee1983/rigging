@@ -85,4 +85,60 @@ Release hygiene milestone：GitHub Actions 在真實 PR 上首次全綠 + 五類
 
 ---
 
-_Last updated: 2026-04-20 after v1.1 milestone close_
+## v1.2 — Create Rigging
+
+**Shipped:** 2026-04-20
+**Timeline:** 2026-04-20 (single day)
+**Phases:** 9 → 10 (2 phases / 8 plans complete)
+**Requirements:** SCAF-01..08 (scaffold engine + npm publish) — see `milestones/v1.2-REQUIREMENTS.md`
+
+### Delivered
+
+`create-rigging@0.1.0` published to npm — developers can `npx create-rigging <project-name>` to scaffold a fully working Rigging project without cloning the repo.
+
+### Key Accomplishments
+
+1. **Scaffold engine** — `packages/create-rigging/bin/create-rigging.js` builds a template from `git ls-files`, substitutes project name across all files, copies to output directory with next-steps banner.
+2. **Published to npm** — `create-rigging@0.1.0` publicly available; `npm show create-rigging version` returns `0.1.0`.
+3. **Docs updated** — README `## Getting Started` leads with `npx create-rigging`; `docs/quickstart.md` `## Scaffold (fastest path)` precedes dev server instructions.
+
+### Archives
+
+- Roadmap: `milestones/v1.2-ROADMAP.md` (to be created)
+- Requirements: `milestones/v1.2-REQUIREMENTS.md` (to be created)
+
+---
+
+## v1.3 — Production Hardening
+
+**Shipped:** 2026-04-21
+**Timeline:** 2026-04-21 (single day)
+**Phases:** 11 → 13 (3 phases / 8 plans complete)
+**Files changed:** 59 files, 6,562 insertions, 54 deletions
+**Requirements:** PROD-01, PROD-02, PROD-03 — all complete
+
+### Delivered
+
+三條生產必要基礎設施全部上線：真實 email 交付（Resend adapter）、Redis 持久化限流（跨重啟共享計數器）、OpenTelemetry HTTP 追蹤（OTLP 相容，Jaeger 本地確認）。三者皆透過環境變數零程式碼切換，測試套件在無任何真實憑證下全部通過。
+
+### Key Accomplishments
+
+1. **ResendEmailAdapter via IEmailPort** — `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` 啟用真實 email 交付；僅設其中一個 var 觸發 fail-fast guard；缺 RESEND_* 時回退 ConsoleEmailAdapter；unit tests 以 `mock.module('resend')` 完整隔離。人工驗證：sign-up 驗證信 + 密碼重設信均送達真實收件匣。
+2. **Redis-backed rate limiting** — `REDIS_URL` 啟用 BetterAuth secondaryStorage + Elysia 全域 rate limit 的 Redis store；無 Redis 時回退 in-memory（本地開發行為不變）；`createRedisClient` 在 log 中遮蔽 URL 敏感資訊。
+3. **OpenTelemetry HTTP tracing** — `tracing.plugin.ts` Elysia middleware 為每個 HTTP 請求發出 span，含 route / method / status / latency 屬性；`OTEL_EXPORTER_OTLP_ENDPOINT` 缺席時為 no-op；`initTracing()` 於 `main.ts` 啟動時呼叫。
+4. **ADR 0020** — 記錄手動組裝 OTel SDK（而非 `sdk-node` all-in-one）的決策：bundle size 控制、避免 Node built-in auto-instrumentation、Bun 相容性考量。
+5. **Zero test regressions** — 全部 Phase 11/12/13 交付後測試套件 passing；OTel 無 exporter 時 no-op；rate limit 無 Redis 時 in-memory fallback；email 無 RESEND_* 時 ConsoleEmailAdapter。
+
+### Architecture Decisions
+
+- **ADR 0020** — OTel SDK manual assembly vs `sdk-node` all-in-one（bundle + Bun compat）
+
+### Archives
+
+- Roadmap: `milestones/v1.3-ROADMAP.md`
+- Requirements: `milestones/v1.3-REQUIREMENTS.md`
+- Phase directories: `.planning/phases/11-*` … `13-*`（可用 `$gsd-cleanup` 後續歸檔）
+
+---
+
+_Last updated: 2026-04-21 after v1.3 milestone close_

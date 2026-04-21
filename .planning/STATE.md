@@ -2,50 +2,50 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: "Production Hardening"
-status: active
+status: complete
 stopped_at: ""
-last_updated: "2026-04-21T00:00:00.000Z"
-last_activity: 2026-04-21 — Phase 13 planning complete (5 plans, 4 waves — OpenTelemetry tracing)
-resume_file: .planning/phases/12-redis-rate-limit-store/12-01-SUMMARY.md
+last_updated: "2026-04-21T12:00:00.000Z"
+last_activity: 2026-04-21 — v1.3 milestone closed (Resend + Redis + OTel all shipped)
+resume_file: .planning/phases/13-opentelemetry-tracing/13-05-SUMMARY.md
 progress:
   total_phases: 3
-  completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
-  percent: 67
+  completed_phases: 3
+  total_plans: 8
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.3 Production Hardening started)
+See: `.planning/PROJECT.md` (updated 2026-04-21 after v1.3 milestone)
 
 **Core value:** AI Agent 寫出來的程式碼必須「自動」具備安全性與結構性——靠的不是提示詞約束，而是框架本身的軌道（type system + runtime guards + DI）讓錯誤的寫法根本跑不起來。
 
-**Current focus:** v1.3 Production Hardening — Phase 13 next (OpenTelemetry Tracing)
+**Current focus:** v1.3 milestone complete — planning next milestone via `$gsd-new-milestone`
 
 ## Current Position
 
-Milestone: **v1.3 Production Hardening** — In Progress
+Milestone: **v1.3 Production Hardening** — ✅ SHIPPED 2026-04-21
 
-Phase: Phase 13 (planning complete — 5 plans ready)
+Phase: All 3 phases complete (11 / 12 / 13)
 
-Plan: Phase 13 Plan 01 — next
+Status: Milestone closed — all PROD-01/02/03 requirements delivered and verified
 
-Status: Phase 13 planning complete — ready to execute (5 plans, 4 waves)
+Last activity: 2026-04-21 — v1.3 milestone closed
 
-Last activity: 2026-04-21 — Phase 12 complete (Redis rate limit store + planning closure)
+Progress: ██████████ 100% (3/3 phases complete, 8/8 plans)
 
-Progress: ██████░░░░ 67% (2/3 phases complete, 1/1 plan in Phase 12)
-
-## v1.3 Phase Overview
+## v1.3 Phase Overview (archived)
 
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
 | 11 | Resend Email Adapter | PROD-01 | Complete (2026-04-21) — 2/2 plans |
 | 12 | Redis Rate Limit Store | PROD-02 | Complete (2026-04-21) — 1/1 plan |
-| 13 | OpenTelemetry Tracing | PROD-03 | Ready to execute (5 plans) |
+| 13 | OpenTelemetry Tracing | PROD-03 | Complete (2026-04-21) — 5/5 plans |
+
+Full phase details: `milestones/v1.3-ROADMAP.md`
 
 ## v1.2 Phase Overview (archived)
 
@@ -54,7 +54,7 @@ Progress: ██████░░░░ 67% (2/3 phases complete, 1/1 plan in P
 | 9 | Scaffold Engine | SCAF-01, SCAF-03, SCAF-04, SCAF-05, SCAF-06, SCAF-07 | Complete (2026-04-20) — 5/5 plans |
 | 10 | Publish & Docs | SCAF-02, SCAF-08 | Complete (2026-04-20) — 3/3 plans |
 
-Full phase details: `milestones/v1.2-ROADMAP.md` (to be archived at milestone close)
+Full phase details: `milestones/v1.2-ROADMAP.md`
 
 ## v1.1 Phase Overview (archived)
 
@@ -70,17 +70,7 @@ Full phase details: `milestones/v1.1-ROADMAP.md`
 
 ### Decisions
 
-See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes).
-
-- **11-01**: resend@6.12.2 pinned exact (no caret); RESEND_FROM_ADDRESS validated via custom regex FormatRegistry (TypeBox has no built-in email format); fail-fast guard on partial RESEND config (exactly one var set = startup error).
-- **11-02**: mock.module('resend') replaces Resend class entirely — no real HTTP possible during tests; mockImplementation() per-test without beforeEach reset; optional field tests use withEnv with undefined values.
-- **12-01**: Optional Redis shared between BetterAuth `secondaryStorage` and global Elysia rate limit; `createRedisClient` redacts URLs in logs; `rateLimit` uses separate branches for `exactOptionalPropertyTypes`.
-
-### v1.3 Architecture Notes
-
-- **PROD-01**: `IEmailPort` interface already exists; `ResendEmailAdapter` is a pure adapter swap. No domain change. Env vars: `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`. Default to `ConsoleEmailAdapter` when unset (preserves test behavior).
-- **PROD-02**: `REDIS_URL` optional — `ioredis` + `@better-auth/redis-storage` + `elysia-rate-limit` with `RedisRateLimitContext`; global rate limit skipped in `NODE_ENV=test`; in-memory fallback when Redis absent.
-- **PROD-03**: New Elysia middleware (plugin) layer. OTLP export via `OTEL_EXPORTER_OTLP_ENDPOINT`. No-op when env var absent. Spans must include route, method, status, latency. Will need ADR for OTel SDK choice.
+See `PROJECT.md` Key Decisions (includes ADR 0020 and v1.3 OTel/Redis/Resend outcomes).
 
 ### Pending Todos
 
@@ -94,8 +84,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-21
 
-Stopped at: Phase 12 Plan 01 complete (12-01-SUMMARY.md) — Redis rate limit store shipped
+Stopped at: v1.3 milestone closed — all phases complete
 
-Resume file: `.planning/phases/12-redis-rate-limit-store/12-01-SUMMARY.md`
+Resume file: `.planning/phases/13-opentelemetry-tracing/13-05-SUMMARY.md`
 
-Next: Start Phase 13 (OpenTelemetry Tracing — PROD-03)
+Next: `$gsd-new-milestone` to plan v1.4

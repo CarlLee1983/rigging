@@ -15,7 +15,7 @@
 
 ### Observability
 
-- [ ] **PROD-03**: All HTTP requests automatically emit OpenTelemetry trace spans (route, method, status code, latency) via an Elysia middleware, collectable by any OTLP-compatible backend
+- [x] **PROD-03**: All HTTP requests automatically emit OpenTelemetry trace spans (route, method, status code, latency) via an Elysia middleware, collectable by any OTLP-compatible backend
 
 ## Future Requirements
 
@@ -63,7 +63,7 @@
 |-------------|-------|--------|
 | PROD-01 | Phase 11 | Complete (2026-04-21) |
 | PROD-02 | Phase 12 | Complete (2026-04-21) |
-| PROD-03 | Phase 13 | Pending |
+| PROD-03 | Phase 13 | Complete (2026-04-21) |
 
 **Coverage:**
 - v1.3 requirements: 3 total

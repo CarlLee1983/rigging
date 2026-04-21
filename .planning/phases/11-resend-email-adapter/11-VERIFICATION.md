@@ -1,8 +1,8 @@
 ---
 phase: 11-resend-email-adapter
 verified: 2026-04-21T00:00:00Z
-status: human_needed
-score: 3/5 must-haves verified (SCs 3-4 require human testing; SC TS typecheck error is a warning)
+status: verified
+score: 5/5 must-haves verified (SCs 3-4 confirmed by human testing 2026-04-21)
 re_verification: false
 human_verification:
   - test: "Email verification delivers to a real inbox"

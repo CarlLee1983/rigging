@@ -1,8 +1,8 @@
 ---
 phase: 10-publish-docs
 verified: 2026-04-20T00:00:00Z
-status: human_needed
-score: 5/6 must-haves verified
+status: archived
+score: 6/6 must-haves verified
 overrides_applied: 0
 human_verification:
   - test: "從 repo 外部執行 npx create-rigging smoke-test 確認 package 實際可用"
