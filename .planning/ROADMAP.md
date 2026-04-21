@@ -94,7 +94,11 @@ Plans:
   3. An email verification request (`POST /api/auth/sign-up`) results in a real email arriving at the recipient inbox (verifiable via Resend dashboard or inbox)
   4. A password reset request (`POST /api/auth/forget-password`) results in a real reset-link email arriving at the recipient inbox
   5. The existing test suite continues to pass without a real Resend API key — `ConsoleEmailAdapter` remains the default in test environments
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Install resend@6.12.2 + extend ConfigSchema + create ResendEmailAdapter + wire createAuthModule with conditional selection and fail-fast guard
+- [ ] 11-02-PLAN.md — Unit tests for ResendEmailAdapter (mock resend package) + update config drift guard test
 
 ### Phase 12: Redis Rate Limit Store
 **Goal**: A developer deploying multiple instances (or restarting a single instance) can configure Redis as the rate limit backend, ensuring rate limiting state is shared and persists across restarts
@@ -134,7 +138,7 @@ Plans:
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
-| 11. Resend Email Adapter | v1.3 | 0/? | Not started | - |
+| 11. Resend Email Adapter | v1.3 | 0/2 | Not started | - |
 | 12. Redis Rate Limit Store | v1.3 | 0/? | Not started | - |
 | 13. OpenTelemetry Tracing | v1.3 | 0/? | Not started | - |
 
