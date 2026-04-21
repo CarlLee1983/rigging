@@ -1,4 +1,6 @@
+import { redisStorage } from '@better-auth/redis-storage'
 import { Elysia } from 'elysia'
+import type { Redis } from 'ioredis'
 import type { Logger } from 'pino'
 import type { Config } from '../bootstrap/config'
 import type { DrizzleDb } from '../shared/infrastructure/db/client'
@@ -23,8 +25,16 @@ import { authContextPlugin } from './presentation/plugins/auth-context.plugin'
 export interface AuthModuleDeps {
   db: DrizzleDb
   logger: Logger
-  config: Pick<Config, 'BETTER_AUTH_SECRET' | 'BETTER_AUTH_URL' | 'RESEND_API_KEY' | 'RESEND_FROM_ADDRESS'>
+  config: Pick<
+    Config,
+    | 'BETTER_AUTH_SECRET'
+    | 'BETTER_AUTH_URL'
+    | 'RESEND_API_KEY'
+    | 'RESEND_FROM_ADDRESS'
+    | 'REDIS_URL'
+  >
   clock?: { now(): Date }
+  redis?: Redis
   authInstance?: AuthInstance
 }
 
@@ -46,13 +56,23 @@ export function createAuthModule(deps: AuthModuleDeps) {
 
   const emailPort =
     deps.config.RESEND_API_KEY && deps.config.RESEND_FROM_ADDRESS
-      ? new ResendEmailAdapter(deps.config.RESEND_API_KEY, deps.config.RESEND_FROM_ADDRESS, deps.logger)
+      ? new ResendEmailAdapter(
+          deps.config.RESEND_API_KEY,
+          deps.config.RESEND_FROM_ADDRESS,
+          deps.logger,
+        )
       : new ConsoleEmailAdapter(deps.logger)
+
+  const secondaryStorage = deps.redis
+    ? redisStorage({ client: deps.redis, keyPrefix: 'better-auth:' })
+    : undefined
+
   const auth =
     deps.authInstance ??
     createAuthInstance(deps.db, {
       secret: deps.config.BETTER_AUTH_SECRET,
       baseURL: deps.config.BETTER_AUTH_URL,
+      secondaryStorage,
       sendVerificationEmail: async ({ url, email }) => {
         await emailPort.send({
           to: email,

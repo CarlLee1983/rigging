@@ -1,10 +1,12 @@
 import { Elysia } from 'elysia'
+import type { Redis } from 'ioredis'
 import { createAgentsModule } from '../agents/agents.module'
 import { createAuthModule } from '../auth/auth.module'
 import type { AuthInstance } from '../auth/infrastructure/better-auth/auth-instance'
 import type { IDbHealthProbe } from '../health/application/ports/db-health-probe.port'
 import { createHealthModule, type HealthModuleDeps } from '../health/health.module'
 import { createDbClient, type DrizzleDb } from '../shared/infrastructure/db/client'
+import { createRedisClient } from '../shared/infrastructure/redis/client'
 import { corsPlugin } from '../shared/presentation/plugins/cors.plugin'
 import { errorHandlerPlugin } from '../shared/presentation/plugins/error-handler.plugin'
 import {
@@ -22,6 +24,7 @@ import type { Config } from './config'
 export interface AppDeps {
   db?: DrizzleDb // override for tests; defaults to createDbClient(config).db
   probe?: IDbHealthProbe // override for tests; defaults to DrizzleDbHealthProbe(db) inside createHealthModule
+  redis?: Redis // override for tests; defaults to createRedisClient(config.REDIS_URL) if URL present
   authInstance?: AuthInstance
 }
 
@@ -43,14 +46,19 @@ export interface AppDeps {
 export function createApp(config: Config, deps: AppDeps = {}) {
   const logger = createPinoLogger({ NODE_ENV: config.NODE_ENV, LOG_LEVEL: config.LOG_LEVEL })
   const db = deps.db ?? createDbClient({ DATABASE_URL: config.DATABASE_URL }).db
+  const redis = deps.redis ?? (config.REDIS_URL ? createRedisClient(config.REDIS_URL, logger) : undefined)
 
   // Build HealthModuleDeps conditionally: `probe` is an optional property without `| undefined`
   // in its type (tsconfig `exactOptionalPropertyTypes: true`), so we must OMIT it rather than
   // pass `undefined`. createHealthModule defaults to DrizzleDbHealthProbe(db) when probe is absent.
   const healthDeps: HealthModuleDeps = deps.probe ? { db, probe: deps.probe } : { db }
-  const authDeps = deps.authInstance
-    ? { db, logger, config, authInstance: deps.authInstance }
-    : { db, logger, config }
+  const authDeps = {
+    db,
+    logger,
+    config,
+    redis,
+    ...(deps.authInstance && { authInstance: deps.authInstance }),
+  }
 
   return new Elysia({ name: 'rigging/app' })
     .use(requestLoggerPlugin(logger))

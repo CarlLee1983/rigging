@@ -23,6 +23,7 @@ export interface AuthInstanceConfig {
   baseURL: string
   sendVerificationEmail: (params: { url: string; email: string }) => Promise<void>
   sendResetPassword: (params: { url: string; email: string }) => Promise<void>
+  secondaryStorage?: any
 }
 
 export function createAuthInstance(db: DrizzleDb, cfg: AuthInstanceConfig) {
@@ -31,6 +32,7 @@ export function createAuthInstance(db: DrizzleDb, cfg: AuthInstanceConfig) {
     secret: cfg.secret,
     baseURL: cfg.baseURL,
     basePath: '/api/auth',
+    secondaryStorage: cfg.secondaryStorage,
     emailVerification: {
       sendOnSignUp: true,
       sendVerificationEmail: async ({ user, url }) => {
@@ -54,7 +56,7 @@ export function createAuthInstance(db: DrizzleDb, cfg: AuthInstanceConfig) {
       enabled: true,
       window: 60,
       max: 100,
-      storage: 'memory',
+      storage: cfg.secondaryStorage ? 'secondary-storage' : 'memory',
     },
   })
 }
