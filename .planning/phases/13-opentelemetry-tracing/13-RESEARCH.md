@@ -599,22 +599,25 @@ describe('OTel HTTP spans', () => {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **span 是否要在 `onAfterHandle` 還是 `onAfterResponse` 中結束？**
    - What we know：`onAfterHandle` 在 handler return 後執行；`onAfterResponse` 在 response 送出後執行
    - What's unclear：latency 應量到 response sent 還是 handler return？
    - Recommendation：用 `onAfterHandle`（與 requestLoggerPlugin 的 `startedAt` 量測點一致）；若要更精確的「到 response 送出」可改 `onAfterResponse`，但差距在網路層面
+   - **RESOLVED: onAfterHandle**（與 requestLoggerPlugin 一致；Plan 03 Task 1 採用）
 
 2. **`_span` derive 的 TypeScript 型別推斷**
    - What we know：`derive` 的返回值型別在 `{ as: 'global' }` 時需要明確的型別宣告
    - What's unclear：`Span | null` 型別在 onAfterHandle context 中是否能被正確推斷
    - Recommendation：`ctx._span as Span | null` 或用 `if (!ctx._span) return` guard
+   - **RESOLVED: `if (!span) return` defensive guard**（Plan 03 Task 1 採用）
 
 3. **`main.ts` import order 與 Bun ESM**
    - What we know：`verbatimModuleSyntax: true` 保留 import 順序；OTel 要求在其他 import 前初始化
    - What's unclear：Bun 是否保證 static import 的執行順序（vs top-level await）
    - Recommendation：使用 explicit 函式呼叫模式（loadConfig → initTracing → createApp）而非 side-effect import，更明確且可測試
+   - **RESOLVED: explicit 函式呼叫模式**（loadConfig → initTracing → createApp；Plan 03 Task 2 採用）
 
 ---
 

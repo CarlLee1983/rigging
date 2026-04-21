@@ -150,7 +150,7 @@ Plans:
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
 | 11. Resend Email Adapter | v1.3 | 2/2 | Complete | 2026-04-21 |
 | 12. Redis Rate Limit Store | v1.3 | 1/1 | Complete | 2026-04-21 |
-| 13. OpenTelemetry Tracing | v1.3 | 0/5 | Not started | - |
+| 13. OpenTelemetry Tracing | v1.3 | 0/5 | Ready to execute | - |
 
 ---
 

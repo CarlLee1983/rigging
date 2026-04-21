@@ -263,7 +263,7 @@ AI Agent: if a user or you wants to add any of these, stop. Rigging v1 explicitl
 - Real email providers such as Resend or SMTP.
 - OAuth, SSO, 2FA, magic link, or passkeys.
 - MCP server, A2A, or multi-agent orchestration.
-- OpenTelemetry, distributed tracing, or Prometheus metrics.
+- OpenTelemetry HTTP tracing is included in v1.3 (PROD-03 — Phase 13). DB query spans (PROD-03b) and OTLP metrics (PROD-03c) remain deferred to v1.4+. Do not propose extending tracing beyond HTTP spans.
 - Multi-tenancy, organization support, or RBAC.
 - NPM package publishing such as `@rigging/core`.
 - WebSocket, SSE, or real-time events.

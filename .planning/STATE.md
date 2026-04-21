@@ -5,7 +5,7 @@ milestone_name: "Production Hardening"
 status: active
 stopped_at: ""
 last_updated: "2026-04-21T00:00:00.000Z"
-last_activity: 2026-04-21 — Phase 12 complete (Redis rate limit store + planning closure)
+last_activity: 2026-04-21 — Phase 13 planning complete (5 plans, 4 waves — OpenTelemetry tracing)
 resume_file: .planning/phases/12-redis-rate-limit-store/12-01-SUMMARY.md
 progress:
   total_phases: 3
@@ -29,11 +29,11 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.3 Production Hardening st
 
 Milestone: **v1.3 Production Hardening** — In Progress
 
-Phase: Phase 12 (complete — 1/1 plan complete)
+Phase: Phase 13 (planning complete — 5 plans ready)
 
-Plan: Phase 13 — next
+Plan: Phase 13 Plan 01 — next
 
-Status: Phase 12 complete — ready to start Phase 13 (OpenTelemetry Tracing)
+Status: Phase 13 planning complete — ready to execute (5 plans, 4 waves)
 
 Last activity: 2026-04-21 — Phase 12 complete (Redis rate limit store + planning closure)
 
@@ -45,7 +45,7 @@ Progress: ██████░░░░ 67% (2/3 phases complete, 1/1 plan in P
 |-------|------|--------------|--------|
 | 11 | Resend Email Adapter | PROD-01 | Complete (2026-04-21) — 2/2 plans |
 | 12 | Redis Rate Limit Store | PROD-02 | Complete (2026-04-21) — 1/1 plan |
-| 13 | OpenTelemetry Tracing | PROD-03 | Not started |
+| 13 | OpenTelemetry Tracing | PROD-03 | Ready to execute (5 plans) |
 
 ## v1.2 Phase Overview (archived)
 
