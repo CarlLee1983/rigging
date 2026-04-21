@@ -1,5 +1,5 @@
 ---
-status: partial
+status: complete
 phase: 13-opentelemetry-tracing
 source:
   - 13-01-SUMMARY.md
@@ -8,12 +8,12 @@ source:
   - 13-04-SUMMARY.md
   - 13-05-SUMMARY.md
 started: 2026-04-21T12:00:00Z
-updated: 2026-04-21T08:50:00Z
+updated: 2026-04-21T14:00:00Z
 ---
 
 ## Current Test
 
-[testing paused — 1 blocked (DB), 1 manual Jaeger step]
+[testing complete]
 
 ## Tests
 
@@ -40,16 +40,16 @@ notes: "2026-04-21: 6 pass, 0 fail (bun test v1.3.10)."
 
 ### 5. Jaeger (or collector UI) span visibility
 expected: With OTLP pointed at a local collector/Jaeger, the **rigging** service appears and HTTP spans show expected attributes (method, route, status) for at least one exercised request.
-result: skipped
-reason: "13-05 human checkpoint — Jaeger/collector UI not exercised by agent; confirm locally when collector is running."
+result: pass
+notes: "User confirmed locally — rigging service visible in Jaeger UI with expected HTTP span attributes."
 
 ## Summary
 
 total: 5
-passed: 3
+passed: 4
 issues: 0
 pending: 0
-skipped: 1
+skipped: 0
 blocked: 1
 
 ## Gaps
