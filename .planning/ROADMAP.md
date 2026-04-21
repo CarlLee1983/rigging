@@ -43,7 +43,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 ### v1.3 Production Hardening — Phases 11-13
 
-- [ ] **Phase 11: Resend Email Adapter** — Replace ConsoleEmailAdapter with a real Resend-backed adapter, configured via environment variables
+- [x] **Phase 11: Resend Email Adapter** — Replace ConsoleEmailAdapter with a real Resend-backed adapter, configured via environment variables
 - [ ] **Phase 12: Redis Rate Limit Store** — Upgrade the in-memory rate limit store to a Redis-backed persistent store, configured via environment variables
 - [ ] **Phase 13: OpenTelemetry Tracing** — Add an Elysia middleware that emits OTLP-compatible trace spans for every HTTP request
 
@@ -98,7 +98,7 @@ Plans:
 
 Plans:
 - [x] 11-01-PLAN.md — Install resend@6.12.2 + extend ConfigSchema + create ResendEmailAdapter + wire createAuthModule with conditional selection and fail-fast guard
-- [ ] 11-02-PLAN.md — Unit tests for ResendEmailAdapter (mock resend package) + update config drift guard test
+- [x] 11-02-PLAN.md — Unit tests for ResendEmailAdapter (mock resend package) + update config drift guard test
 
 ### Phase 12: Redis Rate Limit Store
 **Goal**: A developer deploying multiple instances (or restarting a single instance) can configure Redis as the rate limit backend, ensuring rate limiting state is shared and persists across restarts
@@ -138,7 +138,7 @@ Plans:
 | 8. ADR Process Self-Check | v1.1 | 2/2 | Complete | 2026-04-20 |
 | 9. Scaffold Engine | v1.2 | 5/5 | Complete | 2026-04-20 |
 | 10. Publish & Docs | v1.2 | 3/3 | Complete | 2026-04-20 |
-| 11. Resend Email Adapter | v1.3 | 1/2 | In Progress | - |
+| 11. Resend Email Adapter | v1.3 | 2/2 | Complete | 2026-04-21 |
 | 12. Redis Rate Limit Store | v1.3 | 0/? | Not started | - |
 | 13. OpenTelemetry Tracing | v1.3 | 0/? | Not started | - |
 

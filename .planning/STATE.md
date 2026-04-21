@@ -5,14 +5,14 @@ milestone_name: "Production Hardening"
 status: active
 stopped_at: ""
 last_updated: "2026-04-21T00:00:00.000Z"
-last_activity: 2026-04-21 — Phase 11 Plan 01 executed (resend@6.12.2 + ResendEmailAdapter + createAuthModule wiring)
-resume_file: .planning/phases/11-resend-email-adapter/11-01-SUMMARY.md
+last_activity: 2026-04-21 — Phase 11 Plan 02 executed (ResendEmailAdapter unit tests + config optional-field tests)
+resume_file: .planning/phases/11-resend-email-adapter/11-02-SUMMARY.md
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 17
+  completed_plans: 2
+  percent: 33
 ---
 
 # Project State
@@ -29,15 +29,15 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 — v1.3 Production Hardening st
 
 Milestone: **v1.3 Production Hardening** — In Progress
 
-Phase: Phase 11 (in progress — 1/2 plans complete)
+Phase: Phase 11 (complete — 2/2 plans complete)
 
-Plan: 11-02 (Wave 2) — next
+Plan: Phase 12 — next
 
-Status: 11-01 complete — ready to execute 11-02
+Status: Phase 11 complete — ready to start Phase 12 (Redis Rate Limit Store)
 
-Last activity: 2026-04-21 — Phase 11 Plan 01 executed (resend@6.12.2 + ResendEmailAdapter + createAuthModule wiring)
+Last activity: 2026-04-21 — Phase 11 Plan 02 executed (ResendEmailAdapter unit tests + config optional-field tests)
 
-Progress: █░░░░░░░░░ 17% (0/3 phases complete, 1/2 plans in Phase 11)
+Progress: ███░░░░░░░ 33% (1/3 phases complete, 2/2 plans in Phase 11)
 
 ## v1.3 Phase Overview
 
@@ -73,6 +73,7 @@ Full phase details: `milestones/v1.1-ROADMAP.md`
 See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes).
 
 - **11-01**: resend@6.12.2 pinned exact (no caret); RESEND_FROM_ADDRESS validated via custom regex FormatRegistry (TypeBox has no built-in email format); fail-fast guard on partial RESEND config (exactly one var set = startup error).
+- **11-02**: mock.module('resend') replaces Resend class entirely — no real HTTP possible during tests; mockImplementation() per-test without beforeEach reset; optional field tests use withEnv with undefined values.
 
 ### v1.3 Architecture Notes
 
@@ -92,8 +93,8 @@ See `PROJECT.md` Key Decisions (includes ADR 0019 and v1.1 CI/ADR gate outcomes)
 
 Last session: 2026-04-21
 
-Stopped at: Phase 11 Plan 01 complete (11-01-SUMMARY.md created)
+Stopped at: Phase 11 Plan 02 complete (11-02-SUMMARY.md created) — Phase 11 fully complete
 
-Resume file: `.planning/phases/11-resend-email-adapter/11-01-SUMMARY.md`
+Resume file: `.planning/phases/11-resend-email-adapter/11-02-SUMMARY.md`
 
-Next: Execute 11-02-PLAN.md (unit tests for ResendEmailAdapter + config drift guard update)
+Next: Start Phase 12 (Redis Rate Limit Store — PROD-02)
