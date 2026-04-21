@@ -101,6 +101,30 @@ describe('loadConfig', () => {
   })
 })
 
+describe('loadConfig optional Resend fields', () => {
+  test('RESEND_API_KEY and RESEND_FROM_ADDRESS default to undefined when not set', () => {
+    withEnv({ RESEND_API_KEY: undefined, RESEND_FROM_ADDRESS: undefined }, () => {
+      const config = loadConfig()
+      expect(config.RESEND_API_KEY).toBeUndefined()
+      expect(config.RESEND_FROM_ADDRESS).toBeUndefined()
+    })
+  })
+
+  test('RESEND_API_KEY is present when set', () => {
+    withEnv({ RESEND_API_KEY: 're_test_abc123', RESEND_FROM_ADDRESS: undefined }, () => {
+      const config = loadConfig()
+      expect(config.RESEND_API_KEY).toBe('re_test_abc123')
+    })
+  })
+
+  test('RESEND_FROM_ADDRESS is present when set to a valid email', () => {
+    withEnv({ RESEND_FROM_ADDRESS: 'noreply@example.com', RESEND_API_KEY: undefined }, () => {
+      const config = loadConfig()
+      expect(config.RESEND_FROM_ADDRESS).toBe('noreply@example.com')
+    })
+  })
+})
+
 describe('Config contract drift guard', () => {
   test('.env.example keys match ConfigSchema keys exactly', () => {
     const envText = readFileSync('.env.example', 'utf8')
