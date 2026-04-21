@@ -10,6 +10,10 @@ FormatRegistry.Set('uri', (value) => {
   }
 })
 
+FormatRegistry.Set('email', (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+)
+
 // Bootstrap env validation lives outside the DDD feature slices.
 // Startup must fail fast on missing or malformed values.
 export const ConfigSchema = Type.Object({
@@ -28,6 +32,8 @@ export const ConfigSchema = Type.Object({
     Type.Literal('warn'),
     Type.Literal('error'),
   ]),
+  RESEND_API_KEY: Type.Optional(Type.String()),
+  RESEND_FROM_ADDRESS: Type.Optional(Type.String({ format: 'email' })),
 })
 
 export type Config = Static<typeof ConfigSchema>
